@@ -26,7 +26,7 @@ import "react-tabs/style/react-tabs.css";
 export default function App(){
   const [time, setTime] = useState(0);
   const [timers, setTimers] = useState([]);
-  
+
   function createTimer() {
     setTimers([...timers, <TimerComponent style = {styles.input} startTimeInSeconds={time} key={timers.length}/>])
   }
@@ -41,7 +41,7 @@ export default function App(){
         />
         {timers}
         <Button title="CLEAR" onPress={() => {setTimers([])}}/>
-        <Button title="ADD" onPress={}
+        
       </View>
     </View>
   );
