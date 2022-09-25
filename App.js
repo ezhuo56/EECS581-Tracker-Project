@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import reactDom from 'react-dom';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
-import TimerComponent from './components/Timer';
 
 export default function App(){
   const [time, setTime] = useState(0);
   return(
-    <SafeAreaView style = {styles.container}>
+    <View style = {styles.container}>
       <View style = {styles.box}>
         <TextInput 
           style = {styles.input}
           placeholder = 'e.g. 600'
-          onSubmitEditing={(val) => setTime(val)}
+          onChangeText={(val) => setTime(val)}
+          onSubmitEditing={(val) => addTimer(time)}
         />
+        <TimerComponent></TimerComponent>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -41,3 +42,60 @@ const styles = StyleSheet.create({
     width: 200,
   }
 });
+
+function addTimer(val){
+  const abc = React.createElement(Text, { style: 'input'}, 'lets go');
+  reactDom.render(abc, useRef());
+
+  alert('yikes');
+}
+
+class TimerComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seconds: parseInt(props.startTimeInSeconds, 10) || 60,
+    };
+  }
+
+  render() {
+    return (
+        <View> 
+            <Text>
+                {this.formatTime(this.state.seconds)}
+            </Text>
+        </View>
+    );
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.decrementTime(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  decrementTime() {
+    if(this.state.seconds >= 0) {
+        this.setState(state => ({
+            seconds: state.seconds - 1
+    }))};
+    if(this.state.seconds == 0) {
+        alert("Timer Ended");
+    }
+  }
+
+  formatTime(timePassedInSeconds) {
+    if(timePassedInSeconds < 0) {
+        return "Timer Ended"
+    }
+    let hours = Math.floor(timePassedInSeconds / 3600);
+    let minutes = Math.floor(timePassedInSeconds / 60) % 60;
+    let seconds = timePassedInSeconds % 60;
+    let returnArray = [hours, minutes, seconds]
+        .map(time => String(time).padStart(2, '0'))
+        .join(':');
+    return returnArray
+  }
+}
