@@ -1,5 +1,7 @@
 import React, { useState, Component } from 'react';
 import reactDom from 'react-dom';
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
 
 
