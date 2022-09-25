@@ -37,10 +37,13 @@ export default function App(){
           style = {styles.input}
           placeholder = 'e.g. 600'
           onChangeText={(val) => setTime(val)}
-          onSubmitEditing={(val) => createTimer()}
         />
         {timers}
+        <View style = {{flexDirection:"row"}}>
+        <Button title="ADD" onPress={() => createTimer()}/>
         <Button title="CLEAR" onPress={() => {setTimers([])}}/>
+        </View>
+      
         
       </View>
     </View>
