@@ -1,83 +1,78 @@
-import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
 import TimerComponent from './components/Timer';
+/*
+//Couldn't implement the tabs b/c the packages wouldn't install
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+    <Tabs>
+      <TabList>
+          <Tab>TAB 1</Tab>
+          <Tab>TAB 2</Tab>
+          <Tab>TAB 3</Tab>
+        </TabList>
+        <TabPanel>
+          <h2>TAB NO: 1</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>TAB NO:2</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>TAB NO:3</h2>
+        </TabPanel>
+      </Tabs>
+*/
 
-const Separator = () => (
-  <View style={styles.separator} />
-);
+export default function App(){
+  const [time, setTime] = useState(0);
+  const [timers, setTimers] = useState([]);
 
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <TimerComponent startTimeInSeconds={10}></TimerComponent>
-    <View>
-      <Text style={styles.title}>
-        The title and onPress handler are required. It is recommended to set accessibilityLabel to help make your app usable by everyone.
-      </Text>
-      <Button
-        title="Press me"
-        onPress={() => Alert.alert('Simple Button pressed')}
-      />
-    </View>
-    <Separator />
-    <View>
-      <Text style={styles.title}>
-        Adjust the color in a way that looks standard on each platform. On  iOS, the color prop controls the color of the text. On Android, the color adjusts the background color of the button.
-      </Text>
-      <Button
-        title="Press me"
-        color="#f194ff"
-        onPress={() => Alert.alert('Button with adjusted color pressed')}
-      />
-    </View>
-    <Separator />
-    <View>
-      <Text style={styles.title}>
-        All interaction for the component are disabled.
-      </Text>
-      <Button
-        title="Press me"
-        disabled
-        onPress={() => Alert.alert('Cannot press this one')}
-      />
-    </View>
-    <Separator />
-    <View>
-      <Text style={styles.title}>
-        This layout strategy lets the title define the width of the button.
-      </Text>
-      <View style={styles.fixToText}>
-        <Button
-          title="Left button"
-          onPress={() => Alert.alert('Left button pressed')}
+  function createTimer() {
+    setTimers([...timers, <TimerComponent style = {styles.input} startTimeInSeconds={time} key={timers.length}/>])
+  }
+  return(
+    <View style = {styles.container}>
+      <View style = {styles.box}>
+        <TextInput 
+          style = {styles.input}
+          placeholder = 'e.g. 600'
+          onChangeText={(val) => setTime(val)}
         />
-        <Button
-          title="Right button"
-          onPress={() => Alert.alert('Right button pressed')}
-        />
+        {timers}
+        <View style = {{flexDirection:"row"}}>
+        <Button title="ADD" onPress={() => createTimer()}/>
+        <Button title="CLEAR" onPress={() => {setTimers([])}}/>
+        </View>
+      
+        
       </View>
     </View>
-  </SafeAreaView>
-);
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: 16,
-  },
-  title: {
-    textAlign: 'center',
-    marginVertical: 8,
-  },
-  fixToText: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'black',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignContent: 'center',
+    alignItems: 'center',
   },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  box: {
+    width: '100%',
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
   },
+  input: {
+    borderWidth: 1,
+    backgroundColor: 'white',
+    padding: 8,
+    margin: 10,
+    width: 200,
+    textAlign: 'center',
+  }
 });
-
-export default App;

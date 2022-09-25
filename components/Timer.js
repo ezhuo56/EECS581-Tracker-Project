@@ -12,7 +12,7 @@ class TimerComponent extends Component {
   render() {
     return (
         <View> 
-            <Text>
+            <Text style={this.props.style}>
                 {this.formatTime(this.state.seconds)}
             </Text>
         </View>
