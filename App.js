@@ -12,7 +12,7 @@ const App = () => (
        
       title="Add"
       onPress={() => Alert.alert(
-          'Its GeeksforGeeks !')}
+          'Its working !')}
   />
 </View>
 );
