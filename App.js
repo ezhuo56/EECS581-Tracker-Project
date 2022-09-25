@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import reactDom from 'react-dom';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
+import TimerComponent from './components/Timer';
 
 export default function App(){
   const [time, setTime] = useState(0);
