@@ -1,9 +1,27 @@
 import React, { useState, Component } from 'react';
 import reactDom from 'react-dom';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
+/*
+//Couldn't implement the tabs b/c the packages wouldn't install
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
-
+    <Tabs>
+      <TabList>
+          <Tab>TAB 1</Tab>
+          <Tab>TAB 2</Tab>
+          <Tab>TAB 3</Tab>
+        </TabList>
+        <TabPanel>
+          <h2>TAB NO: 1</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>TAB NO:2</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>TAB NO:3</h2>
+        </TabPanel>
+      </Tabs>
+*/
 
 export default function App(){
   const [time, setTime] = useState(0);
@@ -12,7 +30,6 @@ export default function App(){
   function createTimer() {
     setTimers([...timers, <TimerComponent style = {styles.input} startTimeInSeconds={time} key={timers.length}/>])
   }
-
   return(
     <View style = {styles.container}>
       <View style = {styles.box}>
