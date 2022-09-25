@@ -11,9 +11,8 @@ export default function App(){
           style = {styles.input}
           placeholder = 'e.g. 600'
           onChangeText={(val) => setTime(val)}
-          onSubmitEditing={(val) => addTimer(time)}
         />
-        <TimerComponent></TimerComponent>
+        <TimerComponent startTimeInSeconds={time}></TimerComponent>
       </View>
     </View>
   );
@@ -26,6 +25,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    alignContent: 'center',
+    alignItems: 'center',
   },
   box: {
     width: '100%',
@@ -42,13 +43,6 @@ const styles = StyleSheet.create({
     width: 200,
   }
 });
-
-function addTimer(val){
-  const abc = React.createElement(Text, { style: 'input'}, 'lets go');
-  reactDom.render(abc, useRef());
-
-  alert('yikes');
-}
 
 class TimerComponent extends Component {
   constructor(props) {
