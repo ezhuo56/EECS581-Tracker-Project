@@ -1,12 +1,34 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 const Separator = () => (
   <View style={styles.separator} />
 );
 
 const App = () => (
+
   <SafeAreaView style={styles.container}>
+    <View>
+      <Tabs>
+      <TabList>
+          <Tab>TAB 1</Tab>
+          <Tab>TAB 2</Tab>
+          <Tab>TAB 3</Tab>
+        </TabList>
+        <TabPanel>
+          <h2>TAB NO: 1</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>TAB NO:2</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>TAB NO:3</h2>
+        </TabPanel>
+      </Tabs>
+    </View>
+
     <View>
       <Text style={styles.title}>
         The title and onPress handler are required. It is recommended to set accessibilityLabel to help make your app usable by everyone.
