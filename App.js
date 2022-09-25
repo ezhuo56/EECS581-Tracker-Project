@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import TimerComponent from './components/Timer';
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -7,6 +8,7 @@ const Separator = () => (
 
 const App = () => (
   <SafeAreaView style={styles.container}>
+    <TimerComponent startTimeInSeconds={10}></TimerComponent>
     <View>
       <Text style={styles.title}>
         The title and onPress handler are required. It is recommended to set accessibilityLabel to help make your app usable by everyone.
