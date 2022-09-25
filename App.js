@@ -4,6 +4,12 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from '
 
 export default function App(){
   const [time, setTime] = useState(0);
+  const [timers, setTimers] = useState([]);
+
+  function createTimer() {
+    setTimers([...timers, <TimerComponent style = {styles.input} startTimeInSeconds={time} key={timers.length}/>])
+  }
+
   return(
     <View style = {styles.container}>
       <View style = {styles.box}>
@@ -11,8 +17,10 @@ export default function App(){
           style = {styles.input}
           placeholder = 'e.g. 600'
           onChangeText={(val) => setTime(val)}
+          onSubmitEditing={(val) => createTimer()}
         />
-        <TimerComponent startTimeInSeconds={time}></TimerComponent>
+        {timers}
+        <Button title="CLEAR" onPress={() => {setTimers([])}}/>
       </View>
     </View>
   );
@@ -30,10 +38,10 @@ const styles = StyleSheet.create({
   },
   box: {
     width: '100%',
-    height: '20%',
     backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
   },
   input: {
     borderWidth: 1,
@@ -41,6 +49,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 10,
     width: 200,
+    textAlign: 'center',
   }
 });
 
@@ -55,7 +64,7 @@ class TimerComponent extends Component {
   render() {
     return (
         <View> 
-            <Text>
+            <Text style={this.props.style}>
                 {this.formatTime(this.state.seconds)}
             </Text>
         </View>
