@@ -4,6 +4,9 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from '
 function Home(){
         return(
             <View style = {styles.mainView}>
+                <Button
+                    title = "User"
+                />
                 <Text>Home</Text>
             </View>
         );
