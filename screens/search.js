@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
 
-function Home(){
+function Search(){
         return(
             <View style = {styles.mainView}>
-                <Text>Home</Text>
+                <Text>Search</Text>
             </View>
         );
 }
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Home
+export default Search
