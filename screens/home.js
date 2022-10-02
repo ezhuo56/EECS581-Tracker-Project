@@ -1,11 +1,22 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
 
-function Home(){
+function Home({navigation}){
+        function navU(){
+            navigation.navigate('userPage');
+        }
+        function navS(){
+            navigation.navigate('searchPage');
+        }
         return(
             <View style = {styles.mainView}>
                 <Button
                     title = "User"
+                    onPress={navU}
+                />
+                <Button
+                    title = "Search"
+                    onPress={navS}
                 />
                 <Text>Home</Text>
             </View>
@@ -14,7 +25,6 @@ function Home(){
 
 const styles = StyleSheet.create({
     mainView:{
-        marginTop: 40,
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
