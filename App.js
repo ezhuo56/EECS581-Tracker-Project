@@ -15,9 +15,41 @@ export default function App(){
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name = "homePage" component = {Home} />
-        <Stack.Screen name = "userPage" component = {User} />
-        <Stack.Screen name = "searchPage" component = {Search} />
+        <Stack.Screen 
+          name = "homePage" 
+          component = {Home} 
+          options = {{
+            title: 'Home',
+            headerTitleAlign: 'center',
+            headerStyle: { backgroundColor: 'red', },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' }, 
+            }}  
+          />
+        <Stack.Screen 
+          name = "userPage" 
+          component = {User}
+          options = {{
+            title: 'Profile',
+            headerTitleAlign: 'center',
+            headerStyle: { backgroundColor: 'red', },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' }, 
+            headerBackVisible: false,
+            }}  
+          />
+        <Stack.Screen 
+          name = "searchPage" 
+          component = {Search} 
+          options = {{
+            title: 'Profile',
+            headerTitleAlign: 'center',
+            headerStyle: { backgroundColor: 'red', },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' }, 
+            headerBackVisible: false,
+            }}  
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
