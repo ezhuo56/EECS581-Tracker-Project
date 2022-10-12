@@ -8,6 +8,7 @@ function Home({navigation}){
     function navS(){
         navigation.navigate('searchPage');
     }
+    
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>

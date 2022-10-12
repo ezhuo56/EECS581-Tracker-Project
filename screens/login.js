@@ -1,26 +1,26 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 
-function User({navigation}){
+function Login({navigation}){
     function navH(){
         navigation.navigate('homePage');
     }
-    function navL(){
-        navigation.navigate('loginPage');
+    function navS(){
+        navigation.navigate('signupPage');
     }
-
+    
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
                 <Pressable style={styles.button} onPress={navH}>
-                    <Text style={styles.text}> Home </Text>
+                    <Text style={styles.text}> Login </Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={navL}>
-                    <Text style={styles.text}> Signout </Text>
+                <Pressable style={styles.button} onPress={navS}>
+                    <Text style={styles.text}> Signup </Text>
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <Text>User</Text>
+                <Text>Login</Text>
             </View>
         </View>
     );
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default User
+export default Login

@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Search from './screens/search';
 import Home from './screens/home';
 import User from './screens/user';
+import Login from './screens/login';
+import Signup from './screens/signup';
 
 
 
@@ -16,6 +18,30 @@ export default function App(){
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
+          name = "loginPage" 
+          component = {Login} 
+          options = {{
+            title: 'Login',
+            headerTitleAlign: 'center',
+            headerStyle: { backgroundColor: 'red', },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' }, 
+            headerBackVisible: false,
+            }}  
+        />
+        <Stack.Screen 
+          name = "signupPage" 
+          component = {Signup} 
+          options = {{
+            title: 'Signup',
+            headerTitleAlign: 'center',
+            headerStyle: { backgroundColor: 'red', },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' }, 
+            headerBackVisible: false,
+            }}  
+        />
+        <Stack.Screen 
           name = "homePage" 
           component = {Home} 
           options = {{
@@ -24,6 +50,7 @@ export default function App(){
             headerStyle: { backgroundColor: 'red', },
             headerTintColor: '#fff',
             headerTitleStyle: { fontWeight: 'bold' }, 
+            headerBackVisible: false,
             }}  
           />
         <Stack.Screen 

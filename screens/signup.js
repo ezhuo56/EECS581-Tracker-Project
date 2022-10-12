@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 
-function User({navigation}){
-    function navH(){
-        navigation.navigate('homePage');
-    }
+function Signup({navigation}){
     function navL(){
         navigation.navigate('loginPage');
     }
@@ -12,15 +9,12 @@ function User({navigation}){
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
-                <Pressable style={styles.button} onPress={navH}>
-                    <Text style={styles.text}> Home </Text>
-                </Pressable>
                 <Pressable style={styles.button} onPress={navL}>
-                    <Text style={styles.text}> Signout </Text>
+                    <Text style={styles.text}> Signup </Text>
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <Text>User</Text>
+                <Text>Signup</Text>
             </View>
         </View>
     );
@@ -30,9 +24,6 @@ const styles = StyleSheet.create({
     parent: {
         height: '100%',
         width: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     center: {
         flex: 1,
@@ -44,7 +35,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     button: {
-        width: '50%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 12,
@@ -62,4 +53,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default User
+export default Signup
