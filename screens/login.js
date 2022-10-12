@@ -1,6 +1,19 @@
+/*
+  Name: login.js
+  Description: Makes the login page be able to navigated to with button taps from the user
+  Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
+  Date: 10/11/2022
+  Date revised: 10/12/2022
+  Preconditions: Importing react components 
+  Postconditions: Creates the login page from the imported components
+  Errors: no errors
+  Side effects: no side effects
+  invariants: no invariants
+  any known faults: no known faults
+*/
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-
+//creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
     function navH(){
         navigation.navigate('homePage');
@@ -8,7 +21,7 @@ function Login({navigation}){
     function navS(){
         navigation.navigate('signupPage');
     }
-    
+//creates two buttons that would allow the user to interact with to navigate to either the home page or the sign up page
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
@@ -25,7 +38,7 @@ function Login({navigation}){
         </View>
     );
 }
-
+//CSS style sheet for the page to make it look red with bold fonts
 const styles = StyleSheet.create({
     parent: {
         height: '100%',

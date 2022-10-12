@@ -1,6 +1,19 @@
+/*
+  Name: home.js
+  Description: Makes the home page be able to navigated to with button taps from the user
+  Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
+  Date: 10/10/2022
+  Date revised: 10/12/2022
+  Preconditions: Importing react components 
+  Postconditions: Creates the homepage from the imported components
+  Errors: no errors
+  Side effects: no side effects
+  invariants: no invariants
+  any known faults: no known faults
+*/
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-
+//allows the user to navigate to either the user page or the search page from the home page
 function Home({navigation}){
     function navU(){
         navigation.navigate('userPage');
@@ -8,7 +21,7 @@ function Home({navigation}){
     function navS(){
         navigation.navigate('searchPage');
     }
-    
+//allows the user to click on either the userpage or searchpage to navigate to those pages
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
@@ -25,7 +38,7 @@ function Home({navigation}){
         </View>
     );
 }
-
+//CSS style for the page
 const styles = StyleSheet.create({
     parent: {
         height: '100%',
