@@ -1,32 +1,26 @@
 /*
-  Name: home.js
-  Description: Makes the home page be able to navigated to with button taps from the user
+  Name: settings.js
+  Description: Makes the settings page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
-  Date: 10/10/2022
+  Date: 10/12/2022
   Date revised: 10/12/2022
   Preconditions: Importing react components 
-  Postconditions: Creates the homepage from the imported components
+  Postconditions: Creates the settings page from the imported components provided by react native
   Errors: no errors
   Side effects: no side effects
   invariants: no invariants
   any known faults: no known faults
 */
-import { React, useContext } from 'react';
+import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
+import { lightColorScheme, darkColorScheme } from '../colorschemes';
 import { ColorSchemeContext } from '../context';
-//allows the user to navigate to either the user page or the search page from the home page
-function Home({navigation}){
-    //Retrieves the current app color scheme
+//Creates a function to navigate to the user page
+function Settings({navigation}){
+    //Retrieves the current app color scheme and a function to set it for the rest of the app
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
-    function navU(){
-        navigation.navigate('userPage');
-    }
-    function navS(){
-        navigation.navigate('searchPage');
-    }
-
-    //CSS style for the page
+    //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
@@ -38,7 +32,8 @@ function Home({navigation}){
         },
         center: {
             flex: 1,
-            alignItems: 'center'
+            alignItems: 'center',
+            color: colorScheme.textColor,
         },
         butCont: {
             flex: 1,
@@ -46,7 +41,7 @@ function Home({navigation}){
             alignItems: 'flex-start',
         },
         button: {
-            width: '50%',
+            width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 12,
@@ -62,28 +57,44 @@ function Home({navigation}){
             letterSpacing: 0.25,
             color: 'white',
         },
-        screenText: {
-            fontWeight: 'bold',
-            color: colorScheme.textColor
-        }
+        screenButton: {
+            marginBottom: '100%',
+            width: '60%',
+            height: '5%',
+            backgroundColor: 'black',
+            alignItems: 'center',
+            display: 'flex',
+            color: 'white',
+        },
     })
 
-//allows the user to click on either the userpage or searchpage to navigate to those pages
+    function navU(){
+        navigation.navigate('userPage', {styles: styles});
+    }
+    //Function to change the color scheme of the whole app
+    function changeColorScheme() {
+        if(colorScheme.darkMode) {
+            setColorScheme(lightColorScheme);
+        }
+        else {
+            setColorScheme(darkColorScheme);
+        }
+    }
+    //create buttons that would allow the user to interact with to access their user page
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
                 <Pressable style={styles.button} onPress={navU}>
                     <Text style={styles.text}> User </Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={navS}>
-                    <Text style={styles.text}> Search </Text>
-                </Pressable>
             </View>
-            <View style = {styles.center}>
-                <Text style={styles.screenText}>Home</Text>
+            <View style = {styles.screenButton}>
+                <Button title="Switch Color Schemes" color = 'white' onPress={() => {
+                    changeColorScheme();
+                }}/>
             </View>
         </View>
     );
 }
 
-export default Home
+export default Settings

@@ -11,16 +11,66 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import React from 'react';
+import {React, useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
+import { ColorSchemeContext } from '../context';
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
+    //Retrieves the current app color scheme
+    const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+
     function navH(){
         navigation.navigate('homePage');
     }
     function navL(){
         navigation.navigate('loginPage');
     }
+    function navS(){
+        navigation.navigate('settingsPage');
+    }
+
+    //CSS style sheet for the page to make it look red with bold fonts
+    const styles = StyleSheet.create({
+        parent: {
+            height: '100%',
+            width: '100%',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colorScheme.backgroundColor,
+        },
+        center: {
+            flex: 1,
+            alignItems: 'center'
+        },
+        butCont: {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+        },
+        button: {
+            width: '33.333%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: 12,
+            paddingHorizontal: 32,
+            borderRadius: 0,
+            elevation: 3,
+            backgroundColor: 'darkred',
+        },
+        text: {
+            fontSize: 16,
+            lineHeight: 21,
+            fontWeight: 'bold',
+            letterSpacing: 0.25,
+            color: 'white',
+        },
+        screenText: {
+            fontWeight: 'bold',
+            color: colorScheme.textColor,
+        }
+    })
+
 //create buttons that would allow the user to interact with to access the home page or the signout function 
     return(
         <View style = {styles.parent}>
@@ -28,51 +78,18 @@ function User({navigation}){
                 <Pressable style={styles.button} onPress={navH}>
                     <Text style={styles.text}> Home </Text>
                 </Pressable>
+                <Pressable style={styles.button} onPress={navS}>
+                    <Text style={styles.text}>Settings</Text>
+                </Pressable>
                 <Pressable style={styles.button} onPress={navL}>
                     <Text style={styles.text}> Signout </Text>
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <Text>User</Text>
+                <Text style={styles.screenText}>User</Text>
             </View>
         </View>
     );
 }
-//CSS style sheet for the page to make it look red with bold fonts
-const styles = StyleSheet.create({
-    parent: {
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    center: {
-        flex: 1,
-        alignItems: 'center'
-    },
-    butCont: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-    },
-    button: {
-        width: '50%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 0,
-        elevation: 3,
-        backgroundColor: 'darkred',
-    },
-    text: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-    },
-})
 
 export default User

@@ -12,8 +12,8 @@
   any known faults: no known faults
 */
 import React from 'react';
-import { userState, Component } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput } from 'react-native';
+import { useState, Component } from 'react';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Search from './screens/search';
@@ -21,82 +21,97 @@ import Home from './screens/home';
 import User from './screens/user';
 import Login from './screens/login';
 import Signup from './screens/signup';
-
+import Settings from './screens/settings';
+import {lightColorScheme, darkColorScheme} from './colorschemes';
+import { ColorSchemeContext } from './context';
 
 //create the app to export to expo website which can simulate the app on our phone when a QR is scanned
 export default function App(){
   const Stack = createNativeStackNavigator();
+
+  //Sets up a color scheme to be used in the rest of the app
+  const [colorScheme, setColorScheme] = useState(darkColorScheme);
+  const colorSchemeData = [ colorScheme, setColorScheme ]
+
 //create the login page,sign up page, home page, user page, and search page with CSS style that would style it red with bold fonts
   return(
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name = "loginPage" 
-          component = {Login} 
-          options = {{
-            title: 'Login',
-            headerTitleAlign: 'center',
-            headerStyle: { backgroundColor: 'red', },
-            headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' }, 
-            headerBackVisible: false,
-            }}  
-        />
-        <Stack.Screen 
-          name = "signupPage" 
-          component = {Signup} 
-          options = {{
-            title: 'Signup',
-            headerTitleAlign: 'center',
-            headerStyle: { backgroundColor: 'red', },
-            headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' }, 
-            headerBackVisible: false,
-            }}  
-        />
-        <Stack.Screen 
-          name = "homePage" 
-          component = {Home} 
-          options = {{
-            title: 'Home',
-            headerTitleAlign: 'center',
-            headerStyle: { backgroundColor: 'red', },
-            headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' }, 
-            headerBackVisible: false,
-            }}  
+    <ColorSchemeContext.Provider value={colorSchemeData}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name = "loginPage" 
+            component = {Login} 
+            options = {{
+              title: 'Login',
+              headerTitleAlign: 'center',
+              headerStyle: { backgroundColor: 'red', },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' }, 
+              headerBackVisible: false,
+              }}  
           />
-        <Stack.Screen 
-          name = "userPage" 
-          component = {User}
-          options = {{
-            title: 'Profile',
-            headerTitleAlign: 'center',
-            headerStyle: { backgroundColor: 'red', },
-            headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' }, 
-            headerBackVisible: false,
-            }}  
+          <Stack.Screen 
+            name = "signupPage" 
+            component = {Signup} 
+            options = {{
+              title: 'Signup',
+              headerTitleAlign: 'center',
+              headerStyle: { backgroundColor: 'red', },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' }, 
+              headerBackVisible: false,
+              }}  
           />
-        <Stack.Screen 
-          name = "searchPage" 
-          component = {Search} 
-          options = {{
-            title: 'Profile',
-            headerTitleAlign: 'center',
-            headerStyle: { backgroundColor: 'red', },
-            headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold' }, 
-            headerBackVisible: false,
-            }}  
-          />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen 
+            name = "homePage" 
+            component = {Home} 
+            options = {{
+              title: 'Home',
+              headerTitleAlign: 'center',
+              headerStyle: { backgroundColor: 'red', },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' }, 
+              headerBackVisible: false,
+              }}  
+            />
+          <Stack.Screen 
+            name = "userPage" 
+            component = {User}
+            options = {{
+              title: 'Profile',
+              headerTitleAlign: 'center',
+              headerStyle: { backgroundColor: 'red', },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' }, 
+              headerBackVisible: false,
+              }}  
+            />
+          <Stack.Screen 
+            name = "searchPage" 
+            component = {Search} 
+            options = {{
+              title: 'Profile',
+              headerTitleAlign: 'center',
+              headerStyle: { backgroundColor: 'red', },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' }, 
+              headerBackVisible: false,
+              }}  
+            />
+            <Stack.Screen 
+            name = "settingsPage" 
+            component = {Settings} 
+            options = {{
+              title: 'Settings',
+              headerTitleAlign: 'center',
+              headerStyle: { backgroundColor: 'red', },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' }, 
+              headerBackVisible: false,
+              }}  
+            />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ColorSchemeContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-
-  }
-});

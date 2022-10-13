@@ -11,17 +11,79 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import React from 'react';
+import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
+import { ColorSchemeContext } from '../context';
+
 //creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
+    //Retrieves the current app color scheme
+    const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+
     function navH(){
-        navigation.navigate('homePage');
+        if(username != '' && password != '') {
+            navigation.navigate('homePage');
+        }
     }
     function navS(){
         navigation.navigate('signupPage');
     }
-//creates two buttons that would allow the user to interact with to navigate to either the home page or the sign up page
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    //CSS style sheet for the page to make it look red with bold fonts
+    const styles = StyleSheet.create({
+        parent: {
+            height: '100%',
+            width: '100%',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colorScheme.backgroundColor,
+        },
+        center: {
+            flex: 1,
+            alignItems: 'center',
+        },
+        butCont: {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+        },
+        button: {
+            width: '50%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: 12,
+            paddingHorizontal: 32,
+            borderRadius: 0,
+            elevation: 3,
+            backgroundColor: 'darkred',
+        },
+        text: {
+            fontSize: 16,
+            lineHeight: 21,
+            fontWeight: 'bold',
+            letterSpacing: 0.25,
+            color: 'white',
+        },
+        input: {
+            borderWidth: 1,
+            backgroundColor: 'white',
+            padding: 8,
+            margin: 10,
+            width: 200,
+            textAlign: 'center',
+            fontWeight: 'bold',
+        },
+        inputHeader: {
+            fontWeight: 'bold',
+            color: colorScheme.textColor
+        }
+    })
+
+    //creates two buttons that would allow the user to interact with to navigate to either the home page or the sign up page
+    //Also creates two text inputs, one for a username and one for a password. The password utilizes secure text entry to hide the text
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
@@ -33,46 +95,24 @@ function Login({navigation}){
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <Text>Login</Text>
+                <Text style = {styles.inputHeader}>Username (Any input is currently allowed)</Text>
+                <TextInput 
+                    style = {styles.input}
+                    placeholder = 'Enter Username'
+                    placeholderTextColor = {styles.input.placeholderTextColor}
+                    onChangeText={(val) => setUsername(val)}
+                />
+                <Text style = {styles.inputHeader}>Password (Any input is currently allowed)</Text>
+                <TextInput 
+                    style = {styles.input}
+                    placeholder = 'Enter Password'
+                    placeholderTextColor = {styles.input.placeholderTextColor}
+                    secureTextEntry={true}
+                    onChangeText={(val) => setPassword(val)}
+                />
             </View>
         </View>
     );
 }
-//CSS style sheet for the page to make it look red with bold fonts
-const styles = StyleSheet.create({
-    parent: {
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    center: {
-        flex: 1,
-        alignItems: 'center'
-    },
-    butCont: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-    },
-    button: {
-        width: '50%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 0,
-        elevation: 3,
-        backgroundColor: 'darkred',
-    },
-    text: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-    },
-})
 
 export default Login
