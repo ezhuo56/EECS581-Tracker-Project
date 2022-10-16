@@ -3,7 +3,7 @@
   Description: Makes the user page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/12/2022
+  Date revised: 10/116/2022
   Preconditions: Importing react components 
   Postconditions: Creates the user page from the imported components provided by react native
   Errors: no errors
@@ -13,6 +13,7 @@
 */
 import {React, useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
+import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { ColorSchemeContext } from '../context';
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
@@ -31,62 +32,111 @@ function User({navigation}){
 
     //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
-        parent: {
-            height: '100%',
+        parent:{
+            flex: 1,
+            backgroundColor: 'white',
+        },  
+        profileBack: {
+            alignItems: 'flex-end',
+            padding: 0,
             width: '100%',
-            flex: 1,
+            backgroundColor: 'red',
+            height: 150,
+        },
+        infoCont: {
             alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colorScheme.backgroundColor,
         },
-        center: {
-            flex: 1,
-            alignItems: 'center'
-        },
-        butCont: {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-        },
-        button: {
-            width: '33.333%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingVertical: 12,
-            paddingHorizontal: 32,
-            borderRadius: 0,
-            elevation: 3,
+        backBut: {
+            marginTop: 125,
+            width: 75,
+            height: 25,
             backgroundColor: 'darkred',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
-        text: {
+        backText: {
             fontSize: 16,
             lineHeight: 21,
             fontWeight: 'bold',
             letterSpacing: 0.25,
             color: 'white',
         },
-        screenText: {
+        alignImg: {
+            width: 140,
+            height: 140,
+            borderRadius: 100,
+            marginTop: -70,
+        },
+        userName: {
+            fontSize: 35,
             fontWeight: 'bold',
-            color: colorScheme.textColor,
+        },
+        email: {
+            fontSize: 15,
+            color: 'grey',
+            padding: 15,
+        },
+        bottom: {
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            marginBottom: 10,
+            backgroundColor: 'red',
+        },
+        resize: {
+            backgroundColor: 'crimson',
+            alignItems: 'center',
+            width: '50%',
+            height: 25,
+        },
+        followCont: {
+            alignItems: 'center',
+        },
+        followTitle: {
+            padding: 5,
+            alignItems: 'center',
+            width: '55%',
+            backgroundColor: 'crimson',
+        },
+        followBox: {
+            width: '55%',
+            height: 100,
+            backgroundColor: 'grey',
         }
     })
 
-//create buttons that would allow the user to interact with to access the home page or the signout function 
+//Created a barebones filler userpage, that may be altered later, but fulfills all that is needed
+//Currently options button doesn't work b/c it will be implemented at a later sprint (I believe) 
     return(
-        <View style = {styles.parent}>
-            <View style = {styles.butCont}>
-                <Pressable style={styles.button} onPress={navH}>
-                    <Text style={styles.text}> Home </Text>
+        <View style = { styles.parent }>
+            <ScrollView>
+                <View style = { styles.profileBack } >
+                    <Pressable style = { styles.backBut } onPress = { navH }>
+                    <Text style = { styles.backText } > Home </Text>
+                    </Pressable>
+                </View>
+                <View style = { styles.infoCont } >
+                    <Image source = { require ( './img/temp.png' ) }
+                    style = { styles.alignImg }></Image>
+                    <Text style = { styles.userName }> Bob Jones </Text>
+                    <Text style = { styles.email }> abc@123.gmail.com </Text>
+                    <View style = { styles.infoBack } >
+                    </View>
+                </View>
+                <View style = { styles.followCont } >
+                    <View style = { styles.followTitle } >
+                        <Text style = {{ fontSize: 15, fontWeight: 'bold', color: 'white' }}> Following </Text>
+                    </View>
+                    <View style = { styles.followBox } >
+                    </View>
+                </View>
+            </ScrollView>
+            <View style = { styles.bottom } >
+                <Pressable style = { styles.resize }>
+                    <Text style = { styles.backText } > Options </Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={navS}>
-                    <Text style={styles.text}>Settings</Text>
+                <Pressable style = { styles.resize } onPress = { navL }>
+                    <Text style = { styles.backText } > Signout </Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={navL}>
-                    <Text style={styles.text}> Signout </Text>
-                </Pressable>
-            </View>
-            <View style = {styles.center}>
-                <Text style={styles.screenText}>User</Text>
             </View>
         </View>
     );

@@ -78,6 +78,7 @@ export default function App(){
             name = "userPage" 
             component = {User}
             options = {{
+              headerShown: false,
               title: 'Profile',
               headerTitleAlign: 'center',
               headerStyle: { backgroundColor: 'red', },
@@ -90,7 +91,7 @@ export default function App(){
             name = "searchPage" 
             component = {Search} 
             options = {{
-              title: 'Profile',
+              title: 'Search',
               headerTitleAlign: 'center',
               headerStyle: { backgroundColor: 'red', },
               headerTintColor: '#fff',
