@@ -3,7 +3,7 @@
   Description: Makes the user page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/116/2022
+  Date revised: 10/16/2022
   Preconditions: Importing react components 
   Postconditions: Creates the user page from the imported components provided by react native
   Errors: no errors
@@ -34,7 +34,7 @@ function User({navigation}){
     const styles = StyleSheet.create({
         parent:{
             flex: 1,
-            backgroundColor: 'white',
+            backgroundColor: colorScheme.backgroundColor,
         },  
         profileBack: {
             alignItems: 'flex-end',
@@ -105,7 +105,7 @@ function User({navigation}){
     })
 
 //Created a barebones filler userpage, that may be altered later, but fulfills all that is needed
-//Currently options button doesn't work b/c it will be implemented at a later sprint (I believe) 
+//Currently options button just takes user to settings page, and signout goes to login page
     return(
         <View style = { styles.parent }>
             <ScrollView>
@@ -131,7 +131,7 @@ function User({navigation}){
                 </View>
             </ScrollView>
             <View style = { styles.bottom } >
-                <Pressable style = { styles.resize }>
+                <Pressable style = { styles.resize } onPress = { navS }>
                     <Text style = { styles.backText } > Options </Text>
                 </Pressable>
                 <Pressable style = { styles.resize } onPress = { navL }>

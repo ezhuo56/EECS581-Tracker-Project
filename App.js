@@ -91,6 +91,7 @@ export default function App(){
             name = "searchPage" 
             component = {Search} 
             options = {{
+              headerShown: false,
               title: 'Search',
               headerTitleAlign: 'center',
               headerStyle: { backgroundColor: 'red', },

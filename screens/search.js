@@ -11,19 +11,20 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import {React, useContext} from 'react';
+import {React, useContext, useState} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { ColorSchemeContext } from '../context';
+import SearchBar from "../components/searchBar";
+
 //create a function that would allow the user to navigate to the home page 
 function Search({navigation}){
     //Retrieves the current app color scheme
-    const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+    const [colorScheme, setColorScheme] = useContext(ColorSchemeContext); 
 
     //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
         parent: {
-            height: '100%',
-            width: '100%',
+            flex: 1,
             backgroundColor: colorScheme.backgroundColor,
         },
         center: {
@@ -36,14 +37,12 @@ function Search({navigation}){
             alignItems: 'flex-start',
         },
         button: {
-            width: '100%',
+            width: 100,
+            height: 50,
             alignItems: 'center',
             justifyContent: 'center',
-            paddingVertical: 12,
-            paddingHorizontal: 32,
-            borderRadius: 0,
-            elevation: 3,
             backgroundColor: 'darkred',
+            marginTop: -50,
         },
         text: {
             fontSize: 16,
@@ -55,6 +54,13 @@ function Search({navigation}){
         screenText: {
             fontWeight: 'bold',
             color: colorScheme.textColor,
+        },
+        title:{
+            marginTop: 50,
+            fontSize: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
         }
     })
 
@@ -63,15 +69,15 @@ function Search({navigation}){
     }
     //create a button that allows the user to interact to navigate back to the home page 
     return(
-        <View style = {styles.parent}>
-            <View style = {styles.butCont}>
-                <Pressable style={styles.button} onPress={navH}>
+        <View style = { styles.parent }>
+            <View style = {{ height: 25, backgroundColor: 'red'}}></View>
+            <View style = {{ height: 100, backgroundColor: 'red', alignItems: 'center',}}>
+                <Text style = { styles.title }>Search</Text>
+            </View>
+            <Pressable style={styles.button} onPress={navH}>
                     <Text style={styles.text}> Home </Text>
-                </Pressable>
-            </View>
-            <View style = {styles.center}>
-                <Text style = {styles.screenText}>Search</Text>
-            </View>
+            </Pressable>
+            <SearchBar/>
         </View>
     );
 }
