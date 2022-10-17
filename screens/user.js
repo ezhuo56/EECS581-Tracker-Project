@@ -115,7 +115,7 @@ function User({navigation}){
                     </Pressable>
                 </View>
                 <View style = { styles.infoCont } >
-                    <Image source = { require ( './img/temp.png' ) }
+                    <Image source = { require ( '../img/temp.png' ) }
                     style = { styles.alignImg }></Image>
                     <Text style = { styles.userName }> Bob Jones </Text>
                     <Text style = { styles.email }> abc@123.gmail.com </Text>
