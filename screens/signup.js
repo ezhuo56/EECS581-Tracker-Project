@@ -11,7 +11,7 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import { React, useContext } from 'react';
+import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { ColorSchemeContext } from '../context';
 //create a function that would allow the user to navigate to the login page
@@ -49,6 +49,15 @@ function Signup({navigation}){
             elevation: 3,
             backgroundColor: 'darkred',
         },
+        input: {
+            borderWidth: 1,
+            backgroundColor: 'white',
+            padding: 8,
+            margin: 10,
+            width: 200,
+            textAlign: 'center',
+            fontWeight: 'bold',
+        },
         text: {
             fontSize: 16,
             lineHeight: 21,
@@ -61,7 +70,9 @@ function Signup({navigation}){
             color: colorScheme.textColor
         }
     })
-
+    const[newUsername, createnewUsername] = useState('')
+    const[newPassword, createnewPass] = useState('')
+    const[newPassword1, createnewPass2] = useState('')
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
@@ -70,9 +81,35 @@ function Signup({navigation}){
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <Text style = {styles.screenText}>Signup</Text>
+            
+                 <TextInput
+                 style = {styles.input}
+                 placeholder = 'Enter Username'
+                 placeholderTextColor = {styles.input.placeholderTextColor}   
+                 onChangeText={(val)=> createnewUsername(val)}
+                 />
+                     <TextInput
+                 style = {styles.input}
+                 placeholder = 'Enter Password'
+                 placeholderTextColor = {styles.input.placeholderTextColor}   
+                 onChangeText={(val)=> createnewPass(val)}
+                 />
+                <TextInput
+                 style = {styles.input}
+                 placeholder = 'Reenter Password'
+                 placeholderTextColor = {styles.input.placeholderTextColor}   
+                 onChangeText={(val)=> createnewPass2(val)}
+                 />
+            
+
+              
+                 
+              
             </View>
         </View>
+        
+
+
     );
 }
 
