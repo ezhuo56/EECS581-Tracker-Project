@@ -15,6 +15,8 @@ import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { lightColorScheme, darkColorScheme } from '../colorschemes';
 import { ColorSchemeContext } from '../context';
+import NavBar from '../components/navBar.js';
+
 //Creates a function to navigate to the user page
 function Settings({navigation}){
     //Retrieves the current app color scheme and a function to set it for the rest of the app
@@ -93,6 +95,7 @@ function Settings({navigation}){
                     changeColorScheme();
                 }}/>
             </View>
+            <NavBar/>
         </View>
     );
 }
