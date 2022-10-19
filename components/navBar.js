@@ -12,7 +12,7 @@ const NavBar = () =>{
                 <Image source = { require( '../img/homeIcon.png') } />
             </View>
             <View>
-                <Image source = { require( '../img/serachIcon.png' ) } />
+                <Image source = { require( '../img/searchIcon.png' ) } />
             </View>
         </View>
     );
