@@ -13,16 +13,24 @@
 */
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-import { ColorSchemeContext } from '../context';
+import { ColorSchemeContext, LoginContext } from '../context';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+    const [loginInfo, setLogins] = useContext(LoginContext);
 
     function navH(){
-        if(username != '' && password != '') {
-            navigation.navigate('homePage');
+        let loggedIn = false;
+        loginInfo.forEach(login => {
+            if(username == login.username && password == login.password) {
+                navigation.navigate('homePage');
+                loggedIn = true;
+            }
+        })
+        if(!loggedIn) {
+            alert("Username or password was incorrect");
         }
     }
     function navS(){
@@ -95,14 +103,14 @@ function Login({navigation}){
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <Text style = {styles.inputHeader}>Username (Any input is currently allowed)</Text>
+                <Text style = {styles.inputHeader}> Username </Text>
                 <TextInput 
                     style = {styles.input}
                     placeholder = 'Enter Username'
                     placeholderTextColor = {styles.input.placeholderTextColor}
                     onChangeText={(val) => setUsername(val)}
                 />
-                <Text style = {styles.inputHeader}>Password (Any input is currently allowed)</Text>
+                <Text style = {styles.inputHeader}> Password </Text>
                 <TextInput 
                     style = {styles.input}
                     placeholder = 'Enter Password'

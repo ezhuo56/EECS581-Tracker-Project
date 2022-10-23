@@ -13,14 +13,39 @@
 */
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-import { ColorSchemeContext } from '../context';
+import { ColorSchemeContext, LoginContext } from '../context';
 //create a function that would allow the user to navigate to the login page
 function Signup({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+    const [loginInfo, setLogins] = useContext(LoginContext);
+    const[newUsername, createnewUsername] = useState('')
+    const[newPassword, createnewPass] = useState('')
+    const[newPassword1, createnewPass2] = useState('')
+
+    function navC(){
+        navigation.navigate('loginPage');
+    }
 
     function navL(){
-        navigation.navigate('loginPage');
+        if(newPassword != newPassword1) {
+            alert("Passwords must match");
+            return;
+        }
+        else {
+            loginInfo.forEach(login => {
+                if(login.username == newUsername) {
+                    alert("Username already exists");
+                }
+                return;
+            })
+            let newLogin = {
+                'username': newUsername,
+                'password': newPassword,
+            }
+            setLogins(loginInfo.concat(newLogin));
+            navigation.navigate('loginPage');
+        }
     }
 
     //CSS style sheet for the page to make it look red with bold fonts
@@ -40,7 +65,7 @@ function Signup({navigation}){
             alignItems: 'flex-start',
         },
         button: {
-            width: '100%',
+            width: '50%',
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 12,
@@ -70,12 +95,12 @@ function Signup({navigation}){
             color: colorScheme.textColor
         }
     })
-    const[newUsername, createnewUsername] = useState('')
-    const[newPassword, createnewPass] = useState('')
-    const[newPassword1, createnewPass2] = useState('')
     return(
         <View style = {styles.parent}>
             <View style = {styles.butCont}>
+                <Pressable style={styles.button} onPress={navC}>
+                    <Text style={styles.text}> Cancel </Text>
+                </Pressable>
                 <Pressable style={styles.button} onPress={navL}>
                     <Text style={styles.text}> Signup </Text>
                 </Pressable>
@@ -85,26 +110,23 @@ function Signup({navigation}){
                  <TextInput
                  style = {styles.input}
                  placeholder = 'Enter Username'
-                 placeholderTextColor = {styles.input.placeholderTextColor}   
+                 placeholderTextColor = {styles.input.placeholderTextColor}
                  onChangeText={(val)=> createnewUsername(val)}
                  />
                      <TextInput
                  style = {styles.input}
                  placeholder = 'Enter Password'
-                 placeholderTextColor = {styles.input.placeholderTextColor}   
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 secureTextEntry={true}
                  onChangeText={(val)=> createnewPass(val)}
                  />
                 <TextInput
                  style = {styles.input}
                  placeholder = 'Reenter Password'
-                 placeholderTextColor = {styles.input.placeholderTextColor}   
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 secureTextEntry={true}
                  onChangeText={(val)=> createnewPass2(val)}
                  />
-            
-
-              
-                 
-              
             </View>
         </View>
         

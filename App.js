@@ -23,7 +23,7 @@ import Login from './screens/login';
 import Signup from './screens/signup';
 import Settings from './screens/settings';
 import {lightColorScheme, darkColorScheme} from './colorschemes';
-import { ColorSchemeContext } from './context';
+import { ColorSchemeContext, LoginContext } from './context';
 
 //create the app to export to expo website which can simulate the app on our phone when a QR is scanned
 export default function App(){
@@ -32,66 +32,70 @@ export default function App(){
   //Sets up a color scheme to be used in the rest of the app
   const [colorScheme, setColorScheme] = useState(darkColorScheme);
   const colorSchemeData = [ colorScheme, setColorScheme ]
+  const [loginInfo, setLogins] = useState([]);
+  const loginData = [ loginInfo, setLogins ]
 
 //create the login page,sign up page, home page, user page, and search page with CSS style that would style it red with bold fonts
   return(
     <ColorSchemeContext.Provider value={colorSchemeData}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen 
-            name = "loginPage" 
-            component = {Login} 
-            options = {{
-              title: 'Login',
-              headerTitleAlign: 'center',
-              headerStyle: { backgroundColor: 'red', },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' }, 
-              headerBackVisible: false,
-              }}  
-          />
-          <Stack.Screen 
-            name = "signupPage" 
-            component = {Signup} 
-            options = {{
-              title: 'Signup',
-              headerTitleAlign: 'center',
-              headerStyle: { backgroundColor: 'red', },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' }, 
-              headerBackVisible: false,
-              }}  
-          />
-          <Stack.Screen 
-            name = "homePage" 
-            component = {Home} 
-            options = {{
-              headerShown: false,
-              }}  
-            />
-          <Stack.Screen 
-            name = "userPage" 
-            component = {User}
-            options = {{
-              headerShown: false,
-              }}  
-            />
-          <Stack.Screen 
-            name = "searchPage" 
-            component = {Search} 
-            options = {{
-              headerShown: false,
-              }}  
+      <LoginContext.Provider value={loginData}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen 
+              name = "loginPage" 
+              component = {Login} 
+              options = {{
+                title: 'Login',
+                headerTitleAlign: 'center',
+                headerStyle: { backgroundColor: 'red', },
+                headerTintColor: '#fff',
+                headerTitleStyle: { fontWeight: 'bold' }, 
+                headerBackVisible: false,
+                }}  
             />
             <Stack.Screen 
-            name = "settingsPage" 
-            component = {Settings} 
-            options = {{
-              headerShown: false,
-              }}  
+              name = "signupPage" 
+              component = {Signup} 
+              options = {{
+                title: 'Signup',
+                headerTitleAlign: 'center',
+                headerStyle: { backgroundColor: 'red', },
+                headerTintColor: '#fff',
+                headerTitleStyle: { fontWeight: 'bold' }, 
+                headerBackVisible: false,
+                }}  
             />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen 
+              name = "homePage" 
+              component = {Home} 
+              options = {{
+                headerShown: false,
+                }}  
+              />
+            <Stack.Screen 
+              name = "userPage" 
+              component = {User}
+              options = {{
+                headerShown: false,
+                }}  
+              />
+            <Stack.Screen 
+              name = "searchPage" 
+              component = {Search} 
+              options = {{
+                headerShown: false,
+                }}  
+              />
+              <Stack.Screen 
+              name = "settingsPage" 
+              component = {Settings} 
+              options = {{
+                headerShown: false,
+                }}  
+              />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </LoginContext.Provider>
     </ColorSchemeContext.Provider>
   );
 }
