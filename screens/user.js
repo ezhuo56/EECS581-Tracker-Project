@@ -45,7 +45,6 @@ function User({navigation}){
             backgroundColor: colorScheme.backgroundColor,
         },  
         profileBack: {
-            alignItems: 'flex-end',
             padding: 0,
             width: '100%',
             backgroundColor: 'red',
@@ -109,6 +108,18 @@ function User({navigation}){
             width: '55%',
             height: 100,
             backgroundColor: 'grey',
+        },
+        gear: {
+            marginTop: 150,
+            width: 50,
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'crimson',
+        },
+        gearResize: {
+            width: 35,
+            height: 35,
         }
     })
 
@@ -118,6 +129,10 @@ function User({navigation}){
         <View style = { styles.parent }>
             <ScrollView>
                 <View style = { styles.profileBack } >
+                <Pressable style = { styles.gear } onPress = { navSet } >
+                        <Image source = { require ( '../img/gearIcon.png' ) }
+                        style = { styles.gearResize }></Image>
+                </Pressable>
                 </View>
                 <View style = { styles.infoCont } >
                     <Image source = { require ( '../img/temp.png' ) }
@@ -135,14 +150,6 @@ function User({navigation}){
                     </View>
                 </View>
             </ScrollView>
-            <View style = { styles.bottom } >
-                <Pressable style = { styles.resize } onPress = { navSet }>
-                    <Text style = { styles.backText } > Options </Text>
-                </Pressable>
-                <Pressable style = { styles.resize } onPress = { navL }>
-                    <Text style = { styles.backText } > Signout </Text>
-                </Pressable>
-            </View>
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
