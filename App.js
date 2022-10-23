@@ -87,12 +87,7 @@ export default function App(){
             name = "settingsPage" 
             component = {Settings} 
             options = {{
-              title: 'Settings',
-              headerTitleAlign: 'center',
-              headerStyle: { backgroundColor: 'red', },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' }, 
-              headerBackVisible: false,
+              headerShown: false,
               }}  
             />
         </Stack.Navigator>

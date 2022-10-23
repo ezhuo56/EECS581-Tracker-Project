@@ -67,6 +67,13 @@ function Settings({navigation}){
             display: 'flex',
             color: 'white',
         },
+        title:{
+            marginTop: 50,
+            fontSize: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+        }
     })
 
     function navU(){
@@ -84,6 +91,10 @@ function Settings({navigation}){
     //create buttons that would allow the user to interact with to access their user page
     return(
         <View style = {styles.parent}>
+            <View style = {{ width: '100%', height: 25, backgroundColor: 'crimson'}}></View>
+            <View style = {{ width: '100%', height: 100, backgroundColor: 'crimson', alignItems: 'center', justifyContent: 'flex-end',}}>
+                <Text style = { styles.title }>Settings</Text>
+            </View>
             <View style = {styles.butCont}>
                 <Pressable style={styles.button} onPress={navU}>
                     <Text style={styles.text}> User </Text>

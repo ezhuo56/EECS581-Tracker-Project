@@ -76,8 +76,8 @@ function Search({navigation}){
     //create a button that allows the user to interact to navigate back to the home page 
     return(
         <View style = { styles.parent }>
-            <View style = {{ height: 25, backgroundColor: 'red'}}></View>
-            <View style = {{ height: 100, backgroundColor: 'red', alignItems: 'center',}}>
+            <View style = {{ height: 25, backgroundColor: 'crimson'}}></View>
+            <View style = {{ height: 100, backgroundColor: 'crimson', alignItems: 'center',}}>
                 <Text style = { styles.title }>Search</Text>
             </View>
             <SearchBar/>
