@@ -1,44 +1,69 @@
 import { React, useContext } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable,Image} from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';
 
-const NavBar = () =>{
+function NavBar( { navUser, navHome, navSearch } ){
     return(
-        <View style = { styles.container } >
-            <View>
-            <Image source = { require( '../img/userIcon.png') } />
-            </View>
-            <View>
-                <Image source = { require( '../img/homeIcon.png') } />
-            </View>
-            <View>
-                <Image source = { require( '../img/searchIcon.png' ) } />
-            </View>
+        <View style = { stylesB.containerB } >
+            <Pressable style = { stylesB.userB } onPress = { navU } >
+                <Image source = { require( '../img/userIcon.png' ) } 
+                style = { stylesB.resizeUserB }
+                />
+            </Pressable>
+            <Pressable style = { stylesB.homeB } onPress = { navH } >
+                <Image source = { require( '../img/homeIcon.png' ) } 
+                style = { stylesB.resizeHomeB }   
+                />
+            </Pressable>
+            <Pressable style = { stylesB.searchB } onPress = { navS } >
+                <Image source = { require( '../img/searchIcon.png' ) } 
+                style = { stylesB.resizeSearchB }       
+                />
+            </Pressable>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+const stylesB = StyleSheet.create({
+    containerB: {
         flexDirection: 'row',
-        height: '25%',
+        height: 50,
         width: '100%',
+        position: 'absolute',
+        bottom: 0,
     },
-    user: {
+    resizeUserB: {
+        width: 30,
+        height: 25,
+    },
+    resizeHomeB: {
+        width: 50,
+        height: 25,
+    },
+    resizeSearchB: {
+        width: 25,
+        height: 25,
+    },
+    userB: {
         height: '100%',
         width: '33.33%',
-        backgroundColor: 'blue',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
     },
-    home: {
+    homeB: {
         height: '100%',
         width: '33.33%',
-        backgroundColor: 'red',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
     },
-    search: {
+    searchB: {
         height: '100%',
         width: '33.33%',
-        backgroundColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
     }
 });
 

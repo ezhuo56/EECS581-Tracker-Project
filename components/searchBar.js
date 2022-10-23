@@ -37,7 +37,7 @@ const SearchBar = ( props )  =>{
             />
             <View style = {{ alignItems: 'flex-end'}} >
             <Pressable style = { styles.clear }  onPress = { clearOut } >
-                <Text style = {{ color: 'white', fontWeight: 'bold', }}> X </Text>
+                <Text style = {{ color: 'Black', fontWeight: 'bold', }}> X </Text>
             </Pressable>
             </View>
             <Text> {textIn} </Text>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         width: 30,
         height: 30,
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
     }
