@@ -47,7 +47,7 @@ function User({navigation}){
         profileBack: {
             padding: 0,
             width: '100%',
-            backgroundColor: 'red',
+            backgroundColor: 'crimson',
             height: 150,
         },
         infoCont: {
