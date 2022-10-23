@@ -3,7 +3,7 @@
   Description: Makes the user page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/16/2022
+  Date revised: 10/22/2022
   Preconditions: Importing react components 
   Postconditions: Creates the user page from the imported components provided by react native
   Errors: no errors
@@ -15,19 +15,27 @@ import {React, useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { ColorSchemeContext } from '../context';
+import NavBar from '../components/navBar.js';
+
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
+    function navU(){
+        navigation.navigate('userPage');
+    }
     function navH(){
         navigation.navigate('homePage');
     }
+    function navS(){
+        navigation.navigate('searchPage');
+    }
+    function navSet(){
+        navigation.navigate('settingsPage');
+    }
     function navL(){
         navigation.navigate('loginPage');
-    }
-    function navS(){
-        navigation.navigate('settingsPage');
     }
 
     //CSS style sheet for the page to make it look red with bold fonts
@@ -79,7 +87,7 @@ function User({navigation}){
         bottom: {
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            marginBottom: 10,
+            marginBottom: 50,
             backgroundColor: 'red',
         },
         resize: {
@@ -110,9 +118,6 @@ function User({navigation}){
         <View style = { styles.parent }>
             <ScrollView>
                 <View style = { styles.profileBack } >
-                    <Pressable style = { styles.backBut } onPress = { navH }>
-                    <Text style = { styles.backText } > Home </Text>
-                    </Pressable>
                 </View>
                 <View style = { styles.infoCont } >
                     <Image source = { require ( '../img/temp.png' ) }
@@ -131,15 +136,75 @@ function User({navigation}){
                 </View>
             </ScrollView>
             <View style = { styles.bottom } >
-                <Pressable style = { styles.resize } onPress = { navS }>
+                <Pressable style = { styles.resize } onPress = { navSet }>
                     <Text style = { styles.backText } > Options </Text>
                 </Pressable>
                 <Pressable style = { styles.resize } onPress = { navL }>
                     <Text style = { styles.backText } > Signout </Text>
                 </Pressable>
             </View>
+            <View style = { navBar.containerB } >
+                <Pressable style = { navBar.userB } onPress = { navU } >
+                    <Image source = { require( '../img/userIcon.png' ) } 
+                    style = { navBar.resizeUserB }
+                    />
+                </Pressable>
+                <Pressable style = { navBar.homeB } onPress = { navH } >
+                    <Image source = { require( '../img/homeIcon.png' ) } 
+                    style = { navBar.resizeHomeB }   
+                    />
+                </Pressable>
+                <Pressable style = { navBar.searchB } onPress = { navS } >
+                    <Image source = { require( '../img/searchIcon.png' ) } 
+                    style = { navBar.resizeSearchB }       
+                    />
+                </Pressable>
+            </View>
         </View>
     );
 }
+
+const navBar = StyleSheet.create({
+    containerB: {
+        flexDirection: 'row',
+        height: 50,
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+    },
+    resizeUserB: {
+        width: 30,
+        height: 25,
+    },
+    resizeHomeB: {
+        width: 50,
+        height: 25,
+    },
+    resizeSearchB: {
+        width: 25,
+        height: 25,
+    },
+    userB: {
+        height: '100%',
+        width: '33.33%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightblue',
+    },
+    homeB: {
+        height: '100%',
+        width: '33.33%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+    },
+    searchB: {
+        height: '100%',
+        width: '33.33%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+    }
+});
 
 export default User

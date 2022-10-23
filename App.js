@@ -3,7 +3,7 @@
   Description: Creates the app for the user to see with buttons to interact with the different screens being the login page, sign up page, home page, user page, and the search page.
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/9/2022
-  Date revised: 10/12/2022
+  Date revised: 10/22/2022
   Preconditions: Importing react components 
   Postconditions: Creates app from imported components
   Errors: no errors
@@ -66,12 +66,7 @@ export default function App(){
             name = "homePage" 
             component = {Home} 
             options = {{
-              title: 'Home',
-              headerTitleAlign: 'center',
-              headerStyle: { backgroundColor: 'red', },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' }, 
-              headerBackVisible: false,
+              headerShown: false,
               }}  
             />
           <Stack.Screen 
@@ -79,12 +74,6 @@ export default function App(){
             component = {User}
             options = {{
               headerShown: false,
-              title: 'Profile',
-              headerTitleAlign: 'center',
-              headerStyle: { backgroundColor: 'red', },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' }, 
-              headerBackVisible: false,
               }}  
             />
           <Stack.Screen 
@@ -92,12 +81,6 @@ export default function App(){
             component = {Search} 
             options = {{
               headerShown: false,
-              title: 'Search',
-              headerTitleAlign: 'center',
-              headerStyle: { backgroundColor: 'red', },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' }, 
-              headerBackVisible: false,
               }}  
             />
             <Stack.Screen 
