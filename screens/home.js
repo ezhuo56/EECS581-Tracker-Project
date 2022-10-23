@@ -11,11 +11,43 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import { React, useContext } from 'react';
+import { React, useContext, useEffect } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';
+import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
+
+// IDs for our project
+const client_id = 'dc95aa564add4e22aca854acb29a5565';
+const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
+// scopes to get from the spotify API
+const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
+
+// websites to get spotify auth
+    const discovery = {
+        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+        tokenEndpoint: 'https://accounts.spotify.com/api/token',
+    };
+
 //allows the user to navigate to either the user page or the search page from the home page
 function Home({navigation}){
+    // send an authorization request to spotify servers
+    const [request,response,promptAsync] = useAuthRequest({
+        responseType: ResponseType.Token,
+        clientId: client_id,
+        clientSecret: secret_id,
+        scopes: scopes_arr,
+        usePKCE: false,
+        redirectUri: makeRedirectUri({scheme:'EECS581-Tracker-Project'}),
+    },discovery);
+
+
+    useEffect(() => {
+        if(response?.type === 'success'){
+            const{access_token} = response.params;
+            console.log('access token:',access_token);
+        }
+    },[response])
+
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
@@ -67,14 +99,24 @@ function Home({navigation}){
         screenText: {
             fontWeight: 'bold',
             color: colorScheme.textColor
-        }
+        },
+        spotifyButton: {
+            marginTop: '100%',
+            marginBottom: '100%',
+            width: '60%',
+            height: '5%',
+            backgroundColor: '#1db954',
+            alignItems: 'center',
+            display: 'flex',
+            color: 'white',
+        },
     })
 
 //allows the user to click on either the userpage or searchpage to navigate to those pages
     return(
         <View style = {styles.parent}>
-            <View style = {styles.center}>
-                <Text style={styles.screenText}>Home</Text>
+            <View style={styles.spotifyButton}>
+                <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
             </View>
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
@@ -92,6 +134,7 @@ function Home({navigation}){
                     style = { navBar.resizeSearchB }       
                     />
                 </Pressable>
+            
             </View>
         </View>
     );
