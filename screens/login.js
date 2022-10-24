@@ -13,18 +13,20 @@
 */
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-import { ColorSchemeContext, LoginContext } from '../context';
+import { ColorSchemeContext, LoginContext, UserContext } from '../context';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
+    const [user, setUser] = useContext(UserContext);
 
     function navH(){
         let loggedIn = false;
         loginInfo.forEach(login => {
             if(username == login.username && password == login.password) {
+                setUser(login);
                 navigation.navigate('homePage');
                 loggedIn = true;
             }

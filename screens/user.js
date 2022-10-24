@@ -14,13 +14,14 @@
 import {React, useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { ColorSchemeContext } from '../context';
+import { ColorSchemeContext, UserContext } from '../context';
 import NavBar from '../components/navBar.js';
 
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+    const [user, setUser] = useContext(UserContext);
 
     function navU(){
         navigation.navigate('userPage');
@@ -137,7 +138,7 @@ function User({navigation}){
                 <View style = { styles.infoCont } >
                     <Image source = { require ( '../img/temp.png' ) }
                     style = { styles.alignImg }></Image>
-                    <Text style = { styles.userName }> Bob Jones </Text>
+                    <Text style = { styles.userName }> {user.firstname + ' ' + user.lastname} </Text>
                     <Text style = { styles.email }> abc@123.gmail.com </Text>
                     <View style = { styles.infoBack } >
                     </View>
