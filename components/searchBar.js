@@ -11,8 +11,14 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import {View, TextInput, Text, StyleSheet, Pressable } from "react-native";
+import {View, TextInput, Text, StyleSheet, Pressable,FlatList } from "react-native";
 import {React, useState} from "react"
+const data = [
+    { id: '1', title: 'Artist1' },
+    { id: '2', title: 'Artist2' },
+    { id: '3', title: 'Artist3' },
+    { id: '4', title: 'Artist4' }
+  ];
 
 //Creates a search bar that returns the value inside of it
 //This value will probably be used later in an actual search engine
@@ -26,7 +32,23 @@ const SearchBar = ( props )  =>{
     function clearOut (){
         setTextIn( '' );
     }
-
+const handleSearch = text =>
+{
+    const formattedQuery = text.toLowerCase();
+    const filteredData = filter(fullData, user => {
+        return contains(user, formattedQuery);
+    });
+    setData(filteredData);
+    setQuery(text);
+}
+const contains = ({ musicTitle }, query) => {
+    const { title } = name;
+    if (title.includes(query)) {
+        return true;
+      }
+    
+      return false;
+    };
     return(
         <View style = { styles.container }>
             <TextInput
@@ -41,7 +63,16 @@ const SearchBar = ( props )  =>{
             </Pressable>
             </View>
             <Text> {textIn} </Text>
-        </View>
+            <FlatList
+        data={data}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.listItem}>
+            <Text style={styles.listItemText}>{item.title}</Text>
+          </View>
+        )}
+      />
+    </View>
     );
 }
 
