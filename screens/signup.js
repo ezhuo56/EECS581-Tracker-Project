@@ -19,6 +19,8 @@ function Signup({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
+    const[firstname, creatFirstname] = useState('')
+    const[lastname, creatLastname] = useState('')
     const[newUsername, createnewUsername] = useState('')
     const[newPassword, createnewPass] = useState('')
     const[newPassword1, createnewPass2] = useState('')
@@ -42,6 +44,8 @@ function Signup({navigation}){
             let newLogin = {
                 'username': newUsername,
                 'password': newPassword,
+                'firstname': firstname,
+                'lastname': lastname,
             }
             setLogins(loginInfo.concat(newLogin));
             navigation.navigate('loginPage');
@@ -106,14 +110,25 @@ function Signup({navigation}){
                 </Pressable>
             </View>
             <View style = {styles.center}>
-            
+                <TextInput
+                 style = {styles.input}
+                 placeholder = 'First Name'
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 onChangeText={(val)=> creatFirstname(val)}
+                 />
+                 <TextInput
+                 style = {styles.input}
+                 placeholder = 'Last Name'
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 onChangeText={(val)=> creatLastname(val)}
+                 />
                  <TextInput
                  style = {styles.input}
                  placeholder = 'Enter Username'
                  placeholderTextColor = {styles.input.placeholderTextColor}
                  onChangeText={(val)=> createnewUsername(val)}
                  />
-                     <TextInput
+                <TextInput
                  style = {styles.input}
                  placeholder = 'Enter Password'
                  placeholderTextColor = {styles.input.placeholderTextColor}
