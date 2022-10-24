@@ -14,6 +14,7 @@
 import {React, useContext, useState} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';
+
 import SearchBar from "../components/searchBar";
 
 //create a function that would allow the user to navigate to the home page 
