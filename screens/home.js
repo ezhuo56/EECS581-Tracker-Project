@@ -11,22 +11,26 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import { React, useContext, useEffect } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
+import { React, useContext, useEffect, useState } from 'react';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image, ScrollView } from 'react-native';
 import { ColorSchemeContext } from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
+import axios from 'axios';
 
 // IDs for our project
 const client_id = 'dc95aa564add4e22aca854acb29a5565';
 const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 // scopes to get from the spotify API
 const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
-
+var accessToken;
+var gotToken = false;
 // websites to get spotify auth
     const discovery = {
         authorizationEndpoint: 'https://accounts.spotify.com/authorize',
         tokenEndpoint: 'https://accounts.spotify.com/api/token',
     };
+
+
 
 //allows the user to navigate to either the user page or the search page from the home page
 function Home({navigation}){
@@ -40,11 +44,35 @@ function Home({navigation}){
         redirectUri: makeRedirectUri({scheme:'EECS581-Tracker-Project'}),
     },discovery);
 
+    const GetFollowers = () => {
+        const [artists,setArtists] = useState([]);
+        const [next,setNext] = useState("null");
+        const [getNext,setGetNext] = useState(false);
+        
+        const handleGetFollowers = () => {
+            axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=50",{
+                headers: {
+                    Authorization: "Bearer " + accessToken,
+                }
+            }).then(response => {
+                setNext(response.data.artists.next);
+                for(var i=0; i < (response.data.artists.items).length; i++) {
+                    setArtists(current => [...current, response.data.artists.items[i].name]);
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+            console.log(artists);
+        }
 
+        return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
+    }
     useEffect(() => {
         if(response?.type === 'success'){
             const{access_token} = response.params;
-            console.log('access token:',access_token);
+            accessToken = access_token;
+            gotToken = true;
+            console.log('access token:',accessToken);
         }
     },[response])
 
@@ -101,8 +129,8 @@ function Home({navigation}){
             color: colorScheme.textColor
         },
         spotifyButton: {
-            marginTop: '100%',
-            marginBottom: '100%',
+            marginTop: 6,
+            marginBottom: 6,
             width: '60%',
             height: '5%',
             backgroundColor: '#1db954',
@@ -110,14 +138,90 @@ function Home({navigation}){
             display: 'flex',
             color: 'white',
         },
+        screenButton: {
+            marginBottom: 60,
+            marginTop: 10,
+            width: '60%',
+            height: '5%',
+            backgroundColor: 'black',
+            alignItems: 'center',
+            display: 'flex',
+            color: 'white',
+        },
+        feed: {
+            marginBottom: 4,
+            marginTop: 10,
+            borderWidth: 2,
+            height: '12%',
+            width: '95%',
+            borderRadius: 10,
+
+        },
+        textHeader: {
+            fontSize: 24,
+            padding: 5,
+            textAlign: 'center',
+        },
+        textBody: {
+            fontWeight: 'bold',
+            fontSize: 24,
+            padding: 5,
+            textAlign: 'center',
+        },
+        scroll: {
+            width: '90%',
+        },
     })
 
 //allows the user to click on either the userpage or searchpage to navigate to those pages
     return(
         <View style = {styles.parent}>
-            <View style={styles.spotifyButton}>
+            {/* <View style={styles.spotifyButton}>
                 <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
             </View>
+            <GetFollowers /> */}
+            <ScrollView style={styles.scroll}>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+                <View style={styles.feed}>
+                    <Text style={styles.textHeader}>Started Following:</Text>
+                    <Text style={styles.textBody}>Artist</Text>
+                </View>
+            </ScrollView>
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
