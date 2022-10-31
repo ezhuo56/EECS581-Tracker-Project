@@ -44,8 +44,12 @@ function Home({navigation}){
         redirectUri: makeRedirectUri({scheme:'EECS581-Tracker-Project'}),
     },discovery);
 
+    const [artists,setArtists] = useState([]);
+
+    const [ShouldShow,setShow] = useState(true);
+
     const GetFollowers = () => {
-        const [artists,setArtists] = useState([]);
+        
         const [next,setNext] = useState("null");
         const [getNext,setGetNext] = useState(false);
         
@@ -67,6 +71,28 @@ function Home({navigation}){
 
         return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
     }
+
+    const PrintFollowers = () => {
+        if(artists.length != 0){
+            setShow(false);
+            return (
+                <>
+                    <ScrollView style={styles.scroll}>
+                        {artists.map((data,i) => (
+                            <View key={i} style={styles.feed}>
+                                <Text style={styles.textHeader}>Started Following:</Text>
+                                <Text style={styles.textBody}>{artists[i]}</Text>
+                            </View>
+                        ))}
+                    </ScrollView>
+                </>
+            )
+        }
+        return ;
+    }
+
+
+
     useEffect(() => {
         if(response?.type === 'success'){
             const{access_token} = response.params;
@@ -76,6 +102,19 @@ function Home({navigation}){
         }
     },[response])
 
+    const ShowButtons = () => {
+            if(ShouldShow){
+                return(
+                    <>
+                        <View style={styles.spotifyButton}>
+                            <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
+                        </View>
+                        <GetFollowers />
+                    </>
+                )
+            }
+            return null;
+    }
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
@@ -152,7 +191,7 @@ function Home({navigation}){
             marginBottom: 4,
             marginTop: 10,
             borderWidth: 2,
-            height: '12%',
+            height: '3%',
             width: '95%',
             borderRadius: 10,
 
@@ -176,52 +215,8 @@ function Home({navigation}){
 //allows the user to click on either the userpage or searchpage to navigate to those pages
     return(
         <View style = {styles.parent}>
-            {/* <View style={styles.spotifyButton}>
-                <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
-            </View>
-            <GetFollowers /> */}
-            <ScrollView style={styles.scroll}>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-                <View style={styles.feed}>
-                    <Text style={styles.textHeader}>Started Following:</Text>
-                    <Text style={styles.textBody}>Artist</Text>
-                </View>
-            </ScrollView>
+            <ShowButtons />
+            <PrintFollowers />
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
