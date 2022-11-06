@@ -55,12 +55,7 @@ export default function App(){
                 name = "signupPage" 
                 component = {Signup} 
                 options = {{
-                  title: 'Signup',
-                  headerTitleAlign: 'center',
-                  headerStyle: { backgroundColor: 'red', },
-                  headerTintColor: '#fff',
-                  headerTitleStyle: { fontWeight: 'bold' }, 
-                  headerBackVisible: false,
+                  headerShown: false,
                   }}  
               />
               <Stack.Screen 

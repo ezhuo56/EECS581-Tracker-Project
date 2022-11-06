@@ -21,25 +21,35 @@ function Settings({navigation}){
     //Retrieves the current app color scheme and a function to set it for the rest of the app
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
+    function navU(){
+        navigation.navigate('userPage', {styles: styles});
+    }
+
+    function navL(){
+        navigation.navigate('loginPage');
+    }
+
+    //Function to change the color scheme of the whole app
+    function changeColorScheme() {
+        if(colorScheme.darkMode) {
+            setColorScheme(lightColorScheme);
+        }
+        else {
+            setColorScheme(darkColorScheme);
+        }
+    }
+
     //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
             width: '100%',
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: colorScheme.backgroundColor,
         },
         center: {
             flex: 1,
             alignItems: 'center',
             color: colorScheme.textColor,
-        },
-        butCont: {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
         },
         button: {
             width: '100%',
@@ -59,8 +69,6 @@ function Settings({navigation}){
             color: 'white',
         },
         screenButton: {
-            marginBottom: '100%',
-            width: '60%',
             height: '5%',
             backgroundColor: 'black',
             alignItems: 'center',
@@ -76,22 +84,9 @@ function Settings({navigation}){
         }
     })
 
-    function navU(){
-        navigation.navigate('userPage', {styles: styles});
-    }
-    //Function to change the color scheme of the whole app
-    function changeColorScheme() {
-        if(colorScheme.darkMode) {
-            setColorScheme(lightColorScheme);
-        }
-        else {
-            setColorScheme(darkColorScheme);
-        }
-    }
     //create buttons that would allow the user to interact with to access their user page
     return(
         <View style = {styles.parent}>
-            <View style = {{ width: '100%', height: 25, backgroundColor: 'crimson'}}></View>
             <View style = {{ width: '100%', height: 100, backgroundColor: 'crimson', alignItems: 'center', justifyContent: 'flex-end',}}>
                 <Text style = { styles.title }>Settings</Text>
             </View>
@@ -100,6 +95,9 @@ function Settings({navigation}){
                     <Text style={styles.text}> User </Text>
                 </Pressable>
             </View>
+            <Pressable style = { styles.button } onPress={navL}>
+                <Text style={styles.text}> Signout </Text>
+            </Pressable>
             <View style = {styles.screenButton}>
                 <Button title="Switch Color Schemes" color = 'white' onPress={() => {
                     changeColorScheme();
