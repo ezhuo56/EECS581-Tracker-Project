@@ -3,7 +3,7 @@
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 10/16/2022
+  Date revised: 11/1/2022
   Preconditions: None
   Postconditions: None
   Errors: no errors
@@ -13,6 +13,7 @@
 */
 import {View, TextInput, Text, StyleSheet, Pressable,FlatList } from "react-native";
 import {React, useState} from "react"
+//create a temporary list of artist to search from
 const data = [
     { id: '1', title: 'Artist1' },
     { id: '2', title: 'Artist2' },
