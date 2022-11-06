@@ -22,16 +22,9 @@ function Signup({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
-
-    //const[firstname, creatFirstname] = useState('')
-    //const[lastname, creatLastname] = useState('')
-    //const[newUsername, createnewUsername] = useState('')
-
     const[ email, setEmail ] = useState('');
     const[ password, setPassword ] = useState('');
-
-    //const[newPassword, createnewPass] = useState('')
-    //const[newPassword1, createnewPass2] = useState('')
+    const[ password2, setPassword2 ] = useState('');
 
     function handleSignUp(){
         createUserWithEmailAndPassword( auth, email, password )
@@ -43,32 +36,16 @@ function Signup({navigation}){
         });
     }
 
-    function navC(){
-        navigation.navigate('loginPage');
+    function checkUser(){
+        if( password == password2 ){
+            handleSignUp();
+            navL();
+        } else {
+
+        }
     }
 
     function navL(){
-        /*if(newPassword != newPassword1) {
-            alert("Passwords must match");
-            return;
-        }
-        else {
-            loginInfo.forEach(login => {
-                if(login.username == newUsername) {
-                    alert("Username already exists");
-                }
-                return;
-            })
-            let newLogin = {
-                'username': newUsername,
-                'password': newPassword,
-                'firstname': firstname,
-                'lastname': lastname,
-            }
-            setLogins(loginInfo.concat(newLogin));
-            navigation.navigate('loginPage');
-        }*/
-        handleSignUp();
         navigation.navigate('loginPage');
     }
 
@@ -77,35 +54,21 @@ function Signup({navigation}){
         parent: {
             height: '100%',
             width: '100%',
+            alignItems: 'center',
             backgroundColor: colorScheme.backgroundColor,
         },
         center: {
             flex: 1,
-            alignItems: 'center'
-        },
-        butCont: {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-        },
-        button: {
-            width: '50%',
-            alignItems: 'center',
             justifyContent: 'center',
-            paddingVertical: 12,
-            paddingHorizontal: 32,
-            borderRadius: 0,
-            elevation: 3,
-            backgroundColor: 'darkred',
+            alignItems: 'center'
         },
         input: {
             borderWidth: 1,
+            borderRadius: 5,
             backgroundColor: 'white',
             padding: 8,
             margin: 10,
             width: 200,
-            textAlign: 'center',
-            fontWeight: 'bold',
         },
         text: {
             fontSize: 16,
@@ -117,18 +80,28 @@ function Signup({navigation}){
         screenText: {
             fontWeight: 'bold',
             color: colorScheme.textColor
+        },
+        signupBut: {
+            backgroundColor: 'crimson',
+            borderRadius: 5,
+            width: 100,
+            height: 25,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 10,
+        },
+        signupT: {
+            color: 'white',
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        cancel: {
+            marginTop: 25,
+
         }
     })
     return(
         <View style = {styles.parent}>
-            <View style = {styles.butCont}>
-                <Pressable style={styles.button} onPress={navC}>
-                    <Text style={styles.text}> Cancel </Text>
-                </Pressable>
-                <Pressable style={styles.button} onPress={ navL }>
-                    <Text style={styles.text}> Signup </Text>
-                </Pressable>
-            </View>
             <View style = {styles.center}>
                  <TextInput
                  style = {styles.input}
@@ -143,6 +116,19 @@ function Signup({navigation}){
                  secureTextEntry={true}
                  onChangeText={(val)=> setPassword(val)}
                  />
+                 <TextInput
+                 style = {styles.input}
+                 placeholder = 'Re-enter Password'
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 secureTextEntry={true}
+                 onChangeText={(val)=> setPassword2(val)}
+                 />
+                <Pressable style = { styles.signupBut } onPress = { checkUser }>
+                    <Text style = { styles.signupT } > Signup </Text>
+                </Pressable>
+                <Pressable style = { styles.cancel } onPress = { navL }>
+                    <Text> Cancel </Text>
+                </Pressable>
             </View>
         </View>
         
