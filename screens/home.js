@@ -18,7 +18,8 @@ import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 
 // IDs for our project
- //Removed and encrypted to Github Repostitory
+const client_id = 'dc95aa564add4e22aca854acb29a5565';
+const secret_id = process.env.spotify_api_secret_id;
 // scopes to get from the spotify API
 const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
 var accessToken;
