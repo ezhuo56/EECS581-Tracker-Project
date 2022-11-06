@@ -12,8 +12,10 @@
   any known faults: no known faults
 */
 import { React, useState, useContext } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext } from '../context';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
@@ -22,73 +24,77 @@ function Login({navigation}){
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
 
-    function navH(){
-        let loggedIn = false;
-        loginInfo.forEach(login => {
-            if(username == login.username && password == login.password) {
-                setUser(login);
-                navigation.navigate('homePage');
-                loggedIn = true;
-            }
+    function handleLog(){
+        signInWithEmailAndPassword( auth, email, password )
+        .then( ( re ) => {
+            navH();
         })
-        if(!loggedIn) {
-            alert("Username or password was incorrect");
-        }
+        .catch( ( re ) => {
+            console.log( re );
+        })
     }
+
+    function navH(){
+        navigation.navigate('homePage');
+    }
+
     function navS(){
         navigation.navigate('signupPage');
     }
 
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
             width: '100%',
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: colorScheme.backgroundColor,
         },
         center: {
             flex: 1,
             alignItems: 'center',
         },
-        butCont: {
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-        },
-        button: {
-            width: '50%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingVertical: 12,
-            paddingHorizontal: 32,
-            borderRadius: 0,
-            elevation: 3,
-            backgroundColor: 'darkred',
-        },
-        text: {
-            fontSize: 16,
-            lineHeight: 21,
-            fontWeight: 'bold',
-            letterSpacing: 0.25,
-            color: 'white',
-        },
         input: {
             borderWidth: 1,
+            borderRadius: 5,
             backgroundColor: 'white',
-            padding: 8,
-            margin: 10,
-            width: 200,
-            textAlign: 'center',
-            fontWeight: 'bold',
+            padding: 5,
+            margin: 5,
+            width: 300,
         },
-        inputHeader: {
+        loginBut: {
+            width: 150,
+            height: 35,
+            marginTop: 25,
+            borderRadius: 5,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'darkred',
+        },
+        signupBut: {
+            marginTop: 25,
+            alignItems: 'center',
+        },
+        textL: {
             fontWeight: 'bold',
-            color: colorScheme.textColor
+            color: 'white',
+            fontSize: 16,
+        },
+        textS: {
+            fontWeight: 'bold',
+            color: 'blue',  
+            fontSize: 12,
+        },
+        iconCont: {
+            height: '45%',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        Icon: {
+            width: 150,
+            height: 150,
         }
     })
 
@@ -96,30 +102,31 @@ function Login({navigation}){
     //Also creates two text inputs, one for a username and one for a password. The password utilizes secure text entry to hide the text
     return(
         <View style = {styles.parent}>
-            <View style = {styles.butCont}>
-                <Pressable style={styles.button} onPress={navH}>
-                    <Text style={styles.text}> Login </Text>
-                </Pressable>
-                <Pressable style={styles.button} onPress={navS}>
-                    <Text style={styles.text}> Signup </Text>
-                </Pressable>
+            <View style = { styles.iconCont }>
+                <Image source = { require ( '../img/BigBops.png' ) }
+                       style = { styles.Icon }></Image>
             </View>
             <View style = {styles.center}>
-                <Text style = {styles.inputHeader}> Username </Text>
                 <TextInput 
                     style = {styles.input}
-                    placeholder = 'Enter Username'
+                    placeholder = 'Email'
                     placeholderTextColor = {styles.input.placeholderTextColor}
-                    onChangeText={(val) => setUsername(val)}
+                    onChangeText={(val) => setEmail(val)}
                 />
-                <Text style = {styles.inputHeader}> Password </Text>
                 <TextInput 
                     style = {styles.input}
-                    placeholder = 'Enter Password'
+                    placeholder = 'Password'
                     placeholderTextColor = {styles.input.placeholderTextColor}
                     secureTextEntry={true}
                     onChangeText={(val) => setPassword(val)}
                 />
+                <Pressable style = { styles.loginBut } onPress = { handleLog }>
+                    <Text style = { styles.textL }> Login </Text>
+                </Pressable>
+                <Pressable style = {styles.signupBut } onPress = { navS } >
+                    <Text style = { styles.textS }> Don't have a account?</Text>
+                    <Text style = { styles.textS }> Signup </Text>
+                </Pressable>
             </View>
         </View>
     );
