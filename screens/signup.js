@@ -3,7 +3,7 @@
   Description: Makes the signup page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/12/2022
+  Date revised: 11/6/2022
   Preconditions: Importing react components 
   Postconditions: Creates the signup page from the imported components provided by react native
   Errors: no errors
@@ -14,23 +14,41 @@
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { ColorSchemeContext, LoginContext } from '../context';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+
 //create a function that would allow the user to navigate to the login page
 function Signup({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
-    const[firstname, creatFirstname] = useState('')
-    const[lastname, creatLastname] = useState('')
-    const[newUsername, createnewUsername] = useState('')
-    const[newPassword, createnewPass] = useState('')
-    const[newPassword1, createnewPass2] = useState('')
+
+    //const[firstname, creatFirstname] = useState('')
+    //const[lastname, creatLastname] = useState('')
+    //const[newUsername, createnewUsername] = useState('')
+
+    const[ email, setEmail ] = useState('');
+    const[ password, setPassword ] = useState('');
+
+    //const[newPassword, createnewPass] = useState('')
+    //const[newPassword1, createnewPass2] = useState('')
+
+    function handleSignUp(){
+        createUserWithEmailAndPassword( auth, email, password )
+        .then( ( re ) => {
+            console.log( re );
+        })
+        .catch( ( re ) => {
+            console.log( re );
+        });
+    }
 
     function navC(){
         navigation.navigate('loginPage');
     }
 
     function navL(){
-        if(newPassword != newPassword1) {
+        /*if(newPassword != newPassword1) {
             alert("Passwords must match");
             return;
         }
@@ -49,7 +67,9 @@ function Signup({navigation}){
             }
             setLogins(loginInfo.concat(newLogin));
             navigation.navigate('loginPage');
-        }
+        }*/
+        handleSignUp();
+        navigation.navigate('loginPage');
     }
 
     //CSS style sheet for the page to make it look red with bold fonts
@@ -105,42 +125,23 @@ function Signup({navigation}){
                 <Pressable style={styles.button} onPress={navC}>
                     <Text style={styles.text}> Cancel </Text>
                 </Pressable>
-                <Pressable style={styles.button} onPress={navL}>
+                <Pressable style={styles.button} onPress={ navL }>
                     <Text style={styles.text}> Signup </Text>
                 </Pressable>
             </View>
             <View style = {styles.center}>
-                <TextInput
-                 style = {styles.input}
-                 placeholder = 'First Name'
-                 placeholderTextColor = {styles.input.placeholderTextColor}
-                 onChangeText={(val)=> creatFirstname(val)}
-                 />
                  <TextInput
                  style = {styles.input}
-                 placeholder = 'Last Name'
+                 placeholder = 'Email'
                  placeholderTextColor = {styles.input.placeholderTextColor}
-                 onChangeText={(val)=> creatLastname(val)}
-                 />
-                 <TextInput
-                 style = {styles.input}
-                 placeholder = 'Enter Username'
-                 placeholderTextColor = {styles.input.placeholderTextColor}
-                 onChangeText={(val)=> createnewUsername(val)}
+                 onChangeText={(val)=> setEmail(val)}
                  />
                 <TextInput
                  style = {styles.input}
                  placeholder = 'Enter Password'
                  placeholderTextColor = {styles.input.placeholderTextColor}
                  secureTextEntry={true}
-                 onChangeText={(val)=> createnewPass(val)}
-                 />
-                <TextInput
-                 style = {styles.input}
-                 placeholder = 'Reenter Password'
-                 placeholderTextColor = {styles.input.placeholderTextColor}
-                 secureTextEntry={true}
-                 onChangeText={(val)=> createnewPass2(val)}
+                 onChangeText={(val)=> setPassword(val)}
                  />
             </View>
         </View>
@@ -149,5 +150,25 @@ function Signup({navigation}){
 
     );
 }
+
+/*<TextInput
+style = {styles.input}
+placeholder = 'First Name'
+placeholderTextColor = {styles.input.placeholderTextColor}
+onChangeText={(val)=> creatFirstname(val)}
+/> 
+<TextInput
+style = {styles.input}
+placeholder = 'Last Name'
+placeholderTextColor = {styles.input.placeholderTextColor}
+onChangeText={(val)=> creatLastname(val)}
+/> 
+<TextInput
+style = {styles.input}
+placeholder = 'Reenter Password'
+placeholderTextColor = {styles.input.placeholderTextColor}
+secureTextEntry={true}
+onChangeText={(val)=> createnewPass2(val)}
+/>*/
 
 export default Signup
