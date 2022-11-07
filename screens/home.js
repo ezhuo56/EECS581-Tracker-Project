@@ -19,7 +19,7 @@ import axios from 'axios';
 
 // IDs for our project
 const client_id = 'dc95aa564add4e22aca854acb29a5565';
-const secret_id = process.env.spotify_api_secret_id;
+const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 // scopes to get from the spotify API
 const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
 var accessToken;
