@@ -3,7 +3,7 @@
   Description: Makes the home page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
-  Date revised: 10/22/2022
+  Date revised: 11/5/2022
   Preconditions: Importing react components 
   Postconditions: Creates the homepage from the imported components
   Errors: no errors

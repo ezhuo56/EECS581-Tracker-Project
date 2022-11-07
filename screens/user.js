@@ -171,7 +171,7 @@ function User({navigation}){
         </View>
     );
 }
-
+//style sheet for the app
 const navBar = StyleSheet.create({
     containerB: {
         flexDirection: 'row',
