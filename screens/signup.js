@@ -28,20 +28,33 @@ function Signup({navigation}){
 
     function handleSignUp(){
         createUserWithEmailAndPassword( auth, email, password )
-        .then( ( re ) => {
-            console.log( re );
-        })
-        .catch( ( re ) => {
-            console.log( re );
-        });
+            .then( ( re ) => {
+                console.log( re );
+                navL();
+            })
+            .catch( ( re ) => {
+                console.log( re );
+                errorCode = re.code;
+                if(errorCode == 'auth/email-already-in-use') {
+                    alert("The email provided is already in use")
+                }
+                else if(errorCode == 'auth/invalid-email') {
+                    alert("The email provided is invalid")
+                }
+                else if(errorCode == 'auth/weak-password') {
+                    alert("The password provided is too weak (Must be at least 6 characters long)")
+                }
+                else {
+                    alert("An error occured when creating your account")
+                }
+            });
     }
 
     function checkUser(){
         if( password == password2 ){
             handleSignUp();
-            navL();
         } else {
-
+            alert("The passwords provided must match")
         }
     }
 
