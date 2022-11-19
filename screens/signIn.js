@@ -11,6 +11,7 @@
   invariants: no invariants
   any known faults: no known faults
 */
+/*
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { ColorSchemeContext, LoginContext } from '../context';
@@ -26,33 +27,38 @@ function SignIn({navigation}){
     const[ password, setPassword ] = useState('');
     const[ password2, setPassword2 ] = useState('');
 
-    function handleSignUp(){
-        createUserWithEmailAndPassword( auth, email, password )
-            .then( ( re ) => {
-                console.log( re );
+    function handleSignIn(){
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log( userCredential );
                 navL();
-            })
-            .catch( ( re ) => {
-                console.log( re );
-                errorCode = re.code;
-                if(errorCode == 'auth/email-already-in-use') {
-                    alert("The email provided is already in use")
-                }
-                else if(errorCode == 'auth/invalid-email') {
-                    alert("The email provided is invalid")
-                }
-                else if(errorCode == 'auth/weak-password') {
-                    alert("The password provided is too weak (Must be at least 6 characters long)")
-                }
-                else {
-                    alert("An error occured when creating your account")
-                }
-            });
+                // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log( re );
+            errorCode = re.code;
+            if(errorCode == 'auth/email-already-in-use') {
+                alert("The email provided is already in use")
+            }
+            else if(errorCode == 'auth/invalid-email') {
+                alert("The email provided is invalid")
+            }
+            else if(errorCode == 'auth/weak-password') {
+                alert("The password provided is too weak (Must be at least 6 characters long)")
+            }
+            else {
+                alert("An error occured when creating your account")
+            }
+        });
     }
 
     function checkUser(){
         if( password == password2 ){
-            handleSignUp();
+            handleSignIn();
         } else {
             alert("The passwords provided must match")
         }
@@ -129,6 +135,7 @@ function SignIn({navigation}){
                  secureTextEntry={true}
                  onChangeText={(val)=> setPassword(val)}
                  />
+
                  <TextInput
                  style = {styles.input}
                  placeholder = 'Re-enter Password'
@@ -136,6 +143,7 @@ function SignIn({navigation}){
                  secureTextEntry={true}
                  onChangeText={(val)=> setPassword2(val)}
                  />
+
                 <Pressable style = { styles.signupBut } onPress = { checkUser }>
                     <Text style = { styles.signupT } > Signup </Text>
                 </Pressable>
@@ -170,4 +178,5 @@ secureTextEntry={true}
 onChangeText={(val)=> createnewPass2(val)}
 />*/
 
-export default SignIn
+
+//export default SignIn
