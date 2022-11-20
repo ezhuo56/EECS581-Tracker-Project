@@ -34,9 +34,10 @@ function UserSetUp({navigation}){
     function updateUser() {
         var FirstName = firstName;
         var LastName = secondName;
+        const docRef = collection(dataBase, "users");
         try
         {
-            const docRef = setDoc(collection(dataBase, "users"), {
+                setDoc(doc(docRef, auth.currentUser.uid), {
                 //userID: auth,
                 first: FirstName,
                 last: LastName
