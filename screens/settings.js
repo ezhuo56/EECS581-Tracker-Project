@@ -15,6 +15,7 @@ import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { lightColorScheme, darkColorScheme } from '../colorschemes';
 import { ColorSchemeContext } from '../context';
+import { getAuth, signOut } from "firebase/auth";
 
 //Creates a function to navigate to the user page
 function Settings({navigation}){
@@ -26,6 +27,14 @@ function Settings({navigation}){
     }
 
     function navL(){
+        //right here add in sign out function to delete the current user data
+        const auth = getAuth();
+        signOut(auth).then(() => {
+         //the user has been signed out
+        }).catch((error) => {
+         //didn't sign out
+        });
+        //return back to login page
         navigation.navigate('loginPage');
     }
 
