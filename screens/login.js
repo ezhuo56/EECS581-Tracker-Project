@@ -31,14 +31,25 @@ function Login({navigation}){
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
             setLogins(email);
-            const docRef = doc(dataBase, "users", auth.currentUser.uid);
-            const docSnap = getDoc(docRef);
-            setUser(docSnap.data);
+            handleUser();
             navH();
         })
         .catch( ( re ) => {
             console.log( re );
         })
+    }
+
+    async function handleUser(){
+        const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists())
+        {
+            setUser(docSnap.data());
+        }
+        else
+        {
+            console.log("Error, the login user does not have information in the firestore data base. Log off and input their data manually.\n");
+        }
     }
 
     function navH(){

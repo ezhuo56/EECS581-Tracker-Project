@@ -1,4 +1,4 @@
-import User from "./userData";
+import userData from "./userData";
 
 // Firestore data converter
 const userConverter = {
@@ -11,7 +11,7 @@ const userConverter = {
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new User(data.first, data.second, data.email);
+        return new userData(data.first, data.second, data.email);
     }
 };
 
