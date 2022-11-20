@@ -128,6 +128,8 @@ function User({navigation}){
         }
     })
 
+    const userData = user;
+
 //Created a barebones filler userpage, that may be altered later, but fulfills all that is needed
 //Currently options button just takes user to settings page, and signout goes to login page
     return(
@@ -144,7 +146,7 @@ function User({navigation}){
                         <Image source = { require ( '../img/temp.png' ) }
                         style = { styles.alignImg }></Image>
                     </Pressable>
-                    <Text style = { styles.userName }> {user.firstname + ' ' + user.lastname} </Text>
+                    <Text style = { styles.userName }> {userData} </Text>
                     <Text style = { styles.email }> { loginInfo } </Text>
                     <View style = { styles.infoBack } >
                     </View>

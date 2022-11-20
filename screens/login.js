@@ -15,7 +15,10 @@ import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, dataBase } from '../firebase';
+import {collection, addDoc, doc, getDoc } from "firebase/firestore";
+import {User} from "../components/User";
+import {userConverter} from "../components/firebaseConverter"
 
 //creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
@@ -28,6 +31,9 @@ function Login({navigation}){
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
             setLogins(email);
+            const docRef = doc(dataBase, "users", auth.currentUser.uid);
+            const docSnap = getDoc(docRef);
+            setUser(docSnap.data)
             navH();
         })
         .catch( ( re ) => {
