@@ -45,6 +45,7 @@ function Login({navigation}){
         if(docSnap.exists())
         {
             const UserLoggedIn = docSnap.data();
+            //console.log("Debug code, cuz the Errors are wacky!: toString(): " + UserLoggedIn.toString() + " : first: " + UserLoggedIn.first + " : lastName: " + UserLoggedIn.lastName + ": email: " + UserLoggedIn.email + "\n");
             setUser(UserLoggedIn);
         }
         else

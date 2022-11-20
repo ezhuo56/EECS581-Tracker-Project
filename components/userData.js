@@ -1,11 +1,11 @@
 class userData {
     constructor (Firstname, LastName, email) {
-        this.Firstname = Firstname;
-        this.LastName = LastName;
+        this.firstName = Firstname;
+        this.lastName = LastName;
         this.email = email;
     }
     toString() {
-        return this.Firstname + ', ' + this.LastName + ', ' + this.email;
+        return this.firstName + ', ' + this.lastName;
     }
 }
 
@@ -13,8 +13,8 @@ class userData {
 const userConverter = {
     toFirestore: (user) => {
         return {
-            first: user.Firstname,
-            second: user.LastName,
+            first: user.firstName,
+            second: user.lastName,
             email: user.email
             };
     },

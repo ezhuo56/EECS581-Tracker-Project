@@ -145,7 +145,7 @@ function User({navigation}){
                         <Image source = { require ( '../img/temp.png' ) }
                         style = { styles.alignImg }></Image>
                     </Pressable>
-                    <Text style = { styles.userName }> {user.Firstname + " " + user.LastName} </Text>
+                    <Text style = { styles.userName }> {user.first + " " + user.second} </Text>
                     <Text style = { styles.email }> { user.email } </Text>
                     <View style = { styles.infoBack } >
                     </View>

@@ -4,8 +4,8 @@ import userData from "./userData";
 const userConverter = {
     toFirestore: (user) => {
         return {
-            first: user.Firstname,
-            second: user.LastName,
+            first: user.firstName,
+            second: user.lastName,
             email: user.email
             };
     },
