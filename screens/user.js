@@ -11,10 +11,10 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import {React, useContext} from 'react';
+import {React, useState, useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { ColorSchemeContext, UserContext } from '../context';
+import { ColorSchemeContext, UserContext, LoginContext} from '../context';
 import NavBar from '../components/navBar.js';
 
 //creates two functions to allow the user to navigate to either the home page or the login page
@@ -22,6 +22,7 @@ function User({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [user, setUser] = useContext(UserContext);
+    const [loginInfo, setLogins] = useContext(LoginContext);
 
     function navU(){
         navigation.navigate('userPage');
@@ -81,7 +82,7 @@ function User({navigation}){
         },
         email: {
             fontSize: 15,
-            color: 'grey',
+            color: 'black',
             padding: 15,
         },
         bottom: {
@@ -139,7 +140,7 @@ function User({navigation}){
                     <Image source = { require ( '../img/temp.png' ) }
                     style = { styles.alignImg }></Image>
                     <Text style = { styles.userName }> {user.firstname + ' ' + user.lastname} </Text>
-                    <Text style = { styles.email }> abc@123.gmail.com </Text>
+                    <Text style = { styles.email }> { loginInfo } </Text>
                     <View style = { styles.infoBack } >
                     </View>
                 </View>

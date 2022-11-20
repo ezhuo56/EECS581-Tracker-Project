@@ -13,7 +13,7 @@
 */
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
-import { ColorSchemeContext, LoginContext, UserContext } from '../context';
+import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -24,22 +24,10 @@ function Login({navigation}){
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
 
-    //set up an observer and get user data, needs to be done for every page that might need user info
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-    });
-
     function handleLog(){
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
+            setLogins(email);
             navH();
         })
         .catch( ( re ) => {
