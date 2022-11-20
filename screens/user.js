@@ -39,6 +39,9 @@ function User({navigation}){
     function navL(){
         navigation.navigate('loginPage');
     }
+    function navUS(){
+        navigation.navigate('UserSetupPage');
+    }
 
     //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
@@ -137,8 +140,10 @@ function User({navigation}){
                 </Pressable>
                 </View>
                 <View style = { styles.infoCont } >
-                    <Image source = { require ( '../img/temp.png' ) }
-                    style = { styles.alignImg }></Image>
+                    <Pressable onPress={navUS}>
+                        <Image source = { require ( '../img/temp.png' ) }
+                        style = { styles.alignImg }></Image>
+                    </Pressable>
                     <Text style = { styles.userName }> {user.firstname + ' ' + user.lastname} </Text>
                     <Text style = { styles.email }> { loginInfo } </Text>
                     <View style = { styles.infoBack } >
