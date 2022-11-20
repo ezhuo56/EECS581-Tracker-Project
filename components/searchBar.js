@@ -81,7 +81,7 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
     container:{
-        margin: 10
+        margin: 15,
     },
     input:{
         backgroundColor: "white",

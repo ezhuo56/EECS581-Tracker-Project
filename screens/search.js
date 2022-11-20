@@ -77,10 +77,7 @@ function Search({navigation}){
     //create a button that allows the user to interact to navigate back to the home page 
     return(
         <View style = { styles.parent }>
-            <View style = {{ height: 25, backgroundColor: 'crimson'}}></View>
-            <View style = {{ height: 100, backgroundColor: 'crimson', alignItems: 'center',}}>
-                <Text style = { styles.title }>Search</Text>
-            </View>
+            <View style = {{ height: 75, backgroundColor: colorScheme.backgroundColor}}></View>
             <SearchBar/>
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
