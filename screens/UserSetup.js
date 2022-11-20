@@ -17,6 +17,7 @@ import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, setDoc } from "firebase/firestore";
 import userData from '../components/userData';
+import userConverter from '../components/firebaseConverter';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function UserSetUp({navigation}){
@@ -32,20 +33,12 @@ function UserSetUp({navigation}){
         navigation.navigate('userPage');
     }
 
-    function updateUser() {
+    async function updateUser() {
         var FirstName = firstName;
         var LastName = secondName;
-        const docRef = collection(dataBase, "users");
-        try
-        {
-                setDoc(doc(docRef, auth.currentUser.uid), {
-                //userID: auth,
-                first: FirstName,
-                last: LastName
-            });
-        } catch(e) {
-            console.error("Error adding to firebase: ", e);
-        }
+        const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
+        await setDoc(docRef, new userData(FirstName, LastName, loginInfo));
+        setUser(new userData(FirstName, LastName, loginInfo));
     }
 
     //CSS style sheet for the page to make it look red with bold fonts

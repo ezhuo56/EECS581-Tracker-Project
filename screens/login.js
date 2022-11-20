@@ -40,11 +40,12 @@ function Login({navigation}){
     }
 
     async function handleUser(){
-        const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
+        const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter());
         const docSnap = await getDoc(docRef);
         if(docSnap.exists())
         {
-            setUser(docSnap.data());
+            const UserLoggedIn = docSnap.data();
+            setUser(UserLoggedIn);
         }
         else
         {
