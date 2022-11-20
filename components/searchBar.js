@@ -15,10 +15,7 @@ import {View, TextInput, Text, StyleSheet, Pressable,FlatList } from "react-nati
 import {React, useState} from "react"
 //create a temporary list of artist to search from
 const data = [
-    { id: '1', title: 'Artist1' },
-    { id: '2', title: 'Artist2' },
-    { id: '3', title: 'Artist3' },
-    { id: '4', title: 'Artist4' }
+    { id: '1', title: 'Unfinished Spotify search page, need data from Spotify to continue working' }
   ];
 
 //Creates a search bar that returns the value inside of it
