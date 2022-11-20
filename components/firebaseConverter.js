@@ -1,4 +1,4 @@
-import User from "../components/User";
+import User from "./userData";
 
 // Firestore data converter
 const userConverter = {

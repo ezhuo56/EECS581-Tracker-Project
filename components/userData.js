@@ -1,4 +1,4 @@
-class User {
+class userData {
     constructor (Firstname, LastName, email) {
         this.Firstname = Firstname;
         this.LastName = LastName;
@@ -24,4 +24,4 @@ const userConverter = {
     }
 };
 
-export default User;
+export default userData;

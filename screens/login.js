@@ -17,7 +17,7 @@ import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, getDoc } from "firebase/firestore";
-import {User} from "../components/User";
+import {userData} from "../components/userData.js";
 import {userConverter} from "../components/firebaseConverter"
 
 //creates two functions that would navigate to either the home page or the sign up page
@@ -33,7 +33,7 @@ function Login({navigation}){
             setLogins(email);
             const docRef = doc(dataBase, "users", auth.currentUser.uid);
             const docSnap = getDoc(docRef);
-            setUser(docSnap.data)
+            setUser(docSnap.data);
             navH();
         })
         .catch( ( re ) => {

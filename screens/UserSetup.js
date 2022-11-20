@@ -16,6 +16,7 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, setDoc } from "firebase/firestore";
+import userData from '../components/userData';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function UserSetUp({navigation}){

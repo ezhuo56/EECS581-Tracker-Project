@@ -16,6 +16,7 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { ColorSchemeContext, UserContext, LoginContext} from '../context';
 import NavBar from '../components/navBar.js';
+import userData from "../components/userData.js";
 
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
