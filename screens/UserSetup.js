@@ -16,7 +16,6 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, setDoc } from "firebase/firestore";
-import { useIdTokenAuthRequest } from 'expo-auth-session/build/providers/Google';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function UserSetUp({navigation}){
@@ -35,7 +34,6 @@ function UserSetUp({navigation}){
     function updateUser() {
         var FirstName = firstName;
         var LastName = secondName;
-        var uid = auth.currentUser.uid
         try
         {
             const docRef = setDoc(collection(dataBase, "users"), {
