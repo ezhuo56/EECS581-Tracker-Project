@@ -24,6 +24,7 @@ import Signup from './screens/signup';
 import Settings from './screens/settings';
 import {lightColorScheme, darkColorScheme} from './colorschemes';
 import { ColorSchemeContext, LoginContext, UserContext } from './context';
+import UserSetUp from './screens/UserSetup';
 
 //create the app to export to expo website which can simulate the app on our phone when a QR is scanned
 export default function App(){
@@ -90,6 +91,13 @@ export default function App(){
                   headerStyle:{
                     backgroundColor: 'crimson',
                   },
+                  }}  
+                />
+                <Stack.Screen 
+                name = "UserSetupPage" 
+                component = {UserSetUp} 
+                options = {{
+                  headerShown: false,
                   }}  
                 />
             </Stack.Navigator>

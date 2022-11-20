@@ -14,56 +14,32 @@
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, dataBase } from '../firebase';
-import {collection, addDoc, doc, getDoc } from "firebase/firestore";
-import {userData} from "../components/userData.js";
-import {userConverter} from "../components/firebaseConverter"
+import {collection, addDoc, doc, setDoc } from "firebase/firestore";
+import userData from '../components/userData';
+import userConverter from '../components/firebaseConverter';
 
 //creates two functions that would navigate to either the home page or the sign up page
-function Login({navigation}){
+function UserSetUp({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
 
-    function handleLog(){
-        signInWithEmailAndPassword( auth, email, password )
-        .then( ( re ) => {
-            setLogins(email);
-            handleUser();
-            navH();
-        })
-        .catch( ( re ) => {
-            console.log( re );
-        })
+    const [firstName, setFirstName] = useState('')
+    const [secondName, setSecondName] = useState('')
+
+    function navU(){
+        navigation.navigate('userPage');
     }
 
-    async function handleUser(){
+    async function updateUser() {
+        var FirstName = firstName;
+        var LastName = secondName;
         const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
-        const docSnap = await getDoc(docRef);
-        if(docSnap.exists())
-        {
-            const UserLoggedIn = docSnap.data();
-            //console.log("Debug code, cuz the Errors are wacky!: toString(): " + UserLoggedIn.toString() + " : first: " + UserLoggedIn.first + " : lastName: " + UserLoggedIn.lastName + ": email: " + UserLoggedIn.email + "\n");
-            setUser(UserLoggedIn);
-        }
-        else
-        {
-            console.log("Error, the login user does not have information in the firestore data base. Log off and input their data manually.\n");
-        }
+        await setDoc(docRef, new userData(FirstName, LastName, loginInfo));
+        setUser(new userData(FirstName, LastName, loginInfo));
     }
-
-    function navH(){
-        navigation.navigate('homePage');
-    }
-
-    function navS(){
-        navigation.navigate('signupPage');
-    }
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     //CSS style sheet for the page to make it look red with bold fonts
     const styles = StyleSheet.create({
@@ -129,27 +105,25 @@ function Login({navigation}){
             <View style = {styles.center}>
                 <TextInput 
                     style = {styles.input}
-                    placeholder = 'Email'
+                    placeholder = 'first Name'
                     placeholderTextColor = {styles.input.placeholderTextColor}
-                    onChangeText={(val) => setEmail(val)}
+                    onChangeText={(val) => setFirstName(val)}
                 />
                 <TextInput 
                     style = {styles.input}
-                    placeholder = 'Password'
+                    placeholder = 'last Name'
                     placeholderTextColor = {styles.input.placeholderTextColor}
-                    secureTextEntry={true}
-                    onChangeText={(val) => setPassword(val)}
+                    onChangeText={(val) => setSecondName(val)}
                 />
-                <Pressable style = { styles.loginBut } onPress = { handleLog }>
-                    <Text style = { styles.textL }> Login </Text>
+                <Pressable style = { styles.loginBut } onPress = { updateUser}>
+                    <Text style = { styles.textL }> Save Data </Text>
                 </Pressable>
-                <Pressable style = {styles.signupBut } onPress = { navS } >
-                    <Text style = { styles.textS }> Don't have a account?</Text>
-                    <Text style = { styles.textS }> Signup </Text>
+                <Pressable style = { styles.loginBut } onPress = { navU}>
+                    <Text style = { styles.textL }> go back </Text>
                 </Pressable>
             </View>
         </View>
     );
 }
 
-export default Login
+export default UserSetUp

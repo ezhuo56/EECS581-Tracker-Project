@@ -11,17 +11,19 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import {React, useContext} from 'react';
+import {React, useState, useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { ColorSchemeContext, UserContext } from '../context';
+import { ColorSchemeContext, UserContext, LoginContext} from '../context';
 import NavBar from '../components/navBar.js';
+import userData from "../components/userData.js";
 
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [user, setUser] = useContext(UserContext);
+    const [loginInfo, setLogins] = useContext(LoginContext);
 
     function navU(){
         navigation.navigate('userPage');
@@ -37,6 +39,9 @@ function User({navigation}){
     }
     function navL(){
         navigation.navigate('loginPage');
+    }
+    function navUS(){
+        navigation.navigate('UserSetupPage');
     }
 
     //CSS style sheet for the page to make it look red with bold fonts
@@ -81,7 +86,7 @@ function User({navigation}){
         },
         email: {
             fontSize: 15,
-            color: 'grey',
+            color: 'black',
             padding: 15,
         },
         bottom: {
@@ -136,10 +141,12 @@ function User({navigation}){
                 </Pressable>
                 </View>
                 <View style = { styles.infoCont } >
-                    <Image source = { require ( '../img/temp.png' ) }
-                    style = { styles.alignImg }></Image>
-                    <Text style = { styles.userName }> {user.firstname + ' ' + user.lastname} </Text>
-                    <Text style = { styles.email }> abc@123.gmail.com </Text>
+                    <Pressable onPress={navUS}>
+                        <Image source = { require ( '../img/temp.png' ) }
+                        style = { styles.alignImg }></Image>
+                    </Pressable>
+                    <Text style = { styles.userName }> {user.first + " " + user.second} </Text>
+                    <Text style = { styles.email }> { user.email } </Text>
                     <View style = { styles.infoBack } >
                     </View>
                 </View>
