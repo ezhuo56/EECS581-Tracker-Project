@@ -3,7 +3,7 @@
   Description: Makes the settings page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/12/2022
-  Date revised: 10/12/2022
+  Date revised: 11/20/2022
   Preconditions: Importing react components 
   Postconditions: Creates the settings page from the imported components provided by react native
   Errors: no errors

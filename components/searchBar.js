@@ -1,9 +1,9 @@
 /*
-  Name: colorschemes.js
+  Name: searchBar.js
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 11/1/2022
+  Date revised: 11/20/2022
   Preconditions: None
   Postconditions: None
   Errors: no errors

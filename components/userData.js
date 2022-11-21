@@ -1,3 +1,17 @@
+/*
+  Name: userData.js
+  Description: stores the user data to local app storage
+  Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
+  Date: 11/19/2022
+  Date revised: 11/20/2022
+  Preconditions: add in conditions to store user data to database
+  Postconditions: Create new user information given from app
+  Errors: no errors
+  Side effects: no side effects
+  invariants: no invariants
+  any known faults: no known faults
+*/
+//create user data from information inputted from database
 class userData {
     constructor (Firstname, LastName, email) {
         this.firstName = Firstname;
@@ -9,7 +23,7 @@ class userData {
     }
 }
 
-// Firestore data converter
+// Firestore data converter to grab the data and be able to store it to the database
 const userConverter = {
     toFirestore: (user) => {
         return {

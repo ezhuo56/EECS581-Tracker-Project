@@ -1,11 +1,11 @@
 /*
-  Name: login.js
-  Description: Makes the login page be able to navigated to with button taps from the user
+  Name: UserSetup.js
+  Description: Add in functionality to be able to store user data in Firestore a Firebase database
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/12/2022
-  Preconditions: Importing react components 
-  Postconditions: Creates the login page from the imported components
+  Date revised: 11/20/2022
+  Preconditions: Importing react components/firebase components
+  Postconditions: Creates the user data in database
   Errors: no errors
   Side effects: no side effects
   invariants: no invariants
@@ -32,7 +32,7 @@ function UserSetUp({navigation}){
     function navU(){
         navigation.navigate('userPage');
     }
-
+    //sends the user data to a userConverter to retrieve information from the database
     async function updateUser() {
         var FirstName = firstName;
         var LastName = secondName;

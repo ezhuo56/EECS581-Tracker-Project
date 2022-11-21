@@ -3,7 +3,7 @@
   Description: Makes the login page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/12/2022
+  Date revised: 10/20/2022
   Preconditions: Importing react components 
   Postconditions: Creates the login page from the imported components
   Errors: no errors
@@ -38,7 +38,7 @@ function Login({navigation}){
             console.log( re );
         })
     }
-
+    //collect user information from Firebase database (firestore)
     async function handleUser(){
         const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
         const docSnap = await getDoc(docRef);
@@ -53,11 +53,11 @@ function Login({navigation}){
             console.log("Error, the login user does not have information in the firestore data base. Log off and input their data manually.\n");
         }
     }
-
+    //go back to home page
     function navH(){
         navigation.navigate('homePage');
     }
-
+    //go back to sign up page
     function navS(){
         navigation.navigate('signupPage');
     }

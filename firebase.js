@@ -1,3 +1,16 @@
+/*
+  Name: Firebase.js
+  Description: Create the Firebase ID for Firebase to collect our information
+  Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
+  Date: 11/20/2022
+  Date revised: 11/20/2022
+  Preconditions: Import firebase/firestore
+  Postconditions: Creates a color scheme context to export
+  Errors: no errors
+  Side effects: no side effects
+  invariants: no invariants
+  any known faults: no known faults
+*/
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "firebase/app";
 import { initializeApp } from 'firebase/app';

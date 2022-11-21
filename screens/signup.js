@@ -3,7 +3,7 @@
   Description: Makes the signup page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 11/6/2022
+  Date revised: 11/20/2022
   Preconditions: Importing react components 
   Postconditions: Creates the signup page from the imported components provided by react native
   Errors: no errors
@@ -25,7 +25,7 @@ function Signup({navigation}){
     const[ email, setEmail ] = useState('');
     const[ password, setPassword ] = useState('');
     const[ password2, setPassword2 ] = useState('');
-
+    //create a sign up textbox using the Firebase methods to create a new user to store into Firebase catches password errors
     function handleSignUp(){
         createUserWithEmailAndPassword( auth, email, password )
             .then( ( re ) => {
@@ -49,7 +49,7 @@ function Signup({navigation}){
                 }
             });
     }
-
+    //checks if the passwords match if not give an error
     function checkUser(){
         if( password == password2 ){
             handleSignUp();

@@ -1,3 +1,16 @@
+/*
+  Name: navBar.js
+  Description: navigates the entire app
+  Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
+  Date: 11/20/2022
+  Date revised: 11/20/2022
+  Preconditions: Importing userdata
+  Postconditions: Create new user information given from app
+  Errors: no errors
+  Side effects: no side effects
+  invariants: no invariants
+  any known faults: no known faults
+*/
 import { React, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';

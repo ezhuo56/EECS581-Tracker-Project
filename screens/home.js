@@ -3,7 +3,7 @@
   Description: Makes the home page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
-  Date revised: 11/5/2022
+  Date revised: 11/19/2022
   Preconditions: Importing react components 
   Postconditions: Creates the homepage from the imported components
   Errors: no errors
@@ -50,7 +50,7 @@ function Home({navigation}){
     const [artists,setArtists] = useState([]);
 
     const [ShouldShow,setShow] = useState(true);
-
+    //collect the information of user's Spotify following list
     const GetFollowers = () => {
         
         const [next,setNext] = useState("null");
@@ -74,7 +74,7 @@ function Home({navigation}){
 
         return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
     }
-
+    //after pressing the print data button, it should print out a list of what the user has followed on Spotify, allowing scrolling to see every artist the user has followed
     const PrintFollowers = () => {
         if(artists.length != 0){
             setShow(false);
@@ -95,7 +95,7 @@ function Home({navigation}){
     }
 
 
-
+    //checks if Spotify account is connected
     useEffect(() => {
         if(response?.type === 'success'){
             const{access_token} = response.params;
@@ -104,7 +104,7 @@ function Home({navigation}){
             console.log('access token:',accessToken);
         }
     },[response])
-
+    //show the two buttons to link Spotify and print out Spotify data
     const ShowButtons = () => {
             if(ShouldShow){
                 return(
