@@ -19,6 +19,8 @@ import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, getDoc } from "firebase/firestore";
 import {userData} from "../components/userData.js";
 import {userConverter} from "../components/firebaseConverter"
+import User from './user';
+import { darkColorScheme, lightColorScheme } from '../colorschemes';
 
 //creates two functions that would navigate to either the home page or the sign up page
 function Login({navigation}){
@@ -47,6 +49,12 @@ function Login({navigation}){
             const UserLoggedIn = docSnap.data();
             //console.log("Debug code, cuz the Errors are wacky!: toString(): " + UserLoggedIn.toString() + " : first: " + UserLoggedIn.first + " : lastName: " + UserLoggedIn.lastName + ": email: " + UserLoggedIn.email + "\n");
             setUser(UserLoggedIn);
+            if(UserLoggedIn.colorScheme == "dark") {
+                setColorScheme(darkColorScheme)
+            }
+            else {
+                setColorScheme(lightColorScheme)
+            }
         }
         else
         {
