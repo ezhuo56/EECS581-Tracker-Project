@@ -13,23 +13,30 @@
 */
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-import { ColorSchemeContext, LoginContext } from '../context';
+import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { doc, setDoc } from "firebase/firestore"; 
+import { auth, dataBase } from '../firebase';
+import userData from '../components/userData';
+import userConverter from '../components/firebaseConverter';
 
 //create a function that would allow the user to navigate to the login page
 function Signup({navigation}){
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
-    const[ email, setEmail ] = useState('');
+    const [user, setUser] = useContext(UserContext);
     const[ password, setPassword ] = useState('');
     const[ password2, setPassword2 ] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [secondName, setSecondName] = useState('');
+
     //create a sign up textbox using the Firebase methods to create a new user to store into Firebase catches password errors
     function handleSignUp(){
-        createUserWithEmailAndPassword( auth, email, password )
+        createUserWithEmailAndPassword( auth, loginInfo, password )
             .then( ( re ) => {
                 console.log( re );
+                updateUser();
                 navL();
             })
             .catch( ( re ) => {
@@ -49,6 +56,15 @@ function Signup({navigation}){
                 }
             });
     }
+
+    //sends the user data to a userConverter to retrieve information from the database
+    async function updateUser() {
+        const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
+        
+        await setDoc(docRef, new userData(firstName, secondName, loginInfo));
+        setUser(new userData(firstName, secondName, loginInfo));
+    }
+
     //checks if the passwords match if not give an error
     function checkUser(){
         if( password == password2 ){
@@ -118,9 +134,21 @@ function Signup({navigation}){
             <View style = {styles.center}>
                  <TextInput
                  style = {styles.input}
+                 placeholder = 'First Name'
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 onChangeText={(val)=> setFirstName(val)}
+                 />
+                 <TextInput
+                 style = {styles.input}
+                 placeholder = 'Last Name'
+                 placeholderTextColor = {styles.input.placeholderTextColor}
+                 onChangeText={(val)=> setSecondName(val)}
+                 />
+                 <TextInput
+                 style = {styles.input}
                  placeholder = 'Email'
                  placeholderTextColor = {styles.input.placeholderTextColor}
-                 onChangeText={(val)=> setEmail(val)}
+                 onChangeText={(val)=> setLogins(val)}
                  />
                 <TextInput
                  style = {styles.input}

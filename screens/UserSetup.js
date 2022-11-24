@@ -25,7 +25,6 @@ function UserSetUp({navigation}){
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
-
     const [firstName, setFirstName] = useState('')
     const [secondName, setSecondName] = useState('')
 
