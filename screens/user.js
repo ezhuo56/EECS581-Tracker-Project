@@ -116,7 +116,7 @@ function User({navigation}){
             backgroundColor: 'grey',
         },
         gear: {
-            marginTop: 150,
+            marginTop: 100,
             width: 50,
             height: 50,
             alignItems: 'center',
@@ -148,13 +148,6 @@ function User({navigation}){
                     <Text style = { styles.userName }> {user.first + " " + user.second} </Text>
                     <Text style = { styles.email }> { user.email } </Text>
                     <View style = { styles.infoBack } >
-                    </View>
-                </View>
-                <View style = { styles.followCont } >
-                    <View style = { styles.followTitle } >
-                        <Text style = {{ fontSize: 15, fontWeight: 'bold', color: 'white' }}> Following </Text>
-                    </View>
-                    <View style = { styles.followBox } >
                     </View>
                 </View>
             </ScrollView>
