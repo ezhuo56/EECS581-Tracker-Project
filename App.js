@@ -31,7 +31,7 @@ export default function App(){
   const Stack = createNativeStackNavigator();
 
   //Sets up a color scheme to be used in the rest of the app
-  const [colorScheme, setColorScheme] = useState(darkColorScheme);
+  const [colorScheme, setColorScheme] = useState(lightColorScheme);
   const colorSchemeData = [ colorScheme, setColorScheme ]
   const [loginInfo, setLogins] = useState([]);
   const loginData = [ loginInfo, setLogins ]

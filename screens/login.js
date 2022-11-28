@@ -125,6 +125,15 @@ function Login({navigation}){
         Icon: {
             width: 150,
             height: 150,
+        },
+        center2: {
+            alignItems: 'center',
+            marginTop: -50,
+            padding: 20,
+        },
+        title: {
+            fontWeight: 'bold',
+            fontSize: 28,
         }
     })
 
@@ -135,6 +144,9 @@ function Login({navigation}){
             <View style = { styles.iconCont }>
                 <Image source = { require ( '../img/BigBops.png' ) }
                        style = { styles.Icon }></Image>
+            </View>
+            <View style = { styles.center2 }>
+                <Text style = { styles.title }>Login</Text>
             </View>
             <View style = {styles.center}>
                 <TextInput 

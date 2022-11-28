@@ -88,7 +88,7 @@ function Signup({navigation}){
         },
         center: {
             flex: 1,
-            marginTop: -75,
+            marginTop: -100,
             alignItems: 'center'
         },
         input: {
@@ -150,7 +150,7 @@ function Signup({navigation}){
                        style = { styles.Icon }></Image>
             </View>
             <View style = {styles.center}>
-                <Text style = {styles.title}> Create An Account </Text>
+                <Text style = {styles.title}> Create Account </Text>
                  <TextInput
                  style = {styles.input}
                  placeholder = 'First Name'
