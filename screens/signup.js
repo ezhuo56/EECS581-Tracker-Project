@@ -12,7 +12,7 @@
   any known faults: no known faults
 */
 import { React, useContext, useState } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore"; 
@@ -88,7 +88,7 @@ function Signup({navigation}){
         },
         center: {
             flex: 1,
-            justifyContent: 'center',
+            marginTop: -75,
             alignItems: 'center'
         },
         input: {
@@ -127,11 +127,30 @@ function Signup({navigation}){
         cancel: {
             marginTop: 25,
 
+        },
+        iconCont:{
+            height: '45%',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        Icon: {
+            width: 150,
+            height: 150,
+        },
+        title: {
+            fontWeight: 'bold',
+            fontSize: 28,
+            padding: 20,
         }
     })
     return(
         <View style = {styles.parent}>
+            <View style = { styles.iconCont }>
+                <Image source = { require ( '../img/BigBops.png' ) }
+                       style = { styles.Icon }></Image>
+            </View>
             <View style = {styles.center}>
+                <Text style = {styles.title}> Create An Account </Text>
                  <TextInput
                  style = {styles.input}
                  placeholder = 'First Name'

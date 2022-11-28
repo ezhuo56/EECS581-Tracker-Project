@@ -35,6 +35,8 @@ function Login({navigation}){
             setLogins(email);
             handleUser();
             navH();
+            setEmail('');
+            setPassword('');
         })
         .catch( ( re ) => {
             console.log( re );
@@ -136,12 +138,14 @@ function Login({navigation}){
             </View>
             <View style = {styles.center}>
                 <TextInput 
+                    value = { email }
                     style = {styles.input}
                     placeholder = 'Email'
                     placeholderTextColor = {styles.input.placeholderTextColor}
                     onChangeText={(val) => setEmail(val)}
                 />
                 <TextInput 
+                    value = { password }
                     style = {styles.input}
                     placeholder = 'Password'
                     placeholderTextColor = {styles.input.placeholderTextColor}

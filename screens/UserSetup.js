@@ -104,13 +104,13 @@ function UserSetUp({navigation}){
             <View style = {styles.center}>
                 <TextInput 
                     style = {styles.input}
-                    placeholder = 'first Name'
+                    placeholder = 'First Name'
                     placeholderTextColor = {styles.input.placeholderTextColor}
                     onChangeText={(val) => setFirstName(val)}
                 />
                 <TextInput 
                     style = {styles.input}
-                    placeholder = 'last Name'
+                    placeholder = 'Last Name'
                     placeholderTextColor = {styles.input.placeholderTextColor}
                     onChangeText={(val) => setSecondName(val)}
                 />
@@ -118,7 +118,7 @@ function UserSetUp({navigation}){
                     <Text style = { styles.textL }> Save Data </Text>
                 </Pressable>
                 <Pressable style = { styles.loginBut } onPress = { navU}>
-                    <Text style = { styles.textL }> go back </Text>
+                    <Text style = { styles.textL }> Cancel </Text>
                 </Pressable>
             </View>
         </View>
