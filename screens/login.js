@@ -71,7 +71,10 @@ function Login({navigation}){
     function navS(){
         navigation.navigate('signupPage');
     }
-
+    function navForgetPass()
+    {
+        navigation.navigate('forgetpasswordPage')
+    }
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -170,6 +173,10 @@ function Login({navigation}){
                 <Pressable style = {styles.signupBut } onPress = { navS } >
                     <Text style = { styles.textS }> Don't have a account?</Text>
                     <Text style = { styles.textS }> Signup </Text>
+                </Pressable>
+                <Pressable style = {styles.signupBut } onPress = { navForgetPass } >
+                    <Text style = { styles.textS }> Forgotten password?</Text>
+                    <Text style = { styles.textS }> Forget password </Text>
                 </Pressable>
             </View>
         </View>
