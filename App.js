@@ -22,6 +22,7 @@ import User from './screens/user';
 import Login from './screens/login';
 import Signup from './screens/signup';
 import Settings from './screens/settings';
+import Forgetpassword from './screens/password.js'
 import {lightColorScheme, darkColorScheme} from './colorschemes';
 import { ColorSchemeContext, LoginContext, UserContext } from './context';
 import UserSetUp from './screens/UserSetup';
@@ -48,6 +49,13 @@ export default function App(){
               <Stack.Screen 
                 name = "loginPage" 
                 component = {Login} 
+                options = {{
+                  headerShown: false,
+                  }}  
+              />
+                <Stack.Screen 
+                name = "forgetpasswordPage" 
+                component = {Forgetpassword} 
                 options = {{
                   headerShown: false,
                   }}  
@@ -91,6 +99,7 @@ export default function App(){
                   headerStyle:{
                     backgroundColor: 'crimson',
                   },
+                  
                   }}  
                 />
                 <Stack.Screen 
@@ -100,6 +109,7 @@ export default function App(){
                   headerShown: false,
                   }}  
                 />
+              
             </Stack.Navigator>
           </NavigationContainer>
         </UserContext.Provider>
