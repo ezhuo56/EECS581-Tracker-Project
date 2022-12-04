@@ -14,7 +14,7 @@
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore"; 
 import { auth, dataBase } from '../firebase';
 import userData from '../components/userData';
@@ -55,6 +55,17 @@ function Signup({navigation}){
                     alert("An error occured when creating your account")
                 }
             });
+        sendEmailVerification( auth, loginInfo )
+        .then((re)=>
+        {
+            console.log( re ); 
+            alert("email sent!");  
+        })
+        .catch((error) =>
+        {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
     }
 
     //sends the user data to a userConverter to retrieve information from the database
