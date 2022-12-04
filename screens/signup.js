@@ -14,7 +14,7 @@
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore"; 
 import { auth, dataBase } from '../firebase';
 import userData from '../components/userData';
@@ -32,12 +32,21 @@ function Signup({navigation}){
     const [secondName, setSecondName] = useState('');
 
     //create a sign up textbox using the Firebase methods to create a new user to store into Firebase catches password errors
+    function verification(){
+        sendEmailVerification( auth.currentUser )
+            .then( ( re ) => {
+                console.log( re );
+            })
+            .catch( ( err ) => {
+                console.log( err );
+            });
+        navL();
+    }
+
     function handleSignUp(){
         createUserWithEmailAndPassword( auth, loginInfo, password )
             .then( ( re ) => {
-                console.log( re );
                 updateUser();
-                navL();
             })
             .catch( ( re ) => {
                 console.log( re );
@@ -55,17 +64,6 @@ function Signup({navigation}){
                     alert("An error occured when creating your account")
                 }
             });
-        sendEmailVerification( auth, loginInfo )
-        .then((re)=>
-        {
-            console.log( re ); 
-            alert("email sent!");  
-        })
-        .catch((error) =>
-        {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
     }
 
     //sends the user data to a userConverter to retrieve information from the database
@@ -196,6 +194,9 @@ function Signup({navigation}){
                  />
                 <Pressable style = { styles.signupBut } onPress = { checkUser }>
                     <Text style = { styles.signupT } > Signup </Text>
+                </Pressable>
+                <Pressable style = { styles.signupBut } onPress = { verification }>
+                    <Text style = { styles.signupT } > Verify </Text>
                 </Pressable>
                 <Pressable style = { styles.cancel } onPress = { navL }>
                     <Text> Cancel </Text>
