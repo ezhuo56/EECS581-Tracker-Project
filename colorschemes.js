@@ -13,14 +13,34 @@
 */
 //create a light mode
 export const lightColorScheme = {
+      name: 'light',
       darkMode: false,
       backgroundColor: 'white',
       textColor: 'black',
+      primaryColor: "crimson",
+      secondaryColor: 'darkred',
+      selectColor: "lightskyblue",
+      navBar: 'white',
   }
 //create a dark mode
 export const darkColorScheme = {
+      name: 'dark',
       darkMode: true,
       backgroundColor: 'slategray',
       textColor: 'white',
-  }
-  
+      primaryColor: "crimson",
+      secondaryColor: 'darkred',
+      selectColor: "lightskyblue",
+      navBar: 'white',
+}
+//Blue Color
+export const blueColorScheme = {
+      name: "blue",
+      darkMode: false,
+      backgroundColor: 'mintcream',
+      textColor: 'darkslategray',
+      primaryColor: "midnightblue",
+      secondaryColor: 'royalblue',
+      selectColor: "steelblue",
+      navBar: 'lightcyan',
+}

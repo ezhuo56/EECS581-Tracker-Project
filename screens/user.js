@@ -18,6 +18,7 @@ import { ColorSchemeContext, UserContext, LoginContext} from '../context';
 import NavBar from '../components/navBar.js';
 import userData from "../components/userData.js";
 
+
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
     //Retrieves the current app color scheme
@@ -53,7 +54,7 @@ function User({navigation}){
         profileBack: {
             padding: 0,
             width: '100%',
-            backgroundColor: 'crimson',
+            backgroundColor: colorScheme.primaryColor, //'crimson',
             height: 150,
         },
         infoCont: {
@@ -63,7 +64,7 @@ function User({navigation}){
             marginTop: 125,
             width: 75,
             height: 25,
-            backgroundColor: 'darkred',
+            backgroundColor: colorScheme.primaryColor,
             alignItems: 'center',
             justifyContent: 'center',
         },
@@ -121,13 +122,61 @@ function User({navigation}){
             height: 50,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'crimson',
+            backgroundColor: colorScheme.primaryColor,
         },
         gearResize: {
             width: 35,
             height: 35,
         }
     })
+
+    //style sheet for the app
+const navBar = StyleSheet.create({
+    containerB: {
+        flexDirection: 'row',
+        height: 50,
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+    },
+    resizeUserB: {
+        width: 30,
+        height: 25,
+    },
+    resizeHomeB: {
+        width: 50,
+        height: 25,
+    },
+    resizeSearchB: {
+        width: 25,
+        height: 25,
+    },
+    userB: {
+        height: '100%',
+        width: '33.33%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colorScheme.selectColor,
+    },
+    homeB: {
+        height: '100%',
+        width: '33.33%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colorScheme.navBar,
+    },
+    searchB: {
+        height: '100%',
+        width: '33.33%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colorScheme.navBar,
+    }
+});
+
+    let darkGear = require ( '../img/gearIcon.png' );
+    let lightGear = require ( '../img/gearIconWhite.png' );
+
 
 //Created a barebones filler userpage, that may be altered later, but fulfills all that is needed
 //Currently options button just takes user to settings page, and signout goes to login page
@@ -136,7 +185,7 @@ function User({navigation}){
             <ScrollView>
                 <View style = { styles.profileBack } >
                 <Pressable style = { styles.gear } onPress = { navSet } >
-                        <Image source = { require ( '../img/gearIcon.png' ) }
+                        <Image source = {(colorScheme.name == 'blue' ? lightGear : darkGear)}
                         style = { styles.gearResize }></Image>
                 </Pressable>
                 </View>
@@ -171,48 +220,5 @@ function User({navigation}){
         </View>
     );
 }
-//style sheet for the app
-const navBar = StyleSheet.create({
-    containerB: {
-        flexDirection: 'row',
-        height: 50,
-        width: '100%',
-        position: 'absolute',
-        bottom: 0,
-    },
-    resizeUserB: {
-        width: 30,
-        height: 25,
-    },
-    resizeHomeB: {
-        width: 50,
-        height: 25,
-    },
-    resizeSearchB: {
-        width: 25,
-        height: 25,
-    },
-    userB: {
-        height: '100%',
-        width: '33.33%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'lightblue',
-    },
-    homeB: {
-        height: '100%',
-        width: '33.33%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-    },
-    searchB: {
-        height: '100%',
-        width: '33.33%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-    }
-});
 
 export default User

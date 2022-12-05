@@ -13,14 +13,17 @@
 */
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
-import { lightColorScheme, darkColorScheme } from '../colorschemes';
-import { ColorSchemeContext } from '../context';
+import { lightColorScheme, darkColorScheme, blueColorScheme } from '../colorschemes';
+import { ColorSchemeContext, UserContext } from '../context';
 import { getAuth, signOut } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+import { auth } from '../firebase';
 
 //Creates a function to navigate to the user page
 function Settings({navigation}){
     //Retrieves the current app color scheme and a function to set it for the rest of the app
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+    const [user, setUser] = useContext(UserContext);
 
     function navU(){
         navigation.navigate('userPage', {styles: styles});
@@ -34,18 +37,37 @@ function Settings({navigation}){
         }).catch((error) => {
          //didn't sign out
         });
+        //Reset color scheme to default
+        setColorScheme(lightColorScheme);
         //return back to login page
         navigation.navigate('loginPage');
     }
 
     //Function to change the color scheme of the whole app
     function changeColorScheme() {
-        if(colorScheme.darkMode) {
-            setColorScheme(lightColorScheme);
+        const db = getDatabase();
+        let colorSchemeName = "";
+        switch (colorScheme.name) {
+            case 'light':
+                setColorScheme(darkColorScheme);
+                colorSchemeName = "dark";
+                break;
+            case 'dark':
+                setColorScheme(blueColorScheme);
+                colorSchemeName = "blue";
+                break;
+            case 'blue':
+                setColorScheme(lightColorScheme);
+                colorSchemeName = "light";
+                break;
         }
-        else {
-            setColorScheme(darkColorScheme);
-        }
+        /*set(ref(db, 'users/' + auth.currentUser.uid), {
+            first: user.first,
+            second: user.second,
+            email: user.email,
+            colorScheme: colorSchemeName,
+            userId: auth.currentUser.uid,
+        })*/
     }
 
     //CSS style sheet for the page to make it look red with bold fonts
@@ -68,7 +90,7 @@ function Settings({navigation}){
             paddingHorizontal: 32,
             borderRadius: 0,
             elevation: 3,
-            backgroundColor: 'darkred',
+            backgroundColor: colorScheme.secondaryColor,
         },
         text: {
             fontSize: 16,

@@ -23,7 +23,7 @@ import Login from './screens/login';
 import Signup from './screens/signup';
 import Settings from './screens/settings';
 import Forgetpassword from './screens/password.js'
-import {lightColorScheme, darkColorScheme} from './colorschemes';
+import {lightColorScheme, darkColorScheme } from './colorschemes';
 import { ColorSchemeContext, LoginContext, UserContext } from './context';
 import UserSetUp from './screens/UserSetup';
 
@@ -97,7 +97,7 @@ export default function App(){
                   headerTitleAlign: 'center',
                   headerTintColor: '#fff',
                   headerStyle:{
-                    backgroundColor: 'crimson',
+                    backgroundColor: colorScheme.primaryColor,
                   },
                   
                   }}  

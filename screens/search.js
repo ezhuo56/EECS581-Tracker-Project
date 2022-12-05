@@ -74,6 +74,50 @@ function Search({navigation}){
             color: 'white',
         }
     })
+
+    const navBar = StyleSheet.create({
+        containerB: {
+            flexDirection: 'row',
+            height: 50,
+            width: '100%',
+            position: 'absolute',
+            bottom: 0,
+        },
+        resizeUserB: {
+            width: 30,
+            height: 25,
+        },
+        resizeHomeB: {
+            width: 50,
+            height: 25,
+        },
+        resizeSearchB: {
+            width: 25,
+            height: 25,
+        },
+        userB: {
+            height: '100%',
+            width: '33.33%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colorScheme.navBar,
+        },
+        homeB: {
+            height: '100%',
+            width: '33.33%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colorScheme.navBar,
+        },
+        searchB: {
+            height: '100%',
+            width: '33.33%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colorScheme.selectColor,
+        }
+    });
+
     //create a button that allows the user to interact to navigate back to the home page 
     return(
         <View style = { styles.parent }>
@@ -99,48 +143,5 @@ function Search({navigation}){
         </View>
     );
 }
-
-const navBar = StyleSheet.create({
-    containerB: {
-        flexDirection: 'row',
-        height: 50,
-        width: '100%',
-        position: 'absolute',
-        bottom: 0,
-    },
-    resizeUserB: {
-        width: 30,
-        height: 25,
-    },
-    resizeHomeB: {
-        width: 50,
-        height: 25,
-    },
-    resizeSearchB: {
-        width: 25,
-        height: 25,
-    },
-    userB: {
-        height: '100%',
-        width: '33.33%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-    },
-    homeB: {
-        height: '100%',
-        width: '33.33%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-    },
-    searchB: {
-        height: '100%',
-        width: '33.33%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'lightblue',
-    }
-});
 
 export default Search
