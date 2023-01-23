@@ -11,6 +11,7 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "firebase/app";
 import { initializeApp } from 'firebase/app';
@@ -19,7 +20,7 @@ import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+//Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCTahgzEzT-BgW7RehvX6GL2LxxoXvKayg",
   authDomain: "big-bops.firebaseapp.com",
@@ -29,7 +30,7 @@ const firebaseConfig = {
   appId: "1:540797973623:web:fb8f77bf8e5d90308c8272"
 };
 
-// Initialize Firebase
+//Initialize Firebase
 const app = initializeApp( firebaseConfig );
 export const dataBase = getFirestore(app);
 export const auth = getAuth( app );

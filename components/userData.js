@@ -3,7 +3,7 @@
   Description: stores the user data to local app storage
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 11/19/2022
-  Date revised: 11/20/2022
+  Date revised: 1/23/2023
   Preconditions: add in conditions to store user data to database
   Postconditions: Create new user information given from app
   Errors: no errors
@@ -11,7 +11,8 @@
   invariants: no invariants
   any known faults: no known faults
 */
-//create user data from information inputted from database
+
+//Create a class with data inputted from firebase
 class userData {
     constructor (Firstname, LastName, email) {
         this.firstName = Firstname;

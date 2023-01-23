@@ -3,7 +3,7 @@
   Description: Makes the login page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 10/20/2022
+  Date revised: 1/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates the login page from the imported components
   Errors: no errors
@@ -11,6 +11,8 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
+//Import everything used for the page
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
@@ -22,14 +24,26 @@ import {userConverter} from "../components/firebaseConverter"
 import User from './user';
 import { darkColorScheme, lightColorScheme, blueColorScheme } from '../colorschemes';
 
-//creates two functions that would navigate to either the home page or the sign up page
+//Setup Login
 function Login({navigation}){
-    //Retrieves the current app color scheme
+    //Create all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    function handleLog(){
+    //Create all needed functions (Explanation given if necessary)
+    function navH(){
+        navigation.navigate('homePage');
+    }
+    function navS(){
+        navigation.navigate('signupPage');
+    }
+    function navForgetPass(){
+        navigation.navigate('forgetpasswordPage')
+    }
+    function handleLogin(){
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
             setLogins(email);
@@ -42,49 +56,30 @@ function Login({navigation}){
             console.log( re );
         })
     }
-    //collect user information from Firebase database (firestore)
+    //Finds the user information on firebase
     async function handleUser(){
         const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);
         const docSnap = await getDoc(docRef);
-        if(docSnap.exists())
-        {
+        if(docSnap.exists()){
             const UserLoggedIn = docSnap.data();
-            //console.log("Debug code, cuz the Errors are wacky!: toString(): " + UserLoggedIn.toString() + " : first: " + UserLoggedIn.first + " : lastName: " + UserLoggedIn.lastName + ": email: " + UserLoggedIn.email + "\n");
             setUser(UserLoggedIn);
-            if(UserLoggedIn.colorScheme == 'blue') {
+            if(UserLoggedIn.colorScheme == 'blue'){
                 setColorScheme(blueColorScheme);
             }
-            else if(UserLoggedIn.colorScheme == 'dark') {
+            else if(UserLoggedIn.colorScheme == 'dark'){
                 setColorScheme(darkColorScheme);
             }
-            else if(UserLoggedIn.colorScheme == 'light') {
+            else if(UserLoggedIn.colorScheme == 'light'){
+                setColorScheme(lightColorScheme);
+            } else {
                 setColorScheme(lightColorScheme);
             }
-            else {
-                setColorScheme(lightColorScheme);
-            }
-        }
-        else
-        {
+        } else {
             console.log("Error, the login user does not have information in the firestore data base. Log off and input their data manually.\n");
         }
     }
-    //go back to home page
-    function navH(){
-        navigation.navigate('homePage');
-    }
-    //go back to sign up page
-    function navS(){
-        navigation.navigate('signupPage');
-    }
-    function navForgetPass()
-    {
-        navigation.navigate('forgetpasswordPage')
-    }
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
-    //CSS style sheet for the page to make it look red with bold fonts
+    //CSS Styling for the page
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
@@ -144,15 +139,15 @@ function Login({navigation}){
             fontWeight: 'bold',
             fontSize: 28,
         }
-    })
+    });
 
-    //creates two buttons that would allow the user to interact with to navigate to either the home page or the sign up page
-    //Also creates two text inputs, one for a username and one for a password. The password utilizes secure text entry to hide the text
+    //Create the Login page
     return(
         <View style = {styles.parent}>
             <View style = { styles.iconCont }>
                 <Image source = { require ( '../img/BigBops.png' ) }
-                       style = { styles.Icon }></Image>
+                       style = { styles.Icon }>
+                </Image>
             </View>
             <View style = { styles.center2 }>
                 <Text style = { styles.title }>Login</Text>
@@ -173,7 +168,7 @@ function Login({navigation}){
                     secureTextEntry={true}
                     onChangeText={(val) => setPassword(val)}
                 />
-                <Pressable style = { styles.loginBut } onPress = { handleLog }>
+                <Pressable style = { styles.loginBut } onPress = { handleLogin }>
                     <Text style = { styles.textL }> Login </Text>
                 </Pressable>
                 <Pressable style = {styles.signupBut } onPress = { navS } >

@@ -3,7 +3,7 @@
   Description: Makes the search page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 11/20/2022
+  Date revised: 1/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates the search page from the imported components provided by react native
   Errors: no errors
@@ -11,17 +11,19 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
+//Import everything used for the page
 import {React, useContext, useState} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';
-
 import SearchBar from "../components/searchBar";
 
-//create a function that would allow the user to navigate to the home page 
+//Setup Search
 function Search({navigation}){
-    //Retrieves the current app color scheme
+    //Create all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext); 
 
+    //Create all needed functions (Explanation given if necessary)
     function navU(){
         navigation.navigate('userPage');
     }
@@ -32,7 +34,7 @@ function Search({navigation}){
         navigation.navigate('searchPage');
     }
 
-    //CSS style sheet for the page to make it look red with bold fonts
+    //CSS Styling for the page
     const styles = StyleSheet.create({
         parent: {
             flex: 1,
@@ -73,7 +75,7 @@ function Search({navigation}){
             justifyContent: 'center',
             color: 'white',
         }
-    })
+    });
 
     const navBar = StyleSheet.create({
         containerB: {
@@ -118,7 +120,7 @@ function Search({navigation}){
         }
     });
 
-    //create a button that allows the user to interact to navigate back to the home page 
+    //Create the search page
     return(
         <View style = { styles.parent }>
             <View style = {{ height: 75, backgroundColor: colorScheme.backgroundColor}}></View>
@@ -126,17 +128,17 @@ function Search({navigation}){
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
-                    style = { navBar.resizeUserB }
+                        style = { navBar.resizeUserB }
                     />
                 </Pressable>
                 <Pressable style = { navBar.homeB } onPress = { navH } >
                     <Image source = { require( '../img/homeIcon.png' ) } 
-                    style = { navBar.resizeHomeB }   
+                        style = { navBar.resizeHomeB }   
                     />
                 </Pressable>
                 <Pressable style = { navBar.searchB } onPress = { navS } >
                     <Image source = { require( '../img/searchIcon.png' ) } 
-                    style = { navBar.resizeSearchB }       
+                        style = { navBar.resizeSearchB }       
                     />
                 </Pressable>
             </View>

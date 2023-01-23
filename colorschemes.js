@@ -3,7 +3,7 @@
   Description: A list of color scheme objects to be exported
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/12/2022
-  Date revised: 11/6/2022
+  Date revised: 1/23/2023
   Preconditions: None
   Postconditions: Creates color scheme objects to export
   Errors: no errors
@@ -11,7 +11,8 @@
   invariants: no invariants
   any known faults: no known faults
 */
-//create a light mode
+
+//Lightmode
 export const lightColorScheme = {
       name: 'light',
       darkMode: false,
@@ -21,8 +22,9 @@ export const lightColorScheme = {
       secondaryColor: 'darkred',
       selectColor: "lightskyblue",
       navBar: 'white',
-  }
-//create a dark mode
+}
+
+//Darkmode
 export const darkColorScheme = {
       name: 'dark',
       darkMode: true,
@@ -33,7 +35,8 @@ export const darkColorScheme = {
       selectColor: "lightskyblue",
       navBar: 'white',
 }
-//Blue Color
+
+//Bluemode
 export const blueColorScheme = {
       name: "blue",
       darkMode: false,

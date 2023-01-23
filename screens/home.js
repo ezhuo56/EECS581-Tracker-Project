@@ -3,7 +3,7 @@
   Description: Makes the home page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
-  Date revised: 11/19/2022
+  Date revised: 1/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates the homepage from the imported components
   Errors: no errors
@@ -11,33 +11,45 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
+//Import everything used for the page
 import { React, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image, ScrollView } from 'react-native';
 import { ColorSchemeContext } from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 
-// IDs for our project
+//IDs for our project
 const client_id = 'dc95aa564add4e22aca854acb29a5565';
 const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 //Eric ID for client sided testing
 //const client_id = '8865b29e5e404623a2e485a91ffb290d';
 //const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
-// scopes to get from the spotify API
+//scopes to get from the spotify API
 const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
 var accessToken;
 var gotToken = false;
-// websites to get spotify auth
-    const discovery = {
-        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-        tokenEndpoint: 'https://accounts.spotify.com/api/token',
-    };
+const discovery = {
+    authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+    tokenEndpoint: 'https://accounts.spotify.com/api/token',
+};
 
-
-
-
-//allows the user to navigate to either the user page or the search page from the home page
+//Setup Home
 function Home({navigation}){
+    //Create all necessary vars
+    const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+
+    //Create all needed functions (Explanation given if necessary)
+    function navU(){
+        navigation.navigate('userPage');
+    }
+    function navH(){
+        navigation.navigate('homePage');
+    }
+    function navS(){
+        navigation.navigate('searchPage');
+    }
+
    /* // send an authorization request to spotify servers
     const [request,response,promptAsync] = useAuthRequest({
         responseType: ResponseType.Token,
@@ -95,7 +107,6 @@ function Home({navigation}){
         return ;
     }
 
-
     //checks if Spotify account is connected
     useEffect(() => {
         if(response?.type === 'success'){
@@ -119,20 +130,8 @@ function Home({navigation}){
             }
             return null;
     }*/
-    //Retrieves the current app color scheme
-    const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
-    function navU(){
-        navigation.navigate('userPage');
-    }
-    function navH(){
-        navigation.navigate('homePage');
-    }
-    function navS(){
-        navigation.navigate('searchPage');
-    }
-
-    //CSS style for the page
+    //CSS Styling for the page
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
@@ -214,7 +213,7 @@ function Home({navigation}){
         scroll: {
             width: '90%',
         },
-    })
+    });
 
     const navBar = StyleSheet.create({
         containerB: {
@@ -258,9 +257,8 @@ function Home({navigation}){
             backgroundColor: colorScheme.navBar,
         }
     });
-   // <ShowButtons />
-   // <PrintFollowers />
-//allows the user to click on either the userpage or searchpage to navigate to those pages
+
+    //Create the home page
     return(
         <View style = {styles.parent}>
           
@@ -285,6 +283,5 @@ function Home({navigation}){
         </View>
     );
 }
-
 
 export default Home

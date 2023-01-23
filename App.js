@@ -3,7 +3,7 @@
   Description: Creates the app for the user to see with buttons to interact with the different screens being the login page, sign up page, home page, user page, and the search page.
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/9/2022
-  Date revised: 10/22/2022
+  Date revised: 1/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates app from imported components
   Errors: no errors
@@ -11,6 +11,8 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
+//Imports essentially everything used for the app
 import React from 'react';
 import { useState, Component } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, useColorScheme } from 'react-native';
@@ -27,11 +29,10 @@ import {lightColorScheme, darkColorScheme } from './colorschemes';
 import { ColorSchemeContext, LoginContext, UserContext } from './context';
 import UserSetUp from './screens/UserSetup';
 
-//create the app to export to expo website which can simulate the app on our phone when a QR is scanned
+//Create the app
 export default function App(){
+  //Creates the necessary vars (including a screens/page stack to navigate)
   const Stack = createNativeStackNavigator();
-
-  //Sets up a color scheme to be used in the rest of the app
   const [colorScheme, setColorScheme] = useState(lightColorScheme);
   const colorSchemeData = [ colorScheme, setColorScheme ]
   const [loginInfo, setLogins] = useState([]);
@@ -39,7 +40,7 @@ export default function App(){
   const [userInfo, setUser] = useState([]);
   const userData = [ userInfo, setUser ]
 
-//create the login page,sign up page, home page, user page, and search page with CSS style that would style it red with bold fonts
+//Create all the screens/pages for the app
   return(
     <ColorSchemeContext.Provider value={colorSchemeData}>
       <LoginContext.Provider value={loginData}>
@@ -53,7 +54,7 @@ export default function App(){
                   headerShown: false,
                   }}  
               />
-                <Stack.Screen 
+              <Stack.Screen 
                 name = "forgetpasswordPage" 
                 component = {Forgetpassword} 
                 options = {{
@@ -99,7 +100,6 @@ export default function App(){
                   headerStyle:{
                     backgroundColor: colorScheme.primaryColor,
                   },
-                  
                   }}  
                 />
                 <Stack.Screen 
@@ -109,7 +109,6 @@ export default function App(){
                   headerShown: false,
                   }}  
                 />
-              
             </Stack.Navigator>
           </NavigationContainer>
         </UserContext.Provider>

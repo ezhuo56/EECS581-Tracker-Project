@@ -3,7 +3,7 @@
   Description: Add in functionality to be able to store user data in Firestore a Firebase database
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 11/20/2022
+  Date revised: 1/23/2023
   Preconditions: Importing react components/firebase components
   Postconditions: Creates the user data in database
   Errors: no errors
@@ -11,6 +11,8 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
+//Import everything used for the page
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext, LoginContext, UserContext} from '../context';
@@ -19,19 +21,20 @@ import {collection, addDoc, doc, setDoc } from "firebase/firestore";
 import userData from '../components/userData';
 import userConverter from '../components/firebaseConverter';
 
-//creates two functions that would navigate to either the home page or the sign up page
+//Setup UserSetUp
 function UserSetUp({navigation}){
-    //Retrieves the current app color scheme
+    //Creates all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
     const [firstName, setFirstName] = useState('')
     const [secondName, setSecondName] = useState('')
 
+    //Create all needed functions (Explanation given if necessary)
     function navU(){
         navigation.navigate('userPage');
     }
-    //sends the user data to a userConverter to retrieve information from the database
+    //User data is converted to retrieve information from firebase
     async function updateUser() {
         var FirstName = firstName;
         var LastName = secondName;
@@ -40,7 +43,7 @@ function UserSetUp({navigation}){
         setUser(new userData(FirstName, LastName, loginInfo));
     }
 
-    //CSS style sheet for the page to make it look red with bold fonts
+    //CSS styling for the page
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
@@ -93,8 +96,7 @@ function UserSetUp({navigation}){
         }
     })
 
-    //creates two buttons that would allow the user to interact with to navigate to either the home page or the sign up page
-    //Also creates two text inputs, one for a username and one for a password. The password utilizes secure text entry to hide the text
+    //Create the userSetup page
     return(
         <View style = {styles.parent}>
             <View style = { styles.iconCont }>
