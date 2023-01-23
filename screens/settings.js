@@ -3,7 +3,7 @@
   Description: Makes the settings page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/12/2022
-  Date revised: 11/20/2022
+  Date revised: 1/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates the settings page from the imported components provided by react native
   Errors: no errors
@@ -11,6 +11,8 @@
   invariants: no invariants
   any known faults: no known faults
 */
+
+//Import everything used for the page
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { lightColorScheme, darkColorScheme, blueColorScheme } from '../colorschemes';
@@ -19,32 +21,28 @@ import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import { auth } from '../firebase';
 
-//Creates a function to navigate to the user page
+//Setup Settings
 function Settings({navigation}){
-    //Retrieves the current app color scheme and a function to set it for the rest of the app
+    //Create all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [user, setUser] = useContext(UserContext);
 
+    //Create all needed functions (Explanation given if necessary)
     function navU(){
         navigation.navigate('userPage', {styles: styles});
     }
-
+    //Also includes the ability to signout, restoring to default settings
     function navL(){
-        //right here add in sign out function to delete the current user data
         const auth = getAuth();
         signOut(auth).then(() => {
-         //the user has been signed out
         }).catch((error) => {
-         //didn't sign out
+            //Unable to signout
         });
-        //Reset color scheme to default
         setColorScheme(lightColorScheme);
-        //return back to login page
         navigation.navigate('loginPage');
     }
-
-    //Function to change the color scheme of the whole app
-    function changeColorScheme() {
+    //Changes colorscheme, later to retrieve the catered colorscheme of each user
+    function changeColorScheme(){
         const db = getDatabase();
         let colorSchemeName = "";
         switch (colorScheme.name) {
@@ -70,7 +68,7 @@ function Settings({navigation}){
         })*/
     }
 
-    //CSS style sheet for the page to make it look red with bold fonts
+    //CSS Styling for the page
     const styles = StyleSheet.create({
         parent: {
             height: '100%',
@@ -113,9 +111,9 @@ function Settings({navigation}){
             justifyContent: 'center',
             color: 'white',
         }
-    })
+    });
 
-    //create buttons that would allow the user to interact with to access their user page
+    //Create the settings page
     return(
         <View style = {styles.parent}>
             <Pressable style = { styles.button } onPress={navL}>
