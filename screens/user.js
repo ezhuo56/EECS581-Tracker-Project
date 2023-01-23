@@ -11,16 +11,115 @@
   invariants: no invariants
   any known faults: no known faults
 */
-import {React, useState, useContext} from 'react';
+import {React, useState,useEffect ,useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
 import { TouchableHighlight, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { ColorSchemeContext, UserContext, LoginContext} from '../context';
+import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
+import axios from 'axios';
 import NavBar from '../components/navBar.js';
 import userData from "../components/userData.js";
+// IDs for our project
+//const client_id = 'dc95aa564add4e22aca854acb29a5565';
+//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
+//Eric ID for client sided testing
+const client_id = '8865b29e5e404623a2e485a91ffb290d';
+const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+// scopes to get from the spotify API
+const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
+var accessToken;
+var gotToken = false;
+// websites to get spotify auth
+    const discovery = {
+        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+        tokenEndpoint: 'https://accounts.spotify.com/api/token',
+    };
+
 
 
 //creates two functions to allow the user to navigate to either the home page or the login page
 function User({navigation}){
+       // send an authorization request to spotify servers
+       const [request,response,promptAsync] = useAuthRequest({
+        responseType: ResponseType.Token,
+        clientId: client_id,
+        clientSecret: secret_id,
+        scopes: scopes_arr,
+        usePKCE: false,
+        redirectUri: makeRedirectUri({scheme:'EECS581-Tracker-Project'}),
+    },discovery);
+
+    const [artists,setArtists] = useState([]);
+
+    const [ShouldShow,setShow] = useState(true);
+    //collect the information of user's Spotify following list
+    const GetFollowers = () => {
+        
+        const [next,setNext] = useState("null");
+        const [getNext,setGetNext] = useState(false);
+        
+        const handleGetFollowers = () => {
+            axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=50",{
+                headers: {
+                    Authorization: "Bearer " + accessToken,
+                }
+            }).then(response => {
+                setNext(response.data.artists.next);
+                for(var i=0; i < (response.data.artists.items).length; i++) {
+                    setArtists(current => [...current, response.data.artists.items[i].name]);
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+            console.log(artists);
+        }
+
+        return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
+    }
+    //after pressing the print data button, it should print out a list of what the user has followed on Spotify, allowing scrolling to see every artist the user has followed
+    const PrintFollowers = () => {
+        if(artists.length != 0){
+            setShow(false);
+            return (
+                <>
+                    <ScrollView style={styles.scroll}>
+                        {artists.map((data,i) => (
+                            <View key={i} style={styles.feed}>
+                                <Text style={styles.textHeader}>Started Following:</Text>
+                                <Text style={styles.textBody}>{artists[i]}</Text>
+                            </View>
+                        ))}
+                    </ScrollView>
+                </>
+            )
+        }
+        return ;
+    }
+
+
+    //checks if Spotify account is connected
+    useEffect(() => {
+        if(response?.type === 'success'){
+            const{access_token} = response.params;
+            accessToken = access_token;
+            gotToken = true;
+            console.log('access token:',accessToken);
+        }
+    },[response])
+    //show the two buttons to link Spotify and print out Spotify data
+    const ShowButtons = () => {
+            if(ShouldShow){
+                return(
+                    <>
+                        <View style={styles.spotifyButton}>
+                            <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
+                        </View>
+                        <GetFollowers />
+                    </>
+                )
+            }
+            return null;
+    }
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [user, setUser] = useContext(UserContext);
@@ -50,7 +149,16 @@ function User({navigation}){
         parent:{
             flex: 1,
             backgroundColor: colorScheme.backgroundColor,
-        },  
+        }, 
+        Spotifybutons:
+        {
+            height: '100%',
+            width: '100%',
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colorScheme.backgroundColor,
+        },
         profileBack: {
             padding: 0,
             width: '100%',
@@ -181,13 +289,17 @@ const navBar = StyleSheet.create({
 //Created a barebones filler userpage, that may be altered later, but fulfills all that is needed
 //Currently options button just takes user to settings page, and signout goes to login page
     return(
+        
         <View style = { styles.parent }>
+            
+            
             <ScrollView>
                 <View style = { styles.profileBack } >
                 <Pressable style = { styles.gear } onPress = { navSet } >
                         <Image source = {(colorScheme.name == 'blue' ? lightGear : darkGear)}
                         style = { styles.gearResize }></Image>
                 </Pressable>
+           
                 </View>
                 <View style = { styles.infoCont } >
                     <Pressable onPress={navUS}>
@@ -199,6 +311,10 @@ const navBar = StyleSheet.create({
                     <View style = { styles.infoBack } >
                     </View>
                 </View>
+                <View style = {styles.Spotifybutons}>
+            <ShowButtons />
+            <PrintFollowers />
+            </View>
             </ScrollView>
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
@@ -217,6 +333,7 @@ const navBar = StyleSheet.create({
                     />
                 </Pressable>
             </View>
+        
         </View>
     );
 }

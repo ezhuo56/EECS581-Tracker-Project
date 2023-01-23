@@ -35,9 +35,10 @@ var gotToken = false;
 
 
 
+
 //allows the user to navigate to either the user page or the search page from the home page
 function Home({navigation}){
-    // send an authorization request to spotify servers
+   /* // send an authorization request to spotify servers
     const [request,response,promptAsync] = useAuthRequest({
         responseType: ResponseType.Token,
         clientId: client_id,
@@ -117,7 +118,7 @@ function Home({navigation}){
                 )
             }
             return null;
-    }
+    }*/
     //Retrieves the current app color scheme
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
@@ -257,12 +258,12 @@ function Home({navigation}){
             backgroundColor: colorScheme.navBar,
         }
     });
-
+   // <ShowButtons />
+   // <PrintFollowers />
 //allows the user to click on either the userpage or searchpage to navigate to those pages
     return(
         <View style = {styles.parent}>
-            <ShowButtons />
-            <PrintFollowers />
+          
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
@@ -284,5 +285,6 @@ function Home({navigation}){
         </View>
     );
 }
+
 
 export default Home
