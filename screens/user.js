@@ -3,9 +3,9 @@
   Description: Makes the user page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 1/23/2023
+  Date revised: 1/29/2023
   Preconditions: Importing react components 
-  Postconditions: Creates the user page from the imported components provided by react native
+  Postconditions: Creates the user page from the imported components provided by react native. Now prints out User's Spotify artist data on this page.
   Errors: no errors
   Side effects: no side effects
   invariants: no invariants
@@ -20,13 +20,14 @@ import { ColorSchemeContext, UserContext, LoginContext} from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 import userData from "../components/userData.js";
-
+import {AsyncStorage} from 'react-native';
+ 
 // IDs for our project
-const client_id = 'dc95aa564add4e22aca854acb29a5565';
-const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
+//const client_id = 'dc95aa564add4e22aca854acb29a5565';
+//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 //Eric ID for client sided testing
-//const client_id = '8865b29e5e404623a2e485a91ffb290d';
-//const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+const client_id = '8865b29e5e404623a2e485a91ffb290d';
+const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
 // scopes to get from the spotify API
 const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
 var accessToken;
@@ -100,6 +101,19 @@ function User({navigation}){
     //Prints who the user is following from spotify
     const PrintFollowers = () => {
         if(artists.length != 0){
+            useEffect(() => {
+                const saveFollowedArtists = async () => {
+                  try {
+                    
+                    console.log(artists);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                };
+                saveFollowedArtists();
+              }, [artists]);
+               
+               
             setShow(false);
             return (
                 <>
