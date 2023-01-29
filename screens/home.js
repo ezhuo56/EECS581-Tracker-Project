@@ -3,7 +3,7 @@
   Description: Makes the home page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
-  Date revised: 1/23/2023
+  Date revised: 1/29/2023
   Preconditions: Importing react components 
   Postconditions: Creates the homepage from the imported components
   Errors: no errors
@@ -132,6 +132,16 @@ function Home({navigation}){
         scroll: {
             width: '90%',
         },
+        musicFeed: {
+            padding: 30,
+        },
+        musicFeedItem: {
+            fontWeight: 'bold',
+            fontSize: 24,
+            padding: 5,
+            textAlign: 'center',
+            borderWidth: 2
+        }
     });
 
     const navBar = StyleSheet.create({
@@ -177,10 +187,36 @@ function Home({navigation}){
         }
     });
 
+    /**
+     * This function is meant to generate the users artist music list
+     * WIP: Currently not able to gather data from spotify
+     * 
+     * @returns A series of react native elements showing new musical releases for the users followed artists
+     */
+    function getArtistMusic() {
+        let items = [
+            "This is currently a work in progress",
+            "Artist One Released\nNew Music",
+            "Artist Two Released\nOther New Music",
+            "Artist Three Released\nAnother New Music",
+            "Artist One Released\nA New Album"
+        ];
+
+        return (
+            <View style = {styles.musicFeed}>
+                {items.map(function (item) {
+                    return (<View><Text style={styles.musicFeedItem}>{item}</Text><View padding={10}></View></View>)
+                })}
+            </View>
+        )
+    }
+
     //Create the home page
     return(
         <View style = {styles.parent}>
-          
+            <ScrollView>
+                {getArtistMusic()}
+            </ScrollView>
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
@@ -197,7 +233,6 @@ function Home({navigation}){
                     style = { navBar.resizeSearchB }       
                     />
                 </Pressable>
-            
             </View>
         </View>
     );
