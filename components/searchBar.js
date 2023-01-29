@@ -5,7 +5,7 @@
   Date: 10/16/2022
   Date revised: 1/23/2023
   Preconditions: None
-  Postconditions: None
+  Postconditions: Allow the usage of the search bar to be utilized by the user to search Spotify's database from the app
   Errors: no errors
   Side effects: no side effects
   invariants: no invariants

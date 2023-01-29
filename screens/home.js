@@ -1,11 +1,11 @@
 /*
   Name: home.js
-  Description: Makes the home page be able to navigated to with button taps from the user
+  Description: Makes the home page be able to navigated to with button taps from the user. Added feature to display the music from the user's artist list
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
   Date revised: 1/29/2023
   Preconditions: Importing react components 
-  Postconditions: Creates the homepage from the imported components
+  Postconditions: Creates the homepage from the imported components, alongside artist music information
   Errors: no errors
   Side effects: no side effects
   invariants: no invariants
