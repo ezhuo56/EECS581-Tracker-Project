@@ -3,7 +3,7 @@
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 1/23/2023
+  Date revised: 2/6/2023
   Preconditions: None
   Postconditions: Allow the usage of the search bar to be utilized by the user to search Spotify's database from the app
   Errors: no errors
@@ -15,32 +15,45 @@
 //Import everything used for the page
 import {View, TextInput, Text, StyleSheet, Pressable,FlatList } from "react-native";
 import {React, useState} from "react"
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 //create a temporary list of artist to search from
 const data = [
-    { id: '1', title: 'Unfinished Spotify search page, need data from Spotify to continue working' }
+    { id: '1', title: 'Bob' },
+    { id: '2', title: 'Jones' },
+    { id: '3', title: 'Billy' },
+    { id: '4', title: '420' },
+    { id: '5', title: 'Huh' },
 ];
 
 //Setup SearchBar
 const SearchBar = ( props )  =>{
     //Create necessary vars
-    const [textIn, setTextIn ] = useState( "" );
+    const [textIn, setTextIn ] = useState( '' );
+    const [filteredData, setFiltered] = useState(data);
+    const [masterData, setMaster] = useState(data);
+
 
     //Create all needed functions (Explanation given if necessary)
-    function setStuff ( text ){
-        setTextIn( text );
+    function setStuff (given){
+        searchFilter();
+        setTextIn( given );
     }
     function clearOut (){
         setTextIn( '' );
     }
-    const handleSearch = text =>
-    {
-        const formattedQuery = text.toLowerCase();
-        const filteredData = filter(fullData, user => {
-            return contains(user, formattedQuery);
+    const searchFilter = () => {
+        if ( textIn ) {
+        const newData = masterData.filter((item) => {
+            const itemData = item.title ? item.title.toUpperCase() 
+                : ''.toUpperCase();
+            const textData = textIn.toUpperCase;
+            return itemData.indexOf(textIn) > -1;
         });
-        setData(filteredData);
-        setQuery(text);
+        setFiltered(newData);
+        } else {
+            setFiltered(masterData);
+        }
     }
     const contains = ({ musicTitle }, query) => {
         const { title } = name;
@@ -81,7 +94,7 @@ const SearchBar = ( props )  =>{
                 placeholder="Search"
                 style = { styles.input }
                 value = { textIn }
-                onChangeText = { setStuff }
+                onChangeText = { ( text ) => setStuff( text ) }
             />
             <View style = {{ alignItems: 'flex-end'}} >
             <Pressable style = { styles.clear }  onPress = { clearOut } >
@@ -90,14 +103,14 @@ const SearchBar = ( props )  =>{
             </View>
             <Text> {textIn} </Text>
             <FlatList
-        data={data}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.listItem}>
-            <Text style={styles.listItemText}>{item.title}</Text>
-          </View>
-        )}
-      />
+                data={filteredData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                <View style={styles.listItem}>
+                    <Text style={styles.listItemText}>{item.title}</Text>
+                </View>
+                )}
+            />
     </View>
     );
 }
