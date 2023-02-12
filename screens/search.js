@@ -17,11 +17,13 @@ import {React, useContext, useState} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';
 import SearchBar from "../components/searchBar";
+import { useNavigation } from '@react-navigation/native';
 
 //Setup Search
 function Search({navigation}){
     //Create all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext); 
+    const temp = useNavigation();
 
     //Create all needed functions (Explanation given if necessary)
     function navU(){
