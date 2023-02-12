@@ -3,7 +3,7 @@
   Description: Makes the home page be able to navigated to with button taps from the user. Added feature to display the music from the user's artist list
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
-  Date revised: 1/29/2023
+  Date revised: 2/12/2023
   Preconditions: Importing react components 
   Postconditions: Creates the homepage from the imported components, alongside artist music information
   Errors: no errors
@@ -14,7 +14,7 @@
 
 //Import everything used for the page
 import { React, useContext, useEffect, useState } from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image, ScrollView } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image, ScrollView, TouchableOpacity, Linking} from 'react-native';
 import { ColorSchemeContext } from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
@@ -38,6 +38,8 @@ const discovery = {
 function Home({navigation}){
     //Create all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
+
+    let showModal = false;
 
     //Create all needed functions (Explanation given if necessary)
     function navU(){
@@ -187,25 +189,51 @@ function Home({navigation}){
         }
     });
 
+    function displayInfo() {
+        Linking.openURL("spotify:track:4cOdK2wGLETKBW3PvgPWqT")
+    }
+
     /**
      * This function is meant to generate the users artist music list
      * WIP: Currently not able to gather data from spotify
      * 
-     * @returns A series of react native elements showing new musical releases for the users followed artists
+     * @returns A series of react native elements showing new musical releases for the users followed artists, each one is pressable with the ability to open other apps such as spotify.
      */
     function getArtistMusic() {
         let items = [
-            "This is currently a work in progress",
-            "Artist One Released\nNew Music",
-            "Artist Two Released\nOther New Music",
-            "Artist Three Released\nAnother New Music",
-            "Artist One Released\nA New Album"
+            {
+                display: "This is currently a work in progress",
+                track: "4cOdK2wGLETKBW3PvgPWqT"
+            },
+            {
+                display: "Artist One Released\nNew Music",
+                track: "2xLMifQCjDGFmkHkpNLD9h"
+            },
+            {
+                display: "Artist Two Released\nOther New Music",
+                track: "3cfOd4CMv2snFaKAnMdnvK"
+            },
+            {
+                display: "Artist Three Released\nAnother New Music",
+                track: "10ecV5dPqa4XJOtVQRqYSX"
+            },
+            {
+                display: "Artist One Released\nA New Album",
+                track: "2bw4WgXyXP90hIex7ur58y"
+            }
         ];
 
         return (
             <View style = {styles.musicFeed}>
                 {items.map(function (item) {
-                    return (<View><Text style={styles.musicFeedItem}>{item}</Text><View padding={10}></View></View>)
+                    return (<View>
+                        <TouchableOpacity onPress = {() => {Linking.openURL("spotify:track:" + item["track"])}}>
+                            <Text style={styles.musicFeedItem}>{item["display"]}
+                            </Text>
+                        </TouchableOpacity>
+                        <View padding={10}>
+                        </View>
+                    </View>)
                 })}
             </View>
         )
