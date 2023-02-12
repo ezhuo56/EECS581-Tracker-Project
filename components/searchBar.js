@@ -13,9 +13,10 @@
 */
 
 //Import everything used for the page
-import {View, TextInput, Text, StyleSheet, Pressable,FlatList } from "react-native";
+import {View, TextInput, Text, StyleSheet, Pressable,FlatList,SafeAreaView } from "react-native";
 import {React, useState} from "react"
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import { useNavigation } from '@react-navigation/native';
 
 //create a temporary list of artist to search from
 const data = [
@@ -27,48 +28,59 @@ const data = [
 ];
 
 //Setup SearchBar
-const SearchBar = ( props )  =>{
+function SearchBar(){
     //Create necessary vars
     const [textIn, setTextIn ] = useState( '' );
     const [filteredData, setFiltered] = useState(data);
     const [masterData, setMaster] = useState(data);
+    const navigation = useNavigation();
 
+    function navArt(){
+        navigation.navigate('artists');
+    }
+
+    const searchFilter = ( text ) => {
+        if ( text ) {
+            const newData = masterData.filter( function ( item ) {
+                const itemData = item.title
+                    ? item.title.toUpperCase()
+                    : ''.toUpperCase();
+                const textData = text.toUpperCase();
+                return itemData.indexOf( textData ) > -1;
+            });
+            setFiltered( newData );
+            setTextIn( text );
+        } else {
+            setFiltered( masterData );
+            setTextIn( text );
+        }
+    }
+    const ItemSeparatorView = () => {
+        return (
+          <View
+            style={{
+              height: 0.5,
+              width: '100%',
+              backgroundColor: '#C8C8C8',
+            }}
+          />
+        );
+    }
+    const ItemView = ({ item }) => {
+        return (
+          // Flat List Item
+          <Text style={styles.itemStyle} onPress={() => navArt()}>
+            {item.id}
+            {'.'}
+            {item.title.toUpperCase()}
+          </Text>
+        );
+    }
 
     //Create all needed functions (Explanation given if necessary)
-    function setStuff (given){
-        searchFilter();
-        setTextIn( given );
-    }
-    function clearOut (){
-        setTextIn( '' );
-    }
-    const searchFilter = () => {
-        if ( textIn ) {
-        const newData = masterData.filter((item) => {
-            const itemData = item.title ? item.title.toUpperCase() 
-                : ''.toUpperCase();
-            const textData = textIn.toUpperCase;
-            return itemData.indexOf(textIn) > -1;
-        });
-        setFiltered(newData);
-        } else {
-            setFiltered(masterData);
-        }
-    }
-    const contains = ({ musicTitle }, query) => {
-        const { title } = name;
-        if (title.includes(query)) {
-            return true;
-        }
-        
-        return false;
-    };
 
     //CSS Styling for the searchBar
     const styles = StyleSheet.create({
-        container:{
-            margin: 15,
-        },
         input:{
             backgroundColor: "white",
             padding: 10,
@@ -84,34 +96,41 @@ const SearchBar = ( props )  =>{
             backgroundColor: 'white',
             alignItems: 'center',
             justifyContent: 'center',
-        }
+        },
+        container: {
+            backgroundColor: 'white',
+          },
+          itemStyle: {
+            padding: 10,
+          },
+          textInputStyle: {
+            height: 40,
+            borderWidth: 1,
+            paddingLeft: 20,
+            margin: 5,
+            borderColor: '#009688',
+            backgroundColor: '#FFFFFF',
+          },
     });
 
     //Create the searchbar
     return(
-        <View style = { styles.container }>
-            <TextInput
-                placeholder="Search"
-                style = { styles.input }
-                value = { textIn }
-                onChangeText = { ( text ) => setStuff( text ) }
-            />
-            <View style = {{ alignItems: 'flex-end'}} >
-            <Pressable style = { styles.clear }  onPress = { clearOut } >
-                <Text style = {{ color: 'Black', fontWeight: 'bold', }}> X </Text>
-            </Pressable>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <TextInput
+                    style={styles.textInputStyle}
+                    onChangeText={ (text) => searchFilter(text)}
+                    value={textIn}
+                    placeholder="Search"
+                />
+                <FlatList
+                    data={filteredData}
+                    keyExtractor={(item, index) => index.toString()}
+                    ItemSeparatorComponent={ItemSeparatorView}
+                    renderItem={ItemView}
+                />
             </View>
-            <Text> {textIn} </Text>
-            <FlatList
-                data={filteredData}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                <View style={styles.listItem}>
-                    <Text style={styles.listItemText}>{item.title}</Text>
-                </View>
-                )}
-            />
-    </View>
+        </SafeAreaView>
     );
 }
 

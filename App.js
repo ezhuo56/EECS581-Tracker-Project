@@ -25,6 +25,7 @@ import Login from './screens/login';
 import Signup from './screens/signup';
 import Settings from './screens/settings';
 import Forgetpassword from './screens/password.js'
+import Artists from './screens/artistBio.js';
 import {lightColorScheme, darkColorScheme } from './colorschemes';
 import { ColorSchemeContext, LoginContext, UserContext } from './context';
 import UserSetUp from './screens/UserSetup';
@@ -88,27 +89,34 @@ export default function App(){
                 options = {{
                   headerShown: false,
                   }}  
-                />
-                <Stack.Screen 
-                name = "settingsPage" 
-                component = {Settings} 
+              />
+              <Stack.Screen 
+              name = "settingsPage" 
+              component = {Settings} 
+              options = {{
+                headerShown: true,
+                title: "Settings",
+                headerTitleAlign: 'center',
+                headerTintColor: '#fff',
+                headerStyle:{
+                  backgroundColor: colorScheme.primaryColor,
+                },
+                }}  
+              />
+              <Stack.Screen 
+              name = "UserSetupPage" 
+              component = {UserSetUp} 
+              options = {{
+                headerShown: false,
+                }}  
+              />
+              <Stack.Screen
+                name = "artists"
+                component = {Artists}
                 options = {{
-                  headerShown: true,
-                  title: "Settings",
-                  headerTitleAlign: 'center',
-                  headerTintColor: '#fff',
-                  headerStyle:{
-                    backgroundColor: colorScheme.primaryColor,
-                  },
-                  }}  
-                />
-                <Stack.Screen 
-                name = "UserSetupPage" 
-                component = {UserSetUp} 
-                options = {{
-                  headerShown: false,
-                  }}  
-                />
+
+                }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </UserContext.Provider>
