@@ -20,13 +20,13 @@ import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 
 //IDs for our project
-const client_id = 'dc95aa564add4e22aca854acb29a5565';
-const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
+//const client_id = 'dc95aa564add4e22aca854acb29a5565';
+//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 //Eric ID for client sided testing
-//const client_id = '8865b29e5e404623a2e485a91ffb290d';
-//const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+const client_id = '8865b29e5e404623a2e485a91ffb290d';
+const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
 //scopes to get from the spotify API
-const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
+const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
 var accessToken;
 var gotToken = false;
 const discovery = {
@@ -40,7 +40,114 @@ function Home({navigation}){
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
     let showModal = false;
+  // send an authorization request to spotify servers
+    const [request,response,promptAsync] = useAuthRequest({
+        responseType: ResponseType.Token,
+        clientId: client_id,
+        clientSecret: secret_id,
+        scopes: scopes_arr,
+        usePKCE: false,
+        redirectUri: makeRedirectUri({scheme:'EECS581-Tracker-Project'}),
+    },discovery);
 
+    const [artists,setArtists] = useState([]);
+    
+    const [ShouldShow,setShow] = useState(true);
+    //collect the information of user's Spotify following list
+    const GetFollowers = () => {
+        
+        const [next,setNext] = useState("null");
+        const [getNext,setGetNext] = useState(false);
+        
+        const handleGetFollowers = () => {
+            axios({
+                method: "get",
+                url: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50",
+                headers: {
+                    Authorization: "Bearer " + accessToken,
+                }
+            }).then(response => {
+                 setArtists(response.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+          
+        }
+
+        return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
+    }
+    //after pressing the print data button, it should print out a list of what the user has followed on Spotify, allowing scrolling to see every artist the user has followed
+    const PrintFollowers = () => {
+        if(artists.length != 0){
+            useEffect(() => {
+                const saveFollowedArtists = async () => {
+                  try {
+                    
+                    console.log(artists);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                };
+                saveFollowedArtists();
+              }, [artists]);
+               
+               
+            setShow(false);
+            return (
+                <>
+                <ScrollView style={styles.scroll}>
+                  {artists?.items
+                    ? artists.items.map((item) => (
+                        <>
+                          <View key={item}>
+                            <Text>
+                              {item.name}
+                              {item?.artists
+                                ? item.artists.map((names, j) => (
+                                    <>
+                                      {names.name}
+                                      {Object.keys(item.artists).length > 1 &&
+                                      j < Object.keys(item.artists).length - 1 ? (
+                                          ', '
+                                        ) : null}
+                                    </>
+                                  ))
+                                : null}
+                            </Text>
+                          </View>
+                        </>
+                      ))
+                    : null}
+                </ScrollView>
+              </>
+            )
+        }
+        return ;
+    }
+
+    //checks if Spotify account is connected
+    useEffect(() => {
+        if(response?.type === 'success'){
+            const{access_token} = response.params;
+            accessToken = access_token;
+            gotToken = true;
+            console.log('access token:',accessToken);
+        }
+    },[response])
+    //show the two buttons to link Spotify and print out Spotify data
+    const ShowButtons = () => {
+            if(ShouldShow){
+                return(
+                    <>
+                        <View style={styles.spotifyButton}>
+                            <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
+                        </View>
+                        <GetFollowers />
+                    </>
+                )
+            }
+            return null;
+    }
     //Create all needed functions (Explanation given if necessary)
     function navU(){
         navigation.navigate('userPage');
@@ -242,15 +349,20 @@ function Home({navigation}){
     //Create the home page
     return(
         <View style = {styles.parent}>
+              
             <ScrollView>
-                {getArtistMusic()}
+            {getArtistMusic()}
             </ScrollView>
+            <ShowButtons />
+
+            <PrintFollowers />
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
                     style = { navBar.resizeUserB }
                     />
                 </Pressable>
+                
                 <Pressable style = { navBar.homeB } onPress = { navH } >
                     <Image source = { require( '../img/homeIcon.png' ) } 
                     style = { navBar.resizeHomeB }   
@@ -260,7 +372,9 @@ function Home({navigation}){
                     <Image source = { require( '../img/searchIcon.png' ) } 
                     style = { navBar.resizeSearchB }       
                     />
+                    
                 </Pressable>
+                
             </View>
         </View>
     );
