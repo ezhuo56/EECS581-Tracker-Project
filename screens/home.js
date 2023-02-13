@@ -76,7 +76,7 @@ function Home({navigation}){
 
         return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
     }
-    //after pressing the print data button, it should print out a list of what the user has followed on Spotify, allowing scrolling to see every artist the user has followed
+    //after pressing the print data button, it should print out a list of the user's artist music that have been released, needs UI improvement
     const PrintFollowers = () => {
         if(artists.length != 0){
             useEffect(() => {
