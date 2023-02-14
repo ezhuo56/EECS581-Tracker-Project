@@ -222,14 +222,15 @@ function Home({navigation}){
             marginBottom: 4,
             marginTop: 10,
             borderWidth: 2,
-            height: '3%',
-            width: '95%',
             borderRadius: 10,
+            padding: 30,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
 
         },
         textHeader: {
             fontSize: 24,
-            padding: 5,
             textAlign: 'center',
         },
         textBody: {
@@ -247,6 +248,7 @@ function Home({navigation}){
         musicFeedItem: {
             fontWeight: 'bold',
             fontSize: 24,
+            textAlign: 'left',
             padding: 5,
             textAlign: 'center',
             borderWidth: 2
@@ -309,24 +311,24 @@ function Home({navigation}){
     function getArtistMusic() {
         let items = [
             {
-                display: "This is currently a work in progress",
-                track: "4cOdK2wGLETKBW3PvgPWqT"
+                name: "Artist One Released:",
+                info: "Music Title",
+                track: "2xLMifQCjDGFmkHkpNLD9h",
             },
             {
-                display: "Artist One Released\nNew Music",
-                track: "2xLMifQCjDGFmkHkpNLD9h"
+                name: "Artist Two Released:",
+                info: "Music Title",
+                track: "3cfOd4CMv2snFaKAnMdnvK",
             },
             {
-                display: "Artist Two Released\nOther New Music",
-                track: "3cfOd4CMv2snFaKAnMdnvK"
+                name: "Artist Three Released:",
+                info: "Music Title",
+                track: "10ecV5dPqa4XJOtVQRqYSX",
             },
             {
-                display: "Artist Three Released\nAnother New Music",
-                track: "10ecV5dPqa4XJOtVQRqYSX"
-            },
-            {
-                display: "Artist One Released\nA New Album",
-                track: "2bw4WgXyXP90hIex7ur58y"
+                name: "Artist Four Released:",
+                info: "Music Title",
+                track: "2bw4WgXyXP90hIex7ur58y",
             }
         ];
 
@@ -334,9 +336,14 @@ function Home({navigation}){
             <View style = {styles.musicFeed}>
                 {items.map(function (item) {
                     return (<View>
-                        <TouchableOpacity onPress = {() => {Linking.openURL("spotify:track:" + item["track"])}}>
-                            <Text style={styles.musicFeedItem}>{item["display"]}
-                            </Text>
+                        <TouchableOpacity onPress = {() => {Linking.openURL("spotify:track:" + item["track"])}}>   
+                            <View style={styles.feed}>
+                                <View style={{ textAlign: 'center', alignItems: 'center' }}>
+                                    <Text style={styles.textHeader}>{item["name"]}</Text>
+                                    <Text style={styles.textBody}>{item["info"]}</Text>
+                                </View>
+                                <Image source = {require( '../img/wlr.png')} style={{ width: 128, height: 128, flexBasis: 40 }}/>
+                            </View>
                         </TouchableOpacity>
                         <View padding={10}>
                         </View>
