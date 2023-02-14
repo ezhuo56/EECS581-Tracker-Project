@@ -20,11 +20,11 @@ import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 
 //IDs for our project
-//const client_id = 'dc95aa564add4e22aca854acb29a5565';
-//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
+const client_id = 'dc95aa564add4e22aca854acb29a5565';
+const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 //Eric ID for client sided testing
-const client_id = '8865b29e5e404623a2e485a91ffb290d';
-const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+//const client_id = '8865b29e5e404623a2e485a91ffb290d';
+//const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
 //scopes to get from the spotify API
 const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
 var accessToken;
@@ -334,25 +334,35 @@ function Home({navigation}){
 
         return (
             <View style = {styles.musicFeed}>
-                {items.map(function (item) {
-                    return (<View>
-                        <TouchableOpacity onPress = {() => {Linking.openURL("spotify:track:" + item["track"])}}>   
-                            <View style={styles.feed}>
-                                <View style={{ textAlign: 'center', alignItems: 'center' }}>
-                                    <Text style={styles.textHeader}>{item["name"]}</Text>
-                                    <Text style={styles.textBody}>{item["info"]}</Text>
-                                </View>
-                                <Image source = {require( '../img/wlr.png')} style={{ width: 128, height: 128, flexBasis: 40 }}/>
+                {artists?.items
+                    ? artists.items.map((item) => (
+                        <>
+                          <View key={item}>
+                                <TouchableOpacity onPress = {() => {Linking.openURL(item.uri)}}>   
+                                    <View style={styles.feed}>
+                                        <View style={{ textAlign: 'center', alignItems: 'center' }}>
+                                        <Text style={styles.textHeader}>{item?.artists ? item.artists.map((names, j) => (
+                                                <>
+                                                    {names.name}
+                                                    {Object.keys(item.artists).length > 1 && j < Object.keys(item.artists).length - 1 ? (', ') : null}
+                                                </>
+                                            ))
+                                            : null} Released:
+                                        </Text>
+                                            <Text style={styles.textBody}>{item.name}</Text>
+                                        </View>
+                                        <Image source = {item.album.images[0]} style={{ width: 128, height: 128, flexBasis: 40 }}/>
+                                    </View>
+                                </TouchableOpacity>
+                                <View padding={10}></View>
                             </View>
-                        </TouchableOpacity>
-                        <View padding={10}>
-                        </View>
-                    </View>)
-                })}
+                        </>
+                      ))
+                    : null}
             </View>
         )
     }
-
+    
     //Create the home page
     return(
         <View style = {styles.parent}>
@@ -362,7 +372,6 @@ function Home({navigation}){
             </ScrollView>
             <ShowButtons />
 
-            <PrintFollowers />
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
                     <Image source = { require( '../img/userIcon.png' ) } 
