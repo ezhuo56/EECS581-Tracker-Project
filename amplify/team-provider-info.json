@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bigbops-dev-182124-authRole",
+      "UnauthRoleArn": "arn:aws:iam::821932796707:role/amplify-bigbops-dev-182124-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::821932796707:role/amplify-bigbops-dev-182124-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-bigbops-dev-182124-deployment",
+      "UnauthRoleName": "amplify-bigbops-dev-182124-unauthRole",
+      "StackName": "amplify-bigbops-dev-182124",
+      "StackId": "arn:aws:cloudformation:us-east-2:821932796707:stack/amplify-bigbops-dev-182124/58d9d680-afeb-11ed-9e89-06136e9dd252",
+      "AmplifyAppId": "d2z7nr2urklq41"
+    }
+  }
+}
