@@ -17,10 +17,11 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext } from '../context';
 import SearchBar from "../components/searchBar";
 
-function Artists({navigation}){
+function Artists({ route, navigation}){
+    
     return(
         <SafeAreaView style={{ flex: 1 }}>
-            
+            <Text> item : {JSON.stringify(route.params)} </Text>
         </SafeAreaView>
     );
 }

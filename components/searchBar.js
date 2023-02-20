@@ -31,12 +31,12 @@ const data = [
 function SearchBar(){
     //Create necessary vars
     const [textIn, setTextIn ] = useState( '' );
-    const [filteredData, setFiltered] = useState(data);
+    const [filteredData, setFiltered] = useState([]);
     const [masterData, setMaster] = useState(data);
     const navigation = useNavigation();
 
-    function navArt(){
-        navigation.navigate('artists');
+    function navArt( given ){
+        navigation.navigate('artists', given);
     }
 
     const searchFilter = ( text ) => {
@@ -51,7 +51,7 @@ function SearchBar(){
             setFiltered( newData );
             setTextIn( text );
         } else {
-            setFiltered( masterData );
+            setFiltered( [] );
             setTextIn( text );
         }
     }
@@ -69,10 +69,8 @@ function SearchBar(){
     const ItemView = ({ item }) => {
         return (
           // Flat List Item
-          <Text style={styles.itemStyle} onPress={() => navArt()}>
-            {item.id}
-            {'.'}
-            {item.title.toUpperCase()}
+          <Text style={styles.itemStyle} onPress={() => navArt( item.title )}>
+            {item.title}
           </Text>
         );
     }
