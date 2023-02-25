@@ -10,6 +10,11 @@
       "StackName": "amplify-bigbops-dev-182124",
       "StackId": "arn:aws:cloudformation:us-east-2:821932796707:stack/amplify-bigbops-dev-182124/58d9d680-afeb-11ed-9e89-06136e9dd252",
       "AmplifyAppId": "d2z7nr2urklq41"
+    },
+    "categories": {
+      "auth": {
+        "bigbops70246fe5": {}
+      }
     }
   }
 }

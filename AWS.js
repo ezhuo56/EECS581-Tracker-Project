@@ -2,7 +2,8 @@
   Name: AWS.js
   Description: Create the and sore the info for the AWS database and server
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
-  Date: 02/11/2023
+  Date created: 02/11/2023
+  Date Edited: 02/25/2023
   Preconditions: 
   Postconditions: creates a constant containing the AWS info
   Errors:
@@ -17,7 +18,7 @@ const AWS_CONFIG = {
   InstanceID: "big-bops-development-database",
   DBName: "Big_Bop_Dev_Database",
   key_pair_name: "Big-Bops-Server",
-  ServerName: "biggestBops",
-  ServerPublicDNS: "ec2-3-144-111-114.us-east-2.compute.amazonaws.com",
-  IP4_Address: "3.144.111.114"
+  ServerName: "BiggestBops",
+  ServerPublicDNS: "ec2-18-116-230-144.us-east-2.compute.amazonaws.com",
+  IP4_Address: "18.116.230.144"
 }

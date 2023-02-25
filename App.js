@@ -29,9 +29,22 @@ import Artists from './screens/artistBio.js';
 import {lightColorScheme, darkColorScheme } from './colorschemes';
 import { ColorSchemeContext, LoginContext, UserContext } from './context';
 import UserSetUp from './screens/UserSetup';
+import Amplify from 'aws-amplify';
+import config from "./src/aws-exports";
+import { withAuthenticator } from 'aws-amplify-react-native';
 
-//Create the app
-export default function App(){
+Amplify.configure({
+    ...config,
+    Analytics: {
+      disables: true,
+    },
+}); 
+
+/*
+Create the app
+used to start with export default, removed and placed at the bottom - andrew
+*/
+function App(){
   //Creates the necessary vars (including a screens/page stack to navigate)
   const Stack = createNativeStackNavigator();
   const [colorScheme, setColorScheme] = useState(lightColorScheme);
@@ -124,3 +137,6 @@ export default function App(){
     </ColorSchemeContext.Provider>
   );
 }
+
+//shove the app in withAuthenticator
+export default withAuthenticator(App);
