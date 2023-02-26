@@ -96,7 +96,7 @@ function User({navigation}){
             });
             console.log(artists);
         }
-        return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
+        return <View style={styles.screenButton}><Button title="Print data" color = {colorScheme.textColor} onPress={handleGetFollowers}/></View>;
     }
     //Prints who the user is following from spotify
     const PrintFollowers = () => {
@@ -145,7 +145,7 @@ function User({navigation}){
                 return(
                     <>
                         <View style={styles.spotifyButton}>
-                            <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
+                            <Button disabled={!request} title="Login to Spotify" color = {colorScheme.textColor} onPress={() => promptAsync()}/>
                         </View>
                         <GetFollowers />
                     </>
@@ -202,11 +202,12 @@ function User({navigation}){
         userName: {
             fontSize: 35,
             fontWeight: 'bold',
+            color: colorScheme.textColor,
         },
         email: {
             fontSize: 15,
-            color: 'black',
             padding: 15,
+            color: colorScheme.textColor,
         },
         bottom: {
             flexDirection: 'row',
@@ -297,7 +298,7 @@ function User({navigation}){
             <ScrollView>
                 <View style = { styles.profileBack } >
                 <Pressable style = { styles.gear } onPress = { navSet } >
-                        <Image source = {(colorScheme.name == 'blue' ? lightGear : darkGear)}
+                        <Image source = {(['blue', 'light', 'dark'].includes(colorScheme.name) ? lightGear : darkGear)}
                             style = { styles.gearResize }>
                         </Image>
                 </Pressable>
