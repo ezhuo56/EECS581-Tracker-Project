@@ -1,0 +1,6 @@
+type UserData @model @auth(rules: [{allow: private, provider: iam}, {allow: owner}]) {
+  id: ID!
+  email: AWSEmail
+  firstName: String
+  lastName: String
+}

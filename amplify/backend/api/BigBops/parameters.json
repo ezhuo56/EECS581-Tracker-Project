@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "BigBops",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbigbops70246fe5",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
