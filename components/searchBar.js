@@ -3,8 +3,8 @@
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 2/12/2023
-  Preconditions: None
+  Date revised: 2/26/2023
+  Preconditions: data retrieved
   Postconditions: Allow the usage of the search bar to be utilized by the user to search Spotify's database from the app
   Errors: no errors
   Side effects: no side effects
@@ -31,12 +31,12 @@ const data = [
 function SearchBar(){
     //Create necessary vars
     const [textIn, setTextIn ] = useState( '' );
-    const [filteredData, setFiltered] = useState(data);
+    const [filteredData, setFiltered] = useState([]);
     const [masterData, setMaster] = useState(data);
     const navigation = useNavigation();
 
-    function navArt(){
-        navigation.navigate('artists');
+    function navArt( given ){
+        navigation.navigate('artists', given);
     }
 
     const searchFilter = ( text ) => {
@@ -51,7 +51,7 @@ function SearchBar(){
             setFiltered( newData );
             setTextIn( text );
         } else {
-            setFiltered( masterData );
+            setFiltered( [] );
             setTextIn( text );
         }
     }
@@ -69,10 +69,8 @@ function SearchBar(){
     const ItemView = ({ item }) => {
         return (
           // Flat List Item
-          <Text style={styles.itemStyle} onPress={() => navArt()}>
-            {item.id}
-            {'.'}
-            {item.title.toUpperCase()}
+          <Text style={styles.itemStyle} onPress={() => navArt( item.title )}>
+            {item.title}
           </Text>
         );
     }

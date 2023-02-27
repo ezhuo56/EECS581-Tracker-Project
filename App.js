@@ -114,6 +114,7 @@ export default function App(){
                 name = "artists"
                 component = {Artists}
                 options = {{
+                  headerShown: false,
 
                 }}
               />
