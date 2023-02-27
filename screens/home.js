@@ -18,13 +18,13 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext } from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
-
+import {API_KEY} from '@env'
 //IDs for our project
-const client_id = 'dc95aa564add4e22aca854acb29a5565';
-const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
+const client_id = API_KEY;
+//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
 //Eric ID for client sided testing
 //const client_id = '8865b29e5e404623a2e485a91ffb290d';
-//const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
 //scopes to get from the spotify API
 const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
 var accessToken;
