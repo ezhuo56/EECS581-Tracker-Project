@@ -18,9 +18,8 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext } from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
-import { dataBase, auth } from '../firebase';
-import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
-import { idConverter, userConverter } from '../components/firebaseConverter';
+import { dataBase } from '../firebase';
+import { doc, getDoc } from "firebase/firestore";
 
 
 //Setup Home

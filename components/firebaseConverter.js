@@ -14,7 +14,6 @@
 
 //Import everything used for the page
 import userData from "./userData";
-import idData from "./idData";
 
 //Firestore User Data Converter
 const userConverter = {
@@ -28,20 +27,6 @@ const userConverter = {
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
         return new userData(data.first, data.second, data.email);
-    }
-};
-
-//Firestore ID Data Converter
-const idConverter = {
-    toFirestore: (id) => {
-        return {
-            clientid: id.client,
-            secretid: id.secret,
-            };
-    },
-    fromFirestore: (snapshot, options) => {
-        const data = snapshot.data(options);
-        return new idData(data.clientid, data.secretid);
     }
 };
 export default userConverter;
