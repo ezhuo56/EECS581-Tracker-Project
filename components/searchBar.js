@@ -3,7 +3,7 @@
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 2/26/2023
+  Date revised: 3/6/2023
   Preconditions: data retrieved
   Postconditions: Allow the usage of the search bar to be utilized by the user to search Spotify's database from the app
   Errors: no errors
