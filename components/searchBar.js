@@ -14,26 +14,40 @@
 
 //Import everything used for the page
 import {View, TextInput, Text, StyleSheet, Pressable,FlatList,SafeAreaView } from "react-native";
-import {React, useState} from "react"
+import {React, useState, useEffect} from "react"
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import { useNavigation } from '@react-navigation/native';
+import { auth, dataBase } from '../firebase';
+import {collection, addDoc, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
 
 //create a temporary list of artist to search from
-const data = [
+/*const data = [
     { id: '1', title: 'Bob' },
     { id: '2', title: 'Jones' },
     { id: '3', title: 'Billy' },
     { id: '4', title: '420' },
     { id: '5', title: 'Huh' },
-];
+];*/
 
 //Setup SearchBar
 function SearchBar(){
     //Create necessary vars
+    const [data, setData] = useState([]);
     const [textIn, setTextIn ] = useState( '' );
     const [filteredData, setFiltered] = useState([]);
     const [masterData, setMaster] = useState(data);
     const navigation = useNavigation();
+
+    useEffect( () => {
+        const ref = collection( dataBase, "Artists" );
+        onSnapshot( ref, (artists) => 
+            setData( artists.docs.map( (artist ) => ({
+            title: artist.id,
+            data: artist.data(),
+            })))
+        );
+        setMaster( data );
+    })
 
     function navArt( given ){
         navigation.navigate('artists', given);
