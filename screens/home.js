@@ -3,7 +3,7 @@
   Description: Makes the home page be able to navigated to with button taps from the user. Added feature to display the music from the user's artist list
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/10/2022
-  Date revised: 2/12/2023
+  Date revised: 3/6/2023
   Preconditions: Importing react components 
   Postconditions: Creates the homepage from the imported components, alongside artist music information
   Errors: no errors
@@ -18,28 +18,49 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext } from '../context';
 import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
-import {API_KEY} from '@env'
-//IDs for our project
-const client_id = API_KEY;
-//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
-//Eric ID for client sided testing
-//const client_id = '8865b29e5e404623a2e485a91ffb290d';
-const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
-//scopes to get from the spotify API
-const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
-var accessToken;
-var gotToken = false;
-const discovery = {
-    authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-    tokenEndpoint: 'https://accounts.spotify.com/api/token',
-};
+import { dataBase, auth } from '../firebase';
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { idConverter, userConverter } from '../components/firebaseConverter';
+
 
 //Setup Home
 function Home({navigation}){
+
+    //IDs for our project
+    const [client_id,setClient] = useState('');
+    const [secret_id,setSecret] = useState('');
+    const [data, setData] = useState([]);
+
+    async function getId(){
+        const docRef = doc(dataBase, "spotifyid", "VUWUOJoxafST6Syd474J");
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()){
+            const ids = docSnap.data();
+            setClient( ids.clientid );
+            setSecret( ids.secretid );
+        } else {
+            console.log("id not found");
+        }
+    }
+
+    useEffect( () => {
+        getId();
+    });
+
+    //Eric ID for client sided testing
+    //const client_id = '8865b29e5e404623a2e485a91ffb290d';
+    // const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+    //scopes to get from the spotify API
+    const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
+    var accessToken;
+    var gotToken = false;
+    const discovery = {
+        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+        tokenEndpoint: 'https://accounts.spotify.com/api/token',
+    };
     //Create all necessary vars
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
 
-    let showModal = false;
   // send an authorization request to spotify servers
     const [request,response,promptAsync] = useAuthRequest({
         responseType: ResponseType.Token,
@@ -76,56 +97,6 @@ function Home({navigation}){
 
         return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
     }
-    //after pressing the print data button, it should print out a list of the user's artist music that have been released, needs UI improvement
-    const PrintFollowers = () => {
-        if(artists.length != 0){
-            useEffect(() => {
-                const saveFollowedArtists = async () => {
-                  try {
-                    
-                    console.log(artists);
-                  } catch (error) {
-                    console.log(error);
-                  }
-                };
-                saveFollowedArtists();
-              }, [artists]);
-               
-               
-            setShow(false);
-            return (
-                <>
-                <ScrollView style={styles.scroll}>
-                  {artists?.items
-                    ? artists.items.map((item) => (
-                        <>
-                          <View key={item}>
-                            <Text>
-                              {item.name}
-                              {item?.artists
-                                ? item.artists.map((names, j) => (
-                                    <>
-                                      {names.name}
-                                      {Object.keys(item.artists).length > 1 &&
-                                      j < Object.keys(item.artists).length - 1 ? (
-                                          ', '
-                                        ) : null}
-                                    </>
-                                  ))
-                                : null}
-                            </Text>
-                          </View>
-                        </>
-                      ))
-                    : null}
-                </ScrollView>
-              </>
-            )
-        }
-        return ;
-    }
-
-    //checks if Spotify account is connected
     useEffect(() => {
         if(response?.type === 'success'){
             const{access_token} = response.params;
@@ -136,17 +107,17 @@ function Home({navigation}){
     },[response])
     //show the two buttons to link Spotify and print out Spotify data
     const ShowButtons = () => {
-            if(ShouldShow){
-                return(
-                    <>
-                        <View style={styles.spotifyButton}>
-                            <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
-                        </View>
-                        <GetFollowers />
-                    </>
-                )
-            }
-            return null;
+        if(ShouldShow){
+            return(
+                <>
+                    <View style={styles.spotifyButton}>
+                        <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
+                    </View>
+                    <GetFollowers />
+                </>
+            )
+        }
+        return null;
     }
     //Create all needed functions (Explanation given if necessary)
     function navU(){
@@ -298,10 +269,6 @@ function Home({navigation}){
         }
     });
 
-    function displayInfo() {
-        Linking.openURL("spotify:track:4cOdK2wGLETKBW3PvgPWqT")
-    }
-
     /**
      * This function is meant to generate the users artist music list
      * WIP: Currently not able to gather data from spotify
@@ -369,6 +336,7 @@ function Home({navigation}){
               
             <ScrollView>
             {getArtistMusic()}
+
             </ScrollView>
             <ShowButtons />
 
