@@ -3,7 +3,7 @@
   Description: Makes the login page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 1/23/2023
+  Date revised: 3/12/2023
   Preconditions: Importing react components 
   Postconditions: Creates the login page from the imported components
   Errors: no errors
@@ -15,7 +15,7 @@
 //Import everything used for the page
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
-import { ColorSchemeContext, LoginContext, UserContext} from '../context';
+import { ColorSchemeContext, LoginContext, UserContext, ExpoPushContext} from '../context';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, getDoc } from "firebase/firestore";
@@ -30,6 +30,7 @@ function Login({navigation}){
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [loginInfo, setLogins] = useContext(LoginContext);
     const [user, setUser] = useContext(UserContext);
+    const [expoPushToken, setExpoPushToken] = useContext(ExpoPushContext);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -43,7 +44,25 @@ function Login({navigation}){
     function navForgetPass(){
         navigation.navigate('forgetpasswordPage')
     }
+    function sendLoginNotification() {
+        console.log("Sending Notification");
+        fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-Encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                to: expoPushToken,
+                data: {},
+                title: 'Login Attempt',
+                body: 'There was an attempt to login to Big Bops on your device',
+            }),
+        })
+    }
     function handleLogin(){
+        sendLoginNotification();
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
             setLogins(email);
