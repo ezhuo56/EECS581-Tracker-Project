@@ -3,7 +3,7 @@
   Description: Makes the search page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 2/12/2023
+  Date revised: 3/20/2023
   Preconditions: Importing react components 
   Postconditions: Creates the search page from the imported components provided by react native
   Errors: no errors
@@ -18,6 +18,8 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext } from '../context';
 import SearchBar from "../components/searchBar";
 import { useNavigation } from '@react-navigation/native';
+import { auth, dataBase } from '../firebase';
+import {collection, addDoc, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
 
 //Setup Search
 function Search({navigation}){
