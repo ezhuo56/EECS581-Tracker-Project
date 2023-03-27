@@ -20,7 +20,7 @@ import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 import { dataBase } from '../firebase';
 import { doc, getDoc } from "firebase/firestore";
-
+ 
 
 //Setup Home
 function Home({navigation}){
@@ -41,14 +41,27 @@ function Home({navigation}){
             console.log("id not found");
         }
     }
-
+    async function getEricId(){
+        const docRef = doc(dataBase, "EricSpotifyID", "oxPGoByCBnAYgokgJ1J0");
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()){
+            const Ericids = docSnap.data();
+            setEricClient( Ericids.client_id );
+            setEricSecret( Ericids.secret_id );
+        } else {
+            console.log("id not found");
+        }
+    }
     useEffect( () => {
-        getId();
+        getEricId();
     });
+    /*useEffect( () => {
+        getId();
+    });*/
 
     //Eric ID for client sided testing
-    //const client_id = '8865b29e5e404623a2e485a91ffb290d';
-    // const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
+    //const [client_id,setEricClient] = useState('');
+    //const [secret_id,setEricSecret] = useState('');
     //scopes to get from the spotify API
     const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
     var accessToken;
@@ -315,10 +328,13 @@ function Home({navigation}){
                                             ))
                                             : null} Released:
                                         </Text>
+                                        
                                             <Text style={styles.textBody}>{item.name}</Text>
+                                            
                                         </View>
-                                        <Image source = {item.album.images[0]} style={{ width: 128, height: 128, flexBasis: 40 }}/>
+                                        <Image source = {item.album.images[0]} style={{ width: 128, height: 128, flexBasis:40}}/>
                                     </View>
+                                    
                                 </TouchableOpacity>
                                 <View padding={10}></View>
                             </View>
