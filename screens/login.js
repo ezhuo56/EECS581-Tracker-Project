@@ -23,6 +23,7 @@ import {userData} from "../components/userData.js";
 import {userConverter} from "../components/firebaseConverter"
 import User from './user';
 import { darkColorScheme, lightColorScheme, blueColorScheme } from '../colorschemes';
+import { sendNotification } from '../notification';
 
 //Setup Login
 function Login({navigation}){
@@ -44,25 +45,8 @@ function Login({navigation}){
     function navForgetPass(){
         navigation.navigate('forgetpasswordPage')
     }
-    function sendLoginNotification() {
-        console.log("Sending Notification");
-        fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Accept-Encoding': 'gzip, deflate',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                to: expoPushToken,
-                data: {},
-                title: 'Login Attempt',
-                body: 'There was an attempt to login to Big Bops on your device',
-            }),
-        })
-    }
     function handleLogin(){
-        sendLoginNotification();
+        sendNotification(expoPushToken, 'Login Attempt', 'There was an attempt to login to Big Bops on your device');
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
             setLogins(email);
