@@ -51,10 +51,8 @@ function Artists({ route, navigation}){
     const [biography, setBio ] = useState( bee );
 
     useEffect( () => {
-        setBio( "yuh" );
-        console.log( artistName );
-        const docRef = doc( dataBase, "Artists", artistName );
-        getDoc( docRef ).then( ( doc ) => {
+        const docRef = doc( dataBase, "Artists", JSON.parse(artistName) );
+        onSnapshot( docRef, ( doc ) => {
             console.log( doc.data() );
             setBio( doc.get( "Bio" ) );
         })
