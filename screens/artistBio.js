@@ -17,7 +17,7 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressab
 import { ColorSchemeContext } from '../context';
 import SearchBar from "../components/searchBar";
 import { auth, dataBase } from '../firebase';
-import {collection, addDoc, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
+import {collection, addDoc, doc, setDoc, getDoc, onSnapshot } from "firebase/firestore";
 
 function Artists({ route, navigation}){
     function navBack(){
@@ -51,14 +51,13 @@ function Artists({ route, navigation}){
     const [biography, setBio ] = useState( bee );
 
     useEffect( () => {
+        setBio( "yuh" );
         console.log( artistName );
         const docRef = doc( dataBase, "Artists", artistName );
-        const docSnap = getDoc( docRef );
-        if( docSnap.exists() ){
-            //Set Data
-        } else {
-            //Should never reach this case
-        }
+        getDoc( docRef ).then( ( doc ) => {
+            console.log( doc.data() );
+            setBio( doc.get( "Bio" ) );
+        })
     });
 
     const styles = StyleSheet.create({
