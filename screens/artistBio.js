@@ -3,7 +3,7 @@
   Description: Create an artist bio
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 2/12/2023
-  Date revised: 3/20/2023
+  Date revised: 3/27/2023
   Preconditions: Requires User to press a Search button, pushing data forwards to database & retreving
   Postconditions: Returns a biography of said pressed searched person
   Errors: no errors
