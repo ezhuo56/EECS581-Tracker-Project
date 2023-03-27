@@ -52,17 +52,11 @@ function Home({navigation}){
             console.log("id not found");
         }
     }
+    
     useEffect( () => {
-        getEricId();
-    });
-    /*useEffect( () => {
         getId();
-    });*/
+    });
 
-    //Eric ID for client sided testing
-    //const [client_id,setEricClient] = useState('');
-    //const [secret_id,setEricSecret] = useState('');
-    //scopes to get from the spotify API
     const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
     var accessToken;
     var gotToken = false;
@@ -86,13 +80,13 @@ function Home({navigation}){
     const [artists,setArtists] = useState([]);
     
     const [ShouldShow,setShow] = useState(true);
-    //collect the information of user's Spotify following list
-    const GetFollowers = () => {
-        
-        const [next,setNext] = useState("null");
-        const [getNext,setGetNext] = useState(false);
-        
-        const handleGetFollowers = () => {
+
+    useEffect(() => {
+        if(response?.type === 'success'){
+            const{access_token} = response.params;
+            accessToken = access_token;
+            gotToken = true;
+            console.log('access token:',accessToken);
             axios({
                 method: "get",
                 url: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50",
@@ -100,21 +94,11 @@ function Home({navigation}){
                     Authorization: "Bearer " + accessToken,
                 }
             }).then(response => {
-                 setArtists(response.data);
+                    setArtists(response.data);
             }).catch((err) => {
                 console.log(err);
             });
-          
-        }
-
-        return <View style={styles.screenButton}><Button title="Print data" color = 'white' onPress={handleGetFollowers}/></View>;
-    }
-    useEffect(() => {
-        if(response?.type === 'success'){
-            const{access_token} = response.params;
-            accessToken = access_token;
-            gotToken = true;
-            console.log('access token:',accessToken);
+            setShow(false);
         }
     },[response])
     //show the two buttons to link Spotify and print out Spotify data
@@ -125,7 +109,6 @@ function Home({navigation}){
                     <View style={styles.spotifyButton}>
                         <Button disabled={!request} title="Login to Spotify" color = 'white' onPress={() => promptAsync()}/>
                     </View>
-                    <GetFollowers />
                 </>
             )
         }
@@ -182,7 +165,8 @@ function Home({navigation}){
             color: colorScheme.textColor
         },
         spotifyButton: {
-            marginTop: 6,
+            position: 'absolute',
+            marginTop: 250,
             marginBottom: 6,
             width: '60%',
             height: '5%',
@@ -348,12 +332,12 @@ function Home({navigation}){
     //Create the home page
     return(
         <View style = {styles.parent}>
-              
+            <ShowButtons />
             <ScrollView>
             {getArtistMusic()}
 
             </ScrollView>
-            <ShowButtons />
+            
 
             <View style = { navBar.containerB } >
                 <Pressable style = { navBar.userB } onPress = { navU } >
