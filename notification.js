@@ -1,5 +1,5 @@
 /*
-  Name: notifications.js
+  Name: notification.js
   Description: This file contains the function for sending a notification
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 03/26/2023
