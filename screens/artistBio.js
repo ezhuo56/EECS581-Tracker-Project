@@ -3,7 +3,7 @@
   Description: Create an artist bio
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 2/12/2023
-  Date revised: 2/26/2023
+  Date revised: 3/27/2023
   Preconditions: Requires User to press a Search button, pushing data forwards to database & retreving
   Postconditions: Returns a biography of said pressed searched person
   Errors: no errors
@@ -12,10 +12,12 @@
   any known faults: no known faults
 */
 
-import {React, useContext, useState} from 'react';
+import {React, useContext, useState, useEffect} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
 import { ColorSchemeContext } from '../context';
 import SearchBar from "../components/searchBar";
+import { auth, dataBase } from '../firebase';
+import {collection, addDoc, doc, setDoc, getDoc, onSnapshot } from "firebase/firestore";
 
 function Artists({ route, navigation}){
     function navBack(){
@@ -46,7 +48,15 @@ function Artists({ route, navigation}){
 
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [artistName, setName ] = useState( JSON.stringify(route.params) );
-    const [biography, setBio ] = useState( bee);
+    const [biography, setBio ] = useState( bee );
+
+    useEffect( () => {
+        const docRef = doc( dataBase, "Artists", JSON.parse(artistName) );
+        onSnapshot( docRef, ( doc ) => {
+            console.log( doc.data() );
+            setBio( doc.get( "Bio" ) );
+        })
+    });
 
     const styles = StyleSheet.create({
         profileBack: {
