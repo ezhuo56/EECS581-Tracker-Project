@@ -3,7 +3,7 @@
   Description: Create an artist bio
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 2/12/2023
-  Date revised: 3/27/2023
+  Date revised: 4/1/2023
   Preconditions: Requires User to press a Search button, pushing data forwards to database & retreving
   Postconditions: Returns a biography of said pressed searched person
   Errors: no errors
@@ -75,6 +75,7 @@ function Artists({ route, navigation}){
             alignItems: 'center',
         },
         icon: {
+            resizeMode: 'stretch',
             width: 140,
             height: 140,
             borderRadius: 0,
@@ -82,6 +83,11 @@ function Artists({ route, navigation}){
         },
         bioDetails: {
             marginTop: 50,
+        },
+        nameTitle: {
+            marginTop: 10,
+            fontSize: 35,
+            fontWeight: 'bold',
         }
     });
 
@@ -92,9 +98,9 @@ function Artists({ route, navigation}){
             </Pressable>
         </View>
         <View style = { styles.bioAlign }>
-            <Image source = { require ( '../img/temp.png' ) } style = { styles.icon }>
+            <Image source = { require ( '../img/temp2.png' ) } style = { styles.icon }>
             </Image>
-            <Text> {JSON.parse(artistName)} </Text>
+            <Text style = { styles.nameTitle }> {JSON.parse(artistName)} </Text>
             <View style = { styles.bioDetails }>
                 <Text>
                     {biography}
