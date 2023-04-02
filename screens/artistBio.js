@@ -23,34 +23,22 @@ function Artists({ route, navigation}){
     function navBack(){
         navigation.navigate( 'searchPage' );
     }
-    const bee = `
-    According to all known laws
-    of aviation,
-    
-      
-    there is no way a bee
-    should be able to fly.
-    
-      
-    Its wings are too small to get
-    its fat little body off the ground.
-    
-      
-    The bee, of course, flies anyway
-    
-      
-    because bees don't care
-    what humans think is impossible.
-    
-      
-    Yellow, black. Yellow, black.
-    Yellow, black. Yellow, black.`;
+    const bee = '';
+    let barry = require( '../img/temp2.png' );
+    let backstreet = require( '../img/temp3.png' );
+    let img = backstreet;
 
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [artistName, setName ] = useState( JSON.stringify(route.params) );
     const [biography, setBio ] = useState( bee );
 
     useEffect( () => {
+        console.log( artistName );
+        if( JSON.parse(artistName) == "Barry B. Benson" ){
+            img = barry;
+        } else {
+            img = backstreet;
+        }
         const docRef = doc( dataBase, "Artists", JSON.parse(artistName) );
         onSnapshot( docRef, ( doc ) => {
             console.log( doc.data() );
@@ -73,21 +61,26 @@ function Artists({ route, navigation}){
         },
         bioAlign: {
             alignItems: 'center',
+            margin: 100,
         },
         icon: {
             resizeMode: 'stretch',
             width: 140,
             height: 140,
-            borderRadius: 0,
-            marginTop: -70,
+            borderRadius: 5,
+            marginTop: -170,
         },
         bioDetails: {
             marginTop: 50,
+            fontSize: 20,
         },
         nameTitle: {
             marginTop: 10,
             fontSize: 35,
             fontWeight: 'bold',
+        },
+        bioText: {
+            fontSize: 20,   
         }
     });
 
@@ -98,11 +91,11 @@ function Artists({ route, navigation}){
             </Pressable>
         </View>
         <View style = { styles.bioAlign }>
-            <Image source = { require ( '../img/temp2.png' ) } style = { styles.icon }>
+            <Image source = { img } style = { styles.icon }>
             </Image>
             <Text style = { styles.nameTitle }> {JSON.parse(artistName)} </Text>
             <View style = { styles.bioDetails }>
-                <Text>
+                <Text style = { styles.bioText }>
                     {biography}
                 </Text>
             </View>
