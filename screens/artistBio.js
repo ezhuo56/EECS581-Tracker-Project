@@ -33,12 +33,6 @@ function Artists({ route, navigation}){
     const [biography, setBio ] = useState( bee );
 
     useEffect( () => {
-        console.log( artistName );
-        if( JSON.parse(artistName) == "Barry B. Benson" ){
-            img = barry;
-        } else {
-            img = backstreet;
-        }
         const docRef = doc( dataBase, "Artists", JSON.parse(artistName) );
         onSnapshot( docRef, ( doc ) => {
             console.log( doc.data() );
@@ -91,7 +85,7 @@ function Artists({ route, navigation}){
             </Pressable>
         </View>
         <View style = { styles.bioAlign }>
-            <Image source = { img } style = { styles.icon }>
+            <Image source = { JSON.parse(artistName) == "Backstreet Boys" ? backstreet : barry }style = { styles.icon }>
             </Image>
             <Text style = { styles.nameTitle }> {JSON.parse(artistName)} </Text>
             <View style = { styles.bioDetails }>

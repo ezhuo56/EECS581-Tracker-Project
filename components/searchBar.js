@@ -83,9 +83,11 @@ function SearchBar(){
     const ItemView = ({ item }) => {
         return (
           // Flat List Item
+          <View>
           <Pressable style={styles.itemStyle} onPress={() => navArt( item.title )}>
             {item.title}
           </Pressable>
+          </View>
         );
     }
 
