@@ -57,7 +57,7 @@ function Home({navigation}){
         getId();
     });
 
-    const scopes_arr = ['user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
+    const scopes_arr = ['user-follow-read','user-top-read','user-read-private','user-read-email','playlist-modify-private', 'playlist-modify-public', 'playlist-read-private'];
     var accessToken;
     var gotToken = false;
     const discovery = {
@@ -78,8 +78,10 @@ function Home({navigation}){
     },discovery);
 
     const [artists,setArtists] = useState([]);
-    
     const [ShouldShow,setShow] = useState(true);
+    let prevDates = [4-1,3-31,3-30,3-29,3-28,3-27,3-26,3-25,3-24,3-23,3-22,3-21,3-20,3-19];
+    let latestTracks = "";
+    const [prevTracks, setTracks] = useState("");
 
     useEffect(() => {
         if(response?.type === 'success'){
@@ -87,14 +89,48 @@ function Home({navigation}){
             accessToken = access_token;
             gotToken = true;
             console.log('access token:',accessToken);
-            axios({
-                method: "get",
-                url: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50",
+            axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=50",{
                 headers: {
                     Authorization: "Bearer " + accessToken,
                 }
             }).then(response => {
-                    setArtists(response.data);
+                    for(let i=0; i<response.data.artists.total; i++){
+                        axios({
+                            method: "get",
+                            url: `https://api.spotify.com/v1/artists/${response.data.artists.items[i].id}/albums?offset=0&limit=10&include_groups=album,single&market=US`,
+                            headers: {
+                                Authorization: "Bearer " + accessToken,
+                            }
+                        }).then(artist => {
+                                let limit = (artist.data.limit < artist.data.total) ? artist.data.limit : artist.data.total;
+                                for(let j=0; j<limit; j++){
+                                    let currItem = artist.data.items[j];
+                                    let year = currItem.release_date.substring(0,4);
+                                    if(year === "2023"){
+                                        if(currItem.release_date.substring(5,7) === "04" || currItem.release_date.substring(5,7) === "03" || currItem.release_date.substring(5,7) === "02" | currItem.release_date.substring(5,7) === "01"){
+                                            latestTracks +=`${currItem.id},`;
+                                        }
+                                    }
+                                } 
+                                axios({
+                                    method: "get",
+                                    url: `https://api.spotify.com/v1/albums`,
+                                    params: {
+                                        "ids": latestTracks.substring(0,(latestTracks.length)-1),
+                                    },
+                                    headers: {
+                                        Authorization: "Bearer " + accessToken,
+                                    }
+                                }).then(track => {
+                                        console.log((latestTracks));
+                                        setArtists(track.data);
+                                }).catch((err) => {
+                                    console.log(err);
+                                });
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    }
             }).catch((err) => {
                 console.log(err);
             });
@@ -272,33 +308,11 @@ function Home({navigation}){
      * @returns A series of react native elements showing new musical releases for the users followed artists, each one is pressable with the ability to open other apps such as spotify.
      */
     function getArtistMusic() {
-        let items = [
-            {
-                name: "Artist One Released:",
-                info: "Music Title",
-                track: "2xLMifQCjDGFmkHkpNLD9h",
-            },
-            {
-                name: "Artist Two Released:",
-                info: "Music Title",
-                track: "3cfOd4CMv2snFaKAnMdnvK",
-            },
-            {
-                name: "Artist Three Released:",
-                info: "Music Title",
-                track: "10ecV5dPqa4XJOtVQRqYSX",
-            },
-            {
-                name: "Artist Four Released:",
-                info: "Music Title",
-                track: "2bw4WgXyXP90hIex7ur58y",
-            }
-        ];
-
         return (
+            <>
             <View style = {styles.musicFeed}>
-                {artists?.items
-                    ? artists.items.map((item) => (
+                {artists?.albums
+                    ? artists.albums.map((item,i) => (
                         <>
                           <View key={item}>
                                 <TouchableOpacity onPress = {() => {Linking.openURL(item.uri)}}>   
@@ -311,12 +325,10 @@ function Home({navigation}){
                                                 </>
                                             ))
                                             : null} Released:
-                                        </Text>
-                                        
-                                            <Text style={styles.textBody}>{item.name}</Text>
-                                            
+                                        </Text>                                       
+                                        <Text style={styles.textBody}>{artists.albums[i].name}</Text>
                                         </View>
-                                        <Image source = {item.album.images[0]} style={{ width: 128, height: 128, flexBasis:40}}/>
+                                        <Image source = {artists.albums[i].images[0]} style={{ width: 128, height: 128, flexBasis:40}}/>
                                     </View>
                                     
                                 </TouchableOpacity>
@@ -326,6 +338,7 @@ function Home({navigation}){
                       ))
                     : null}
             </View>
+            </>
         )
     }
     
