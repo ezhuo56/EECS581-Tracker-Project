@@ -3,7 +3,7 @@
   Description: Makes the login page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 3/12/2023
+  Date revised: 4/13/2023
   Preconditions: Importing react components 
   Postconditions: Creates the login page from the imported components
   Errors: no errors
@@ -56,7 +56,7 @@ function Login({navigation}){
             setPassword('');
         })
         .catch( ( re ) => {
-            console.log( re );
+            alert( re );
         })
     }
     //Finds the user information on firebase
@@ -78,7 +78,7 @@ function Login({navigation}){
                 setColorScheme(lightColorScheme);
             }
         } else {
-            console.log("Error, the login user does not have information in the firestore data base. Log off and input their data manually.\n");
+            alert("Error, the login user does not have information in the firestore data base. Log off and input their data manually.\n");
         }
     }
 
