@@ -13,7 +13,7 @@
 */
 
 import {React, useContext, useState, useEffect} from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image, Linking } from 'react-native';
 import { ColorSchemeContext } from '../context';
 import SearchBar from "../components/searchBar";
 import { auth, dataBase } from '../firebase';
@@ -22,6 +22,9 @@ import {collection, addDoc, doc, setDoc, getDoc, onSnapshot } from "firebase/fir
 function Artists({ route, navigation}){
     function navBack(){
         navigation.navigate( 'searchPage' );
+    }
+    function urlRedirect(){
+        Linking.openURL( url );
     }
     const bee = `
     According to all known laws
@@ -49,12 +52,14 @@ function Artists({ route, navigation}){
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [artistName, setName ] = useState( JSON.stringify(route.params) );
     const [biography, setBio ] = useState( bee );
+    const [url, setUrl] = useState( '' );
 
     useEffect( () => {
         const docRef = doc( dataBase, "Artists", JSON.parse(artistName) );
         onSnapshot( docRef, ( doc ) => {
             console.log( doc.data() );
             setBio( doc.get( "Bio" ) );
+            setUrl( doc.get( "url" ) );
         })
     });
 
@@ -71,6 +76,11 @@ function Artists({ route, navigation}){
             height: 50,
             backgroundColor: 'blue',
         },
+        followButton: {
+            width: 100,
+            height: 100,
+            backgroundColor: 'red',
+        },  
         bioAlign: {
             alignItems: 'center',
         },
@@ -95,6 +105,8 @@ function Artists({ route, navigation}){
             <Image source = { require ( '../img/temp.png' ) } style = { styles.icon }>
             </Image>
             <Text> {JSON.parse(artistName)} </Text>
+            <Pressable style = { styles.followButton } onPress = { urlRedirect } >
+            </Pressable>
             <View style = { styles.bioDetails }>
                 <Text>
                     {biography}
