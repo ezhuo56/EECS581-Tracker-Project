@@ -3,8 +3,8 @@
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 2/12/2023
-  Preconditions: None
+  Date revised: 4/1/2023
+  Preconditions: data retrieved
   Postconditions: Allow the usage of the search bar to be utilized by the user to search Spotify's database from the app
   Errors: no errors
   Side effects: no side effects
@@ -14,29 +14,43 @@
 
 //Import everything used for the page
 import {View, TextInput, Text, StyleSheet, Pressable,FlatList,SafeAreaView } from "react-native";
-import {React, useState} from "react"
+import {React, useState, useEffect} from "react"
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import { useNavigation } from '@react-navigation/native';
+import { auth, dataBase } from '../firebase';
+import {collection, addDoc, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
 
 //create a temporary list of artist to search from
-const data = [
+/*const data = [
     { id: '1', title: 'Bob' },
     { id: '2', title: 'Jones' },
     { id: '3', title: 'Billy' },
     { id: '4', title: '420' },
     { id: '5', title: 'Huh' },
-];
+];*/
 
 //Setup SearchBar
 function SearchBar(){
     //Create necessary vars
+    const [data, setData] = useState([]);
     const [textIn, setTextIn ] = useState( '' );
-    const [filteredData, setFiltered] = useState(data);
+    const [filteredData, setFiltered] = useState([]);
     const [masterData, setMaster] = useState(data);
     const navigation = useNavigation();
 
-    function navArt(){
-        navigation.navigate('artists');
+    useEffect( () => {
+        const ref = collection( dataBase, "Artists" );
+        onSnapshot( ref, (artists) => 
+            setData( artists.docs.map( (artist ) => ({
+            title: artist.id,
+            data: artist.data(),
+            })))
+        );
+        setMaster( data );
+    })
+
+    function navArt( given ){
+        navigation.navigate('artists', given);
     }
 
     const searchFilter = ( text ) => {
@@ -51,7 +65,7 @@ function SearchBar(){
             setFiltered( newData );
             setTextIn( text );
         } else {
-            setFiltered( masterData );
+            setFiltered( [] );
             setTextIn( text );
         }
     }
@@ -69,11 +83,11 @@ function SearchBar(){
     const ItemView = ({ item }) => {
         return (
           // Flat List Item
-          <Text style={styles.itemStyle} onPress={() => navArt()}>
-            {item.id}
-            {'.'}
-            {item.title.toUpperCase()}
-          </Text>
+          <View>
+          <Pressable style={styles.itemStyle} onPress={() => navArt( item.title )}>
+            {item.title}
+          </Pressable>
+          </View>
         );
     }
 

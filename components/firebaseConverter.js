@@ -15,7 +15,7 @@
 //Import everything used for the page
 import userData from "./userData";
 
-//Firestore Data Converter
+//Firestore User Data Converter
 const userConverter = {
     toFirestore: (user) => {
         return {
@@ -29,5 +29,4 @@ const userConverter = {
         return new userData(data.first, data.second, data.email);
     }
 };
-
 export default userConverter;
