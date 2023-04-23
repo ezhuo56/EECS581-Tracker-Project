@@ -3,7 +3,7 @@
   Description: Create an artist bio
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 2/12/2023
-  Date revised: 3/27/2023
+  Date revised: 4/23/2023
   Preconditions: Requires User to press a Search button, pushing data forwards to database & retreving
   Postconditions: Returns a biography of said pressed searched person
   Errors: no errors
@@ -23,8 +23,11 @@ function Artists({ route, navigation}){
     function navBack(){
         navigation.navigate( 'searchPage' );
     }
-    function urlRedirect(){
-        Linking.openURL( url );
+    function urlSpot(){
+        Linking.openURL( spot );
+    }
+    function urlYou(){
+        Linking.openURL( you );
     }
     const bee = `
     According to all known laws
@@ -52,14 +55,17 @@ function Artists({ route, navigation}){
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [artistName, setName ] = useState( JSON.stringify(route.params) );
     const [biography, setBio ] = useState( bee );
-    const [url, setUrl] = useState( '' );
+    const [spot, setSpot] = useState( '' );
+    const [you, setYou] = useState( '' );
+
 
     useEffect( () => {
         const docRef = doc( dataBase, "Artists", JSON.parse(artistName) );
         onSnapshot( docRef, ( doc ) => {
             console.log( doc.data() );
             setBio( doc.get( "Bio" ) );
-            setUrl( doc.get( "url" ) );
+            setSpot( doc.get( "spotify" ) );
+            setYou( doc.get( "youtube" ) );
         })
     });
 
@@ -76,10 +82,23 @@ function Artists({ route, navigation}){
             height: 50,
             backgroundColor: 'blue',
         },
-        followButton: {
+        followSpot: {
+            marginTop: 25,
             width: 100,
-            height: 100,
+            height: 50,
+            backgroundColor: 'green',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 5,
+        },  
+        followYou: {
+            marginTop: 25,
+            width: 100,
+            height: 50,
             backgroundColor: 'red',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 5,
         },  
         bioAlign: {
             alignItems: 'center',
@@ -92,6 +111,10 @@ function Artists({ route, navigation}){
         },
         bioDetails: {
             marginTop: 50,
+        },
+        bioText: {
+            fontSize: 25,
+            fontWeight: 'bold',
         }
     });
 
@@ -104,14 +127,22 @@ function Artists({ route, navigation}){
         <View style = { styles.bioAlign }>
             <Image source = { require ( '../img/temp.png' ) } style = { styles.icon }>
             </Image>
-            <Text> {JSON.parse(artistName)} </Text>
-            <Pressable style = { styles.followButton } onPress = { urlRedirect } >
-            </Pressable>
+            <Text style = { styles.bioText } > {JSON.parse(artistName)} </Text>
             <View style = { styles.bioDetails }>
                 <Text>
                     {biography}
                 </Text>
             </View>
+            <Pressable style = { styles.followSpot } onPress = { urlSpot } >
+                <Text style = { styles.bioText } >
+                    Spotify
+                </Text>
+            </Pressable>
+            <Pressable style = { styles.followYou } onPress = { urlYou } >
+                <Text style = { styles.bioText } >
+                    Youtube
+                </Text>
+            </Pressable>
         </View>
         </SafeAreaView>
     );
