@@ -29,28 +29,7 @@ function Artists({ route, navigation}){
     function urlYou(){
         Linking.openURL( you );
     }
-    const bee = `
-    According to all known laws
-    of aviation,
-    
-      
-    there is no way a bee
-    should be able to fly.
-    
-      
-    Its wings are too small to get
-    its fat little body off the ground.
-    
-      
-    The bee, of course, flies anyway
-    
-      
-    because bees don't care
-    what humans think is impossible.
-    
-      
-    Yellow, black. Yellow, black.
-    Yellow, black. Yellow, black.`;
+    const bee = ``;
 
     const [colorScheme, setColorScheme] = useContext(ColorSchemeContext);
     const [artistName, setName ] = useState( JSON.stringify(route.params) );
@@ -102,12 +81,14 @@ function Artists({ route, navigation}){
         },  
         bioAlign: {
             alignItems: 'center',
+            margin: 100,
         },
         icon: {
+            resizeMode: 'stretch',
             width: 140,
             height: 140,
-            borderRadius: 0,
-            marginTop: -70,
+            borderRadius: 5,
+            marginTop: -170,
         },
         bioDetails: {
             marginTop: 50,
@@ -125,11 +106,11 @@ function Artists({ route, navigation}){
             </Pressable>
         </View>
         <View style = { styles.bioAlign }>
-            <Image source = { require ( '../img/temp.png' ) } style = { styles.icon }>
+            <Image source = { JSON.parse(artistName) == "Backstreet Boys" ? backstreet : barry }style = { styles.icon }>
             </Image>
             <Text style = { styles.bioText } > {JSON.parse(artistName)} </Text>
             <View style = { styles.bioDetails }>
-                <Text>
+                <Text style = { styles.bioText }>
                     {biography}
                 </Text>
             </View>
