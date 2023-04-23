@@ -3,7 +3,7 @@
   Description: Creating a search bar component for the search screen
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/16/2022
-  Date revised: 4/1/2023
+  Date revised: 4/23/2023
   Preconditions: data retrieved
   Postconditions: Allow the usage of the search bar to be utilized by the user to search Spotify's database from the app
   Errors: no errors
@@ -83,11 +83,11 @@ function SearchBar(){
     const ItemView = ({ item }) => {
         return (
           // Flat List Item
-          <View>
           <Pressable style={styles.itemStyle} onPress={() => navArt( item.title )}>
-            {item.title}
+            <Text>
+                {item.title}
+            </Text>
           </Pressable>
-          </View>
         );
     }
 
