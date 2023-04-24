@@ -78,10 +78,10 @@ function Home({navigation}){
     },discovery);
 
     const [artists,setArtists] = useState([]);
+    const [oldTracks,setOldTracks] = useState([]);
     const [ShouldShow,setShow] = useState(true);
-    let prevDates = [4-1,3-31,3-30,3-29,3-28,3-27,3-26,3-25,3-24,3-23,3-22,3-21,3-20,3-19];
     let latestTracks = "";
-    const [prevTracks, setTracks] = useState("");
+    let previousTracks = "";
 
     useEffect(() => {
         if(response?.type === 'success'){
@@ -107,8 +107,11 @@ function Home({navigation}){
                                     let currItem = artist.data.items[j];
                                     let year = currItem.release_date.substring(0,4);
                                     if(year === "2023"){
-                                        if(currItem.release_date.substring(5,7) === "04" || currItem.release_date.substring(5,7) === "03" || currItem.release_date.substring(5,7) === "02" | currItem.release_date.substring(5,7) === "01"){
+                                        if(currItem.release_date.substring(5,7) === "04"){
                                             latestTracks +=`${currItem.id},`;
+                                        }
+                                        else if (currItem.release_date.substring(5,7) === "03" || currItem.release_date.substring(5,7) === "02"){
+                                            previousTracks += `${currItem.id},`;
                                         }
                                     }
                                 } 
@@ -124,6 +127,21 @@ function Home({navigation}){
                                 }).then(track => {
                                         console.log((latestTracks));
                                         setArtists(track.data);
+                                }).catch((err) => {
+                                    console.log(err);
+                                });
+                                axios({
+                                    method: "get",
+                                    url: `https://api.spotify.com/v1/albums`,
+                                    params: {
+                                        "ids": previousTracks.substring(0,(previousTracks.length)-1),
+                                    },
+                                    headers: {
+                                        Authorization: "Bearer " + accessToken,
+                                    }
+                                }).then(track => {
+                                        console.log((previousTracks));
+                                        setOldTracks(track.data);
                                 }).catch((err) => {
                                     console.log(err);
                                 });
@@ -255,7 +273,13 @@ function Home({navigation}){
             padding: 5,
             textAlign: 'center',
             borderWidth: 2
-        }
+        },
+        TitleBody: {
+            fontWeight: 'bold',
+            fontSize: 24,
+            padding: 3,
+            textAlign: 'center',
+        },
     });
 
     const navBar = StyleSheet.create({
@@ -314,6 +338,7 @@ function Home({navigation}){
                 {artists?.albums
                     ? artists.albums.map((item,i) => (
                         <>
+                        {i == 0 ? (<Text style={styles.TitleBody}> Released This Week </Text>) : null}
                           <View key={item}>
                                 <TouchableOpacity onPress = {() => {Linking.openURL(item.uri)}}>   
                                     <View style={styles.feed}>
@@ -337,11 +362,38 @@ function Home({navigation}){
                         </>
                       ))
                     : null}
+                {oldTracks?.albums
+                    ? oldTracks.albums.map((item,i) => (
+                        <>
+                        {i == 0 ? (<Text style={styles.TitleBody}> Released Last Month </Text>) : null}
+                          <View key={item}>
+                                <TouchableOpacity onPress = {() => {Linking.openURL(item.uri)}}>   
+                                    <View style={styles.feed}>
+                                        <View style={{ textAlign: 'center', alignItems: 'center' }}>
+                                        <Text style={styles.textHeader}>{item?.artists ? item.artists.map((names, j) => (
+                                                <>
+                                                    {names.name}
+                                                    {Object.keys(item.artists).length > 1 && j < Object.keys(item.artists).length - 1 ? (', ') : null}
+                                                </>
+                                            ))
+                                            : null} Released:
+                                        </Text>                                       
+                                        <Text style={styles.textBody}>{oldTracks.albums[i].name}</Text>
+                                        </View>
+                                        <Image source = {oldTracks.albums[i].images[0]} style={{ width: 128, height: 128, flexBasis:40}}/>
+                                    </View>
+                                    
+                                </TouchableOpacity>
+                                <View padding={10}></View>
+                            </View>
+                        </>
+                      ))
+                    : null}
             </View>
             </>
         )
     }
-    
+
     //Create the home page
     return(
         <View style = {styles.parent}>
