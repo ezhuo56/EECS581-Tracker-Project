@@ -21,21 +21,130 @@ import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 import userData from "../components/userData.js";
 import {AsyncStorage} from 'react-native';
+
+import { Camera, CameraType } from 'expo-camera';
  
-// IDs for our project
-//const client_id = 'dc95aa564add4e22aca854acb29a5565';
-//const secret_id = 'f8e7fcc6de7c4040b2ed7342a5da0db2';
-//Eric ID for client sided testing
-const client_id = '8865b29e5e404623a2e485a91ffb290d';
-const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
-// scopes to get from the spotify API
-const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
-var accessToken;
-var gotToken = false;
 
 //Setup User
 function UserImg({navigation}){
+    //variables
+    const [startCamera,setStartCamera] = React.useState(false)
+    const [capturedImage, setCapturedImage] = useState<any>(null)
 
+    //Create all needed functions (Explanation given if necessary)
+    function navU(){
+        navigation.navigate('userPage');
+    }
+    function navH(){
+        navigation.navigate('homePage');
+    }
+    function navS(){
+        navigation.navigate('searchPage');
+    }
+    function navSet(){
+        navigation.navigate('settingsPage');
+    }
+    function navL(){
+        navigation.navigate('loginPage');
+    }
+    function navUS(){
+        navigation.navigate('UserSetupPage');
+    }
+
+
+  
+    const __startCamera = async () => {
+        const {status} = await Camera.requestCameraPermissionsAsync()
+        if (status === 'granted') {
+          // start the camera
+          setStartCamera(true)
+        } else {
+          Alert.alert('Access denied')
+        }
+      }
+
+      const __takePicture = async () => {
+        if (!camera) return
+        const photo = await camera.takePictureAsync()
+        console.log(photo)
+        setCapturedImage(photo)
+      }
+
+    //PICTURE TAKER
+    return(
+        startCamera ? (
+            <Camera
+              style={{flex: 1,width:"100%"}}
+              ref={(r) => {
+                camera = r
+              }}
+            >
+
+            <View
+                style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    flexDirection: 'row',
+                    flex: 1,
+                    width: '100%',
+                    padding: 20,
+                    justifyContent: 'space-between'
+                }}
+            >
+            <View
+                style={{
+                alignSelf: 'center',
+                flex: 1,
+                alignItems: 'center'
+                }}
+            >
+            <TouchableOpacity
+                onPress={__takePicture}                  //TODO: we have the photo, now sent it somewhere else
+                style={{
+                    width: 70,
+                    height: 70,
+                    bottom: 0,
+                    borderRadius: 50,
+                    backgroundColor: '#fff'
+                }}
+            />
+            </View>
+            </View>
+            </Camera>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: '#fff',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <TouchableOpacity
+                onPress={__startCamera}
+                style={{
+                  width: 130,
+                  borderRadius: 4,
+                  backgroundColor: '#14274e',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 40
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    textAlign: 'center'
+                  }}
+                >
+                  Take picture
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )
+    );
 }
 
 export default UserImg
