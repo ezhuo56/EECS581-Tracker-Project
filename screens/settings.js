@@ -3,7 +3,7 @@
   Description: Makes the settings page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/12/2022
-  Date revised: 1/23/2023
+  Date revised: 4/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates the settings page from the imported components provided by react native
   Errors: no errors
@@ -40,6 +40,7 @@ function Settings({navigation}){
         });
         setColorScheme(lightColorScheme);
         navigation.navigate('loginPage');
+        alert("Sucessfully signed out!");
     }
     //Changes colorscheme, later to retrieve the catered colorscheme of each user
     function changeColorScheme(){
@@ -59,13 +60,6 @@ function Settings({navigation}){
                 colorSchemeName = "light";
                 break;
         }
-        /*set(ref(db, 'users/' + auth.currentUser.uid), {
-            first: user.first,
-            second: user.second,
-            email: user.email,
-            colorScheme: colorSchemeName,
-            userId: auth.currentUser.uid,
-        })*/
     }
 
     //CSS Styling for the page
