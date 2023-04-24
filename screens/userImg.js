@@ -2,10 +2,17 @@
   Name: userImg.js
   Description: this page handles the user wanting to change their profile picture
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
+<<<<<<< Updated upstream
   Date: 10/11/2022
   Date revised: 1/29/2023
   Preconditions: Importing react components 
   Postconditions: Creates the user page from the imported components provided by react native. Now prints out User's Spotify artist data on this page.
+=======
+  Date: 4/23/2023
+  Date revised: 4/23/2023
+  Preconditions: Importing react components, the connected device has a camera and is ios or android
+  Postconditions: changes the user's profile picture
+>>>>>>> Stashed changes
   Errors: no errors
   Side effects: no side effects
   invariants: no invariants
@@ -32,11 +39,14 @@ const secret_id = 'a8bcbef5733c435794cb5bb9b8ce34a5';
 const scopes_arr = ['user-follow-read','user-read-email','playlist-read-private'];
 var accessToken;
 var gotToken = false;
+<<<<<<< Updated upstream
 // websites to get spotify auth
 const discovery = {
     authorizationEndpoint: 'https://accounts.spotify.com/authorize',
     tokenEndpoint: 'https://accounts.spotify.com/api/token',
 };
+=======
+>>>>>>> Stashed changes
 
 //Setup User
 function UserImg({navigation}){
