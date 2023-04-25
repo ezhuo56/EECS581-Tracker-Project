@@ -47,6 +47,8 @@ function Login({navigation}){
     }
     function handleLogin(){
         sendNotification(expoPushToken, 'Login Attempt', 'There was an attempt to login to Big Bops on your device');
+        getMusicInfo();
+
         signInWithEmailAndPassword( auth, email, password )
         .then( ( re ) => {
             setLogins(email);
@@ -59,6 +61,21 @@ function Login({navigation}){
             alert( re );
         })
     }
+
+    async function getMusicInfo() {
+        musicURL = "https://rss.applemarketingtools.com/api/v2/us/music/most-played/10/albums.json"
+        let response = await fetch(musicURL, {
+            method: "GET",
+        });
+        let jsonData = await response.json();
+        let musicNames = [];
+        jsonData['feed']['results'].map(function (result) {
+            musicNames.push(result['name'])
+        });
+        sendNotification(expoPushToken, 'Most Played Music', 'Todays most played music includes: ' + musicNames.join(', '));
+    }
+
+
     //Finds the user information on firebase
     async function handleUser(){
         const docRef = doc(dataBase, "users", auth.currentUser.uid).withConverter(userConverter);

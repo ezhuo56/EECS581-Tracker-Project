@@ -6,12 +6,13 @@
   Date revised: 4/23/2023
   Preconditions: Importing react components, the connected device has a camera and is ios or android
   Postconditions: changes the user's profile picture
-  Errors: no errors
+  Errors: This is connected to nothing, and expo-camera may not be installed.
   Side effects: no side effects
   invariants: no invariants
   any known faults: no known faults
 */
 
+/*
 //Import everything used for the page
 import {React, useState,useEffect ,useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
@@ -148,3 +149,4 @@ function UserImg({navigation}){
 }
 
 export default UserImg
+*/

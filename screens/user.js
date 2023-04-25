@@ -3,7 +3,7 @@
   Description: Makes the user page be able to navigated to with button taps from the user
   Programmer's name: Eric Zhuo, Bayley Duong, Preston Chanta, William Hecht, Andrew Hughes
   Date: 10/11/2022
-  Date revised: 1/29/2023
+  Date revised: 4/23/2023
   Preconditions: Importing react components 
   Postconditions: Creates the user page from the imported components provided by react native. Now prints out User's Spotify artist data on this page.
   Errors: no errors
@@ -309,6 +309,7 @@ function User({navigation}){
                             style = { styles.alignImg }>
                         </Image>
                     </Pressable>
+
                     <Text style = { styles.userName }> {user.first + " " + user.second} </Text>
                     <Text style = { styles.email }> { user.email } </Text>
                     <View style = { styles.infoBack } >
