@@ -12,7 +12,6 @@
   any known faults: no known faults
 */
 
-/*
 //Import everything used for the page
 import {React, useState,useEffect ,useContext} from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable } from 'react-native';
@@ -30,7 +29,7 @@ import { Camera, CameraType } from 'expo-camera';
 function UserImg({navigation}){
     //variables
     const [startCamera,setStartCamera] = React.useState(false)
-    const [capturedImage, setCapturedImage] = useState<any>(null)
+    const [user, setUser] = useContext(UserContext);
 
     //Create all needed functions (Explanation given if necessary)
     function navU(){
@@ -67,8 +66,8 @@ function UserImg({navigation}){
       const __takePicture = async () => {
         if (!camera) return
         const photo = await camera.takePictureAsync()
-        console.log(photo)
-        setCapturedImage(photo)
+        
+        navUS()  //leave the page.
       }
 
     //PICTURE TAKER
@@ -149,4 +148,3 @@ function UserImg({navigation}){
 }
 
 export default UserImg
-*/

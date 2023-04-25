@@ -11,6 +11,7 @@
   invariants: no invariants
   any known faults: no known faults
 */
+import {getStorage, ref } from "firebase/storage";
 
 //Create a class with data inputted from firebase
 class userData {
@@ -18,10 +19,14 @@ class userData {
         this.firstName = Firstname;
         this.lastName = LastName;
         this.email = email;
+        this.userImage = '../img/temp.png';
     }
+
     toString() {
         return this.firstName + ', ' + this.lastName;
     }
+
+
 }
 
 // Firestore data converter to grab the data and be able to store it to the database

@@ -15,7 +15,7 @@
 //Import everything used for the page
 import { React, useState, useContext } from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Pressable, Image } from 'react-native';
-import { ColorSchemeContext, LoginContext, UserContext} from '../context';
+import { ColorSchemeContext, LoginContext, UserContext, UserTempImg} from '../context';
 import { auth, dataBase } from '../firebase';
 import {collection, addDoc, doc, setDoc } from "firebase/firestore";
 import userData from '../components/userData';
@@ -34,6 +34,11 @@ function UserSetUp({navigation}){
     function navU(){
         navigation.navigate('userPage');
     }
+
+    function navImg() {
+        navigation.navigate('UserImg');
+    }
+
     //User data is converted to retrieve information from firebase
     async function updateUser() {
         var FirstName = firstName;
@@ -116,6 +121,9 @@ function UserSetUp({navigation}){
                     placeholderTextColor = {styles.input.placeholderTextColor}
                     onChangeText={(val) => setSecondName(val)}
                 />
+                <Pressable style = { styles.loginBut } onPress = { navImg}>
+                    <Text style = { styles.textL }> Change Profile Picture </Text>
+                </Pressable>
                 <Pressable style = { styles.loginBut } onPress = { updateUser}>
                     <Text style = { styles.textL }> Save Data </Text>
                 </Pressable>

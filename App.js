@@ -31,6 +31,7 @@ import { ColorSchemeContext, LoginContext, UserContext, ExpoPushContext } from '
 import UserSetUp from './screens/UserSetup';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import UserImg from './screens/userImg';
 
 /**
  * The following code is to handle push notifications
@@ -189,6 +190,13 @@ export default function App(){
                     headerShown: false,
 
                   }}
+                />
+                <Stack.Screen 
+                name = "UserImg" 
+                component = {UserImg} 
+                options = {{
+                  headerShown: false,
+                  }}  
                 />
               </Stack.Navigator>
             </NavigationContainer>
