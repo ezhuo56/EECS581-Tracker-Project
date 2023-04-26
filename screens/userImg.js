@@ -28,7 +28,7 @@ import { Camera, CameraType } from 'expo-camera';
 //Setup User
 function UserImg({navigation}){
     //variables
-    const [startCamera,setStartCamera] = React.useState(false)
+    const [startCamera,setStartCamera] = useState(false);
     const [user, setUser] = useContext(UserContext);
 
     //Create all needed functions (Explanation given if necessary)
@@ -66,7 +66,7 @@ function UserImg({navigation}){
       const __takePicture = async () => {
         if (!camera) return
         const photo = await camera.takePictureAsync()
-        
+        //send photo somewhere else. Requires an extra install that breaks things.
         navUS()  //leave the page.
       }
 
@@ -99,7 +99,7 @@ function UserImg({navigation}){
                 }}
             >
             <TouchableOpacity
-                onPress={__takePicture}                  //TODO: we have the photo, now sent it somewhere else
+                onPress={__takePicture}
                 style={{
                     width: 70,
                     height: 70,

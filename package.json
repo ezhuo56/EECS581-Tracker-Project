@@ -29,7 +29,8 @@
     "react-navigation-stack": "^2.10.4",
     "react-tabs": "^5.1.0",
     "expo-notifications": "~0.16.1",
-    "expo-device": "~4.3.0"
+    "expo-device": "~4.3.0",
+    "expo-camera": "~12.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

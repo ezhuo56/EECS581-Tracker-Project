@@ -26,7 +26,15 @@ class userData {
         return this.firstName + ', ' + this.lastName;
     }
 
+    changeImg(img)
+    {
+        this.userImage = img;
+    }
 
+    getImg()
+    {
+        return this.userImage;
+    }
 }
 
 // Firestore data converter to grab the data and be able to store it to the database

@@ -21,6 +21,7 @@ import {useAuthRequest,ResponseType,makeRedirectUri} from 'expo-auth-session';
 import axios from 'axios';
 import userData from "../components/userData.js";
 import {AsyncStorage} from 'react-native';
+import UserImg from './userImg';
  
 // IDs for our project
 //const client_id = 'dc95aa564add4e22aca854acb29a5565';
@@ -291,7 +292,7 @@ function User({navigation}){
             backgroundColor: colorScheme.navBar,
         }
     });
-
+//user.userImage
     //Create the user page
     return(
         <View style = { styles.parent }>
@@ -305,7 +306,7 @@ function User({navigation}){
                 </View>
                 <View style = { styles.infoCont } >
                     <Pressable onPress={navUS}>
-                        <Image source = { require ( '../img/temp.png' ) }
+                        <Image source = { require( '../img/temp.png' ) }
                             style = { styles.alignImg }>
                         </Image>
                     </Pressable>
